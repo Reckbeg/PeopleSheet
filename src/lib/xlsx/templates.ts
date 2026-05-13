@@ -161,6 +161,7 @@ function buildPayrollRecap(workbook: ExcelJS.Workbook, template: TemplateProduct
 function buildAttendanceTracker(workbook: ExcelJS.Workbook, template: TemplateProduct) {
   const setup = addSetupSheet(workbook, template);
   setup.getCell("A11").value = "Tracker month";
+  setup.getCell("A11").font = { bold: true, color: { argb: palette.ink } };
   setup.getCell("A12").value = "Month";
   setup.getCell("B12").value = new Date(2026, 4, 1);
   setup.getCell("B12").numFmt = "mmmm yyyy";
@@ -183,10 +184,12 @@ function buildAttendanceTracker(workbook: ExcelJS.Workbook, template: TemplatePr
   }
   styleHeaderRows(tracker, [4, 5]);
   addRows(tracker, 6, [
-    ["EMP-001", "Dina Prasetya", "Operations", "Present", "Present", "Off", "Off", "Present"],
-    ["EMP-002", "Rafi Mahendra", "People", "Present", "Present", "Off", "Off", "Leave"],
-    ["EMP-003", "Sari Wulandari", "Finance", "Sick", "Present", "Off", "Off", "Present"],
-  ]);
+    ["EMP-001", "Dina Prasetya", "Operations", "Present", "Present", "Off", "Off", "Present", "Present", "Present", "Leave", "Present"],
+    ["EMP-002", "Rafi Mahendra", "People", "Present", "Present", "Off", "Off", "Leave", "Present", "Present", "Present", "Present"],
+    ["EMP-003", "Sari Wulandari", "Finance", "Sick", "Present", "Off", "Off", "Present", "Present", "Sick", "Present", "Present"],
+    ["EMP-004", "Budi Santoso", "Operations", "Present", "Present", "Off", "Off", "Present", "Present", "Present", "Present", "Present"],
+    ["EMP-005", "Maya Anggraini", "Finance", "Present", "Present", "Off", "Off", "Present", "Present", "Present", "Present", "Present"],
+  ], { alternate: true });
   for (let row = 6; row <= 25; row += 1) {
     for (let col = 4; col <= 34; col += 1) {
       tracker.getCell(row, col).dataValidation = {
@@ -207,7 +210,9 @@ function buildAttendanceTracker(workbook: ExcelJS.Workbook, template: TemplatePr
     ["EMP-001", "Dina Prasetya", { formula: 'COUNTIF(\'Monthly Tracker\'!D6:AH6,"Present")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D6:AH6,"Leave")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D6:AH6,"Sick")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D6:AH6,"Absent")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D6:AH6,"Holiday")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D6:AH6,"Off")' }],
     ["EMP-002", "Rafi Mahendra", { formula: 'COUNTIF(\'Monthly Tracker\'!D7:AH7,"Present")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D7:AH7,"Leave")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D7:AH7,"Sick")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D7:AH7,"Absent")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D7:AH7,"Holiday")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D7:AH7,"Off")' }],
     ["EMP-003", "Sari Wulandari", { formula: 'COUNTIF(\'Monthly Tracker\'!D8:AH8,"Present")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D8:AH8,"Leave")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D8:AH8,"Sick")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D8:AH8,"Absent")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D8:AH8,"Holiday")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D8:AH8,"Off")' }],
-  ]);
+    ["EMP-004", "Budi Santoso", { formula: 'COUNTIF(\'Monthly Tracker\'!D9:AH9,"Present")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D9:AH9,"Leave")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D9:AH9,"Sick")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D9:AH9,"Absent")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D9:AH9,"Holiday")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D9:AH9,"Off")' }],
+    ["EMP-005", "Maya Anggraini", { formula: 'COUNTIF(\'Monthly Tracker\'!D10:AH10,"Present")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D10:AH10,"Leave")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D10:AH10,"Sick")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D10:AH10,"Absent")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D10:AH10,"Holiday")' }, { formula: 'COUNTIF(\'Monthly Tracker\'!D10:AH10,"Off")' }],
+  ], { alternate: true });
   freeze(summary);
 }
 
