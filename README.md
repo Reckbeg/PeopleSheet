@@ -1,14 +1,25 @@
 # PeopleSheet
 
-PeopleSheet is a lightweight, privacy-first HR spreadsheet template library for Indonesian SMB teams.
+Practical HR spreadsheet templates for Indonesian teams.
 
-The product is intentionally simple: no employee database, no mandatory login, no Supabase backend, and no HRIS workflow layer. Users download ready-to-use XLSX templates and keep employee data in their own spreadsheet tools.
+PeopleSheet is a lightweight, privacy-first template library. No employee database. No mandatory login. No HRIS complexity. Just download ready-to-use XLSX files and keep your data in your own spreadsheet.
 
-## What Ships
+## Templates
 
-- Payroll Recap Template with 26-25 cut-off support, attendance summary, overtime, deductions, and payroll summary sheets.
-- Attendance Tracker Template with generated monthly dates, weekend highlighting, status columns, and summary counts.
-- Leave Tracker Template with annual leave balances, usage tracking, and simple operational formulas.
+| Template | Sheets | Description |
+|----------|--------|-------------|
+| Payroll Recap | 5 | 26-25 cut-off, attendance, overtime, deductions, summary |
+| Attendance Tracker | 3 | Monthly matrix with weekend highlighting |
+| Leave Tracker | 3 | Annual entitlement, usage log, balance formulas |
+
+## Philosophy
+
+PeopleSheet is built for HR operators who need useful files quickly:
+
+- **Privacy-first** — Templates generate in-memory. No data is stored, transmitted, or logged.
+- **Spreadsheet-native** — Every template is designed to work in Excel and Google Sheets.
+- **Operational** — Focus on practical HR routines, not dashboard theater.
+- **Indonesian context** — IDR formatting, 26-25 payroll cut-off, local leave conventions.
 
 ## Stack
 
@@ -16,7 +27,7 @@ The product is intentionally simple: no employee database, no mandatory login, n
 - TypeScript
 - Tailwind CSS
 - ExcelJS for XLSX generation
-- Vitest for lightweight workbook checks
+- Vitest for workbook checks
 
 ## Local Setup
 
@@ -25,33 +36,31 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`.
-
-No environment variables are required.
+Open `http://localhost:3000`. No environment variables required.
 
 ## Scripts
 
 ```bash
-npm run dev
-npm run lint
-npm run build
-npm test
+npm run dev        # Start development server
+npm run build      # Production build
+npm run lint       # Run ESLint
+npm test           # Run Vitest
 ```
 
 ## Architecture
 
-PeopleSheet is a local-first template platform:
+```
+src/app/page.tsx                    → Public template library page
+src/app/templates/[slug]/download/  → XLSX download API route
+src/lib/templates.ts                → Template catalog metadata
+src/lib/xlsx/templates.ts           → ExcelJS workbook builder
+```
 
-- `src/app/page.tsx` renders the public template library.
-- `src/app/templates/[slug]/download/route.ts` generates XLSX downloads.
-- `src/lib/templates.ts` stores template catalog metadata.
-- `src/lib/xlsx/templates.ts` builds the workbooks with ExcelJS.
+Download routes generate files in memory and return them directly to the browser. No files are cached or stored.
 
-The app does not store employee data. Download routes generate files in memory and return them directly to the browser.
+## Guardrails
 
-## Product Guardrails
-
-- Keep workflows spreadsheet-native and practical.
-- Avoid database, auth, dashboard, and SaaS admin complexity unless the product direction changes.
-- Prefer clear templates over configurable systems.
-- Design for Indonesian HR operators who need useful files quickly.
+- No database, auth, dashboard, or SaaS admin complexity
+- No employee data storage
+- Clear templates over configurable systems
+- Practical for Indonesian HR operators
