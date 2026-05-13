@@ -18,6 +18,16 @@ describe("template catalog", () => {
       expect(getTemplate(template.slug)).toBe(template);
     }
   });
+
+  it("defines previewSheets for every template", () => {
+    for (const template of templates) {
+      expect(template.previewSheets.length).toBeGreaterThan(0);
+      for (const sheet of template.previewSheets) {
+        expect(sheet.name).toBeTruthy();
+        expect(sheet.description).toBeTruthy();
+      }
+    }
+  });
 });
 
 describe("workbook generation", () => {

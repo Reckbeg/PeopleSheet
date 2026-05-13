@@ -16,6 +16,7 @@ export type TemplateProduct = {
   sheets: string[];
   features: string[];
   preview: string[];
+  previewSheets: { name: string; description: string }[];
 };
 
 export const templates: TemplateProduct[] = [
@@ -46,6 +47,13 @@ export const templates: TemplateProduct[] = [
       "Summary sheet calculates gross pay, deductions, and take-home pay.",
       "Separate operational sheets keep attendance, overtime, and deductions easy to audit.",
     ],
+    previewSheets: [
+      { name: "Setup", description: "Period month, cut-off days, payment date" },
+      { name: "Attendance Summary", description: "Employee attendance by period" },
+      { name: "Overtime", description: "Approved overtime with pay formulas" },
+      { name: "Deductions", description: "Pre-payroll deduction records" },
+      { name: "Payroll Summary", description: "Gross pay, deductions, take-home" },
+    ],
   },
   {
     slug: "attendance-tracker",
@@ -68,6 +76,11 @@ export const templates: TemplateProduct[] = [
       "Weekend columns are highlighted for easier scanning.",
       "The summary tab counts common attendance statuses per employee.",
     ],
+    previewSheets: [
+      { name: "Setup", description: "Month picker and status options" },
+      { name: "Monthly Tracker", description: "31-column date matrix with dropdowns" },
+      { name: "Summary", description: "Status counts per employee" },
+    ],
   },
   {
     slug: "leave-tracker",
@@ -89,6 +102,11 @@ export const templates: TemplateProduct[] = [
       "Balance sheet keeps opening balance, annual entitlement, used days, and remaining days together.",
       "Usage sheet calculates workday leave duration.",
       "Approved annual leave automatically rolls into the employee balance.",
+    ],
+    previewSheets: [
+      { name: "Setup", description: "Year and default entitlement" },
+      { name: "Leave Balance", description: "Entitlement, used, and remaining" },
+      { name: "Leave Usage", description: "Leave requests with status tracking" },
     ],
   },
 ];
