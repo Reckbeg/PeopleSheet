@@ -1,28 +1,7 @@
 import Link from "next/link";
-import { categories, templates } from "@/lib/templates";
-
-const privacyNotes = [
-  {
-    title: "No employee database",
-    description:
-      "Your data stays in your spreadsheet. PeopleSheet generates templates, not dashboards.",
-  },
-  {
-    title: "No mandatory login",
-    description:
-      "Download any template immediately. No account, no email, no friction.",
-  },
-  {
-    title: "Works in Excel and Google Sheets",
-    description:
-      "Every template opens cleanly in both Excel and Google Sheets.",
-  },
-  {
-    title: "Built for Indonesian HR routines",
-    description:
-      "IDR formatting, 26-25 payroll cut-off, and local leave conventions included.",
-  },
-];
+import { templates } from "@/lib/templates";
+import { SpreadsheetPreview } from "@/components/spreadsheet-preview";
+import { DownloadButton } from "@/components/download-button";
 
 export default function Home() {
   return (
@@ -36,8 +15,8 @@ export default function Home() {
             <a className="transition hover:text-foreground" href="#templates">
               Templates
             </a>
-            <a className="transition hover:text-foreground" href="#privacy">
-              Privacy
+            <a className="transition hover:text-foreground" href="#why">
+              Why this exists
             </a>
           </nav>
         </div>
@@ -45,16 +24,13 @@ export default function Home() {
 
       <section className="border-b border-line bg-surface">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center px-4 py-16 text-center sm:px-6 lg:px-8 lg:py-20">
-          <p className="text-sm font-semibold text-accent">
-            HR spreadsheet toolkit
-          </p>
-          <h1 className="mt-4 max-w-2xl text-4xl font-semibold tracking-normal text-foreground sm:text-5xl">
-            Practical HR spreadsheets for Indonesian teams
+          <h1 className="max-w-2xl text-4xl font-semibold tracking-normal text-foreground sm:text-5xl">
+            HR spreadsheets that actually work
           </h1>
           <p className="mt-5 max-w-xl text-base leading-7 text-muted">
-            Download ready-to-use XLSX templates for payroll, attendance, and
-            leave tracking. Keep employee data in your own files, not in another
-            HRIS.
+            Ready-to-use XLSX templates for payroll, attendance, and leave
+            tracking. Designed for Indonesian teams. No login. No database.
+            Just download and open.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
@@ -63,155 +39,272 @@ export default function Home() {
             >
               Browse templates
             </a>
-            <a
+            <DownloadButton
               href="/templates/payroll-recap/download"
-              className="inline-flex h-11 items-center justify-center rounded-md border border-line bg-white px-6 text-sm font-semibold text-foreground transition hover:border-accent hover:text-accent"
-            >
-              Download sample XLSX
-            </a>
+              label="Download sample XLSX"
+              variant="bordered"
+            />
           </div>
-          <p className="mt-4 text-xs text-muted">
-            No account required. XLSX files with formulas included.
-          </p>
-        </div>
-      </section>
-
-      <section className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-6 sm:grid-cols-3">
-          {[
-            {
-              label: "5 sheets",
-              title: "Payroll Recap",
-              desc: "26-25 cut-off, attendance, overtime, deductions, and summary.",
-            },
-            {
-              label: "3 sheets",
-              title: "Attendance Tracker",
-              desc: "Monthly matrix with weekend highlighting and status counts.",
-            },
-            {
-              label: "3 sheets",
-              title: "Leave Tracker",
-              desc: "Annual entitlement, usage log, and balance formulas.",
-            },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="rounded-md border border-line bg-white p-5"
-            >
-              <p className="text-xs font-semibold uppercase tracking-wide text-accent">
-                {item.label}
-              </p>
-              <h3 className="mt-2 text-lg font-semibold">{item.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-muted">{item.desc}</p>
-            </div>
-          ))}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-xs text-muted">
+            <span>No signup</span>
+            <span className="text-line">·</span>
+            <span>No data stored</span>
+            <span className="text-line">·</span>
+            <span>Excel & Google Sheets</span>
+            <span className="text-line">·</span>
+            <span>Formulas included</span>
+          </div>
         </div>
       </section>
 
       <section
         id="templates"
-        className="mx-auto w-full max-w-6xl px-4 pb-12 sm:px-6 lg:px-8"
+        className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8"
       >
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-sm font-semibold text-accent">Template library</p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-normal">
-              Start with the operational basics
-            </h2>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <span
-                key={category}
-                className="rounded-md border border-line bg-white px-3 py-2 text-sm font-medium text-muted"
-              >
-                {category}
-              </span>
-            ))}
-          </div>
+        <div>
+          <p className="text-sm font-semibold text-accent">Templates</p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-normal">
+            Three operational basics
+          </h2>
+          <p className="mt-2 max-w-lg text-sm text-muted">
+            Each template is a complete workbook with sample data, formulas, and
+            formatting. Replace the sample rows with your own.
+          </p>
         </div>
 
-        <div className="mt-6 grid gap-4 lg:grid-cols-3">
-          {templates.map((template) => (
+        <div className="mt-8 space-y-8">
+          {templates.map((template, index) => (
             <article
               key={template.slug}
-              className="flex min-h-[420px] flex-col rounded-md border border-line bg-white p-5"
+              className="rounded-lg border border-line bg-white"
             >
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-accent">
-                  {template.category}
-                </p>
-                <h3 className="mt-3 text-xl font-semibold tracking-normal">
-                  {template.name}
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-muted">
-                  {template.summary}
-                </p>
-              </div>
-
-              <div className="mt-5 border-t border-line pt-4">
-                <p className="text-sm font-semibold">Includes</p>
-                <ul className="mt-3 space-y-2 text-sm leading-6 text-muted">
-                  {template.features.map((feature) => (
-                    <li key={feature} className="flex gap-2">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="mt-auto pt-6">
-                <a
-                  href={`/templates/${template.slug}/download`}
-                  className="inline-flex h-10 w-full items-center justify-center rounded-md bg-foreground px-4 text-sm font-semibold text-white transition hover:bg-foreground/90"
+              <div className="grid gap-0 lg:grid-cols-[1fr_1fr]">
+                <div
+                  className={`p-6 sm:p-8 ${index % 2 === 1 ? "lg:order-2" : ""}`}
                 >
-                  {template.downloadLabel}
-                </a>
-                <p className="mt-2 text-center text-xs text-muted">
-                  XLSX file. No account required.
-                </p>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-accent">
+                    {template.category}
+                  </p>
+                  <h3 className="mt-2 text-xl font-semibold tracking-normal">
+                    {template.name}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-muted">
+                    {template.summary}
+                  </p>
+
+                  <div className="mt-5">
+                    <p className="text-sm font-semibold">Sheets</p>
+                    <div className="mt-2.5 space-y-1.5">
+                      {template.previewSheets.map((sheet) => (
+                        <div
+                          key={sheet.name}
+                          className="flex items-start gap-2 text-sm"
+                        >
+                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                          <div>
+                            <span className="font-medium text-foreground">
+                              {sheet.name}
+                            </span>
+                            <span className="text-muted">
+                              {" "}
+                              — {sheet.description}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-5">
+                    <p className="text-sm font-semibold">Notes</p>
+                    <ul className="mt-2 space-y-1 text-xs leading-5 text-muted">
+                      {template.operationalNotes.map((note) => (
+                        <li key={note} className="flex items-start gap-2">
+                          <span className="mt-0.5 text-[10px] text-accent">
+                            ✓
+                          </span>
+                          {note}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mt-5 flex items-center gap-4 text-xs text-muted">
+                    <span>
+                      <span className="font-medium text-foreground">
+                        Best for:
+                      </span>{" "}
+                      {template.useCase}
+                    </span>
+                    <span className="text-line">·</span>
+                    <span>
+                      <span className="font-medium text-foreground">
+                        Team size:
+                      </span>{" "}
+                      {template.teamSize}
+                    </span>
+                  </div>
+
+                  <div className="mt-6">
+                    <DownloadButton
+                      href={`/templates/${template.slug}/download`}
+                      label={template.downloadLabel}
+                    />
+                    <p className="mt-2 text-center text-xs text-muted">
+                      {template.sheets.length} sheets · XLSX · No account
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  className={`border-t border-line bg-[#F8FAFC] p-4 sm:p-6 lg:border-t-0 lg:border-l ${index % 2 === 1 ? "lg:order-1" : ""}`}
+                >
+                  <SpreadsheetPreview
+                    title={template.previewData.title}
+                    headers={template.previewData.headers}
+                    rows={template.previewData.rows}
+                  />
+                  <p className="mt-3 text-center text-[11px] text-muted">
+                    Preview — actual template includes full sample data and
+                    formulas
+                  </p>
+                </div>
               </div>
             </article>
           ))}
         </div>
       </section>
 
-      <section id="privacy" className="border-t border-line bg-surface">
-        <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-            <div>
-              <p className="text-sm font-semibold text-accent">Privacy-first</p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-normal">
-                Your HR data stays in your spreadsheet
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-muted">
-                PeopleSheet generates template files. It does not store, process,
-                or transmit your employee data.
+      <section id="why" className="border-t border-line bg-surface">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-sm font-semibold text-accent">
+              Why this exists
+            </p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-normal">
+              Most Indonesian SMB teams still run HR on spreadsheets
+            </h2>
+          </div>
+
+          <div className="mx-auto mt-8 max-w-2xl space-y-5 text-sm leading-7 text-muted">
+            <p>
+              HR operators at small teams often start each month with a blank
+              spreadsheet or a messy template from the internet. They spend
+              hours formatting columns and fixing broken formulas — just to
+              rebuild the same structure they had last month.
+            </p>
+            <p>
+              PeopleSheet gives those operators a calm starting point. Each
+              template is designed to be immediately useful: realistic sample
+              data, working formulas, and a structure that matches how
+              Indonesian HR teams actually operate.
+            </p>
+            <p>
+              There is no account system. No employee database. No data
+              transmission. You download a file, replace the sample rows, and
+              keep working in your own spreadsheet tool.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="text-sm font-semibold text-accent">How it works</p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-normal">
+            Download, replace, use
+          </h2>
+        </div>
+
+        <div className="mx-auto mt-8 grid max-w-2xl gap-5 sm:grid-cols-3">
+          {[
+            {
+              step: "1",
+              title: "Download",
+              desc: "Choose a template. The XLSX file downloads immediately.",
+            },
+            {
+              step: "2",
+              title: "Replace",
+              desc: "Swap sample rows with your own data. Keep the formulas.",
+            },
+            {
+              step: "3",
+              title: "Use",
+              desc: "Open in Excel or Google Sheets. Edit as needed.",
+            },
+          ].map((item) => (
+            <div
+              key={item.step}
+              className="rounded-md border border-line bg-white p-5 text-center"
+            >
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-accent-soft text-xs font-semibold text-accent">
+                {item.step}
+              </span>
+              <h3 className="mt-2.5 text-sm font-semibold">{item.title}</h3>
+              <p className="mt-1.5 text-xs leading-5 text-muted">
+                {item.desc}
               </p>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {privacyNotes.map((note) => (
-                <div
-                  key={note.title}
-                  className="rounded-md border border-line bg-white px-4 py-4"
-                >
-                  <p className="text-sm font-semibold">{note.title}</p>
-                  <p className="mt-1 text-xs leading-5 text-muted">
-                    {note.description}
-                  </p>
-                </div>
-              ))}
-            </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="privacy" className="border-t border-line bg-surface">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-sm font-semibold text-accent">Privacy</p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-normal">
+              PeopleSheet doesn&apos;t store anything
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-muted">
+              You download a template file, open it in Excel or Google Sheets,
+              and fill in your own employee data. The data stays in that file
+              on your machine. PeopleSheet never sees it.
+            </p>
+          </div>
+
+          <div className="mx-auto mt-8 grid max-w-2xl gap-4 sm:grid-cols-2">
+            {[
+              {
+                label: "No account needed",
+                detail:
+                  "Click download, get the file. No signup, no email, no login wall.",
+              },
+              {
+                label: "Your data never enters the system",
+                detail:
+                  "Templates contain only sample data. Your employee information is never uploaded or transmitted.",
+              },
+              {
+                label: "You own the file",
+                detail:
+                  "Once downloaded, the XLSX is yours. Edit it, share it, store it however you want.",
+              },
+              {
+                label: "Fully offline after download",
+                detail:
+                  "The spreadsheet works without internet. All formulas run locally in Excel or Google Sheets.",
+              },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="rounded-md border border-line bg-white px-4 py-4"
+              >
+                <p className="text-sm font-medium">{item.label}</p>
+                <p className="mt-1.5 text-xs leading-5 text-muted">
+                  {item.detail}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       <footer className="border-t border-line bg-white">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-          <p>PeopleSheet. HR spreadsheet templates.</p>
-          <p>Built for practical operators.</p>
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-5 text-xs text-muted sm:px-6 lg:px-8">
+          <p>PeopleSheet</p>
+          <p>HR spreadsheet templates for Indonesian teams</p>
         </div>
       </footer>
     </main>

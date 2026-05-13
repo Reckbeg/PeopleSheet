@@ -5,6 +5,12 @@ export type TemplateSlug =
   | "attendance-tracker"
   | "leave-tracker";
 
+export type PreviewData = {
+  title: string;
+  headers: string[];
+  rows: (string | number)[][];
+};
+
 export type TemplateProduct = {
   slug: TemplateSlug;
   name: string;
@@ -17,6 +23,10 @@ export type TemplateProduct = {
   features: string[];
   preview: string[];
   previewSheets: { name: string; description: string }[];
+  operationalNotes: string[];
+  useCase: string;
+  teamSize: string;
+  previewData: PreviewData;
 };
 
 export const templates: TemplateProduct[] = [
@@ -48,12 +58,56 @@ export const templates: TemplateProduct[] = [
       "Separate operational sheets keep attendance, overtime, and deductions easy to audit.",
     ],
     previewSheets: [
-      { name: "Setup", description: "Period month, cut-off days, payment date" },
-      { name: "Attendance Summary", description: "Employee attendance by period" },
-      { name: "Overtime", description: "Approved overtime with pay formulas" },
-      { name: "Deductions", description: "Pre-payroll deduction records" },
-      { name: "Payroll Summary", description: "Gross pay, deductions, take-home" },
+      {
+        name: "Setup",
+        description: "Period month, cut-off days, payment date formulas",
+      },
+      {
+        name: "Attendance Summary",
+        description: "One row per employee, present/sick/leave/absent counts",
+      },
+      {
+        name: "Overtime",
+        description: "Date, hours, rate, and auto-calculated overtime pay",
+      },
+      {
+        name: "Deductions",
+        description: "Unpaid absence, equipment, and other pre-payroll items",
+      },
+      {
+        name: "Payroll Summary",
+        description:
+          "Gross pay, deductions, take-home with cross-sheet SUMIF formulas",
+      },
     ],
+    operationalNotes: [
+      "Compatible with Excel 2016+ and Google Sheets",
+      "26-25 payroll cut-off period built into Setup",
+      "IDR currency formatting pre-applied",
+      "All formulas are editable — adjust to your company structure",
+      "Best for teams under 50 employees",
+    ],
+    useCase: "Monthly payroll recap before handing totals to finance",
+    teamSize: "5–50 employees",
+    previewData: {
+      title: "Payroll Summary",
+      headers: [
+        "Employee",
+        "Department",
+        "Base Salary",
+        "Allowance",
+        "Overtime",
+        "Deductions",
+        "Take Home",
+      ],
+      rows: [
+        ["Dina Prasetya", "Operations", 7500000, 500000, 100000, 75000, 8025000],
+        ["Rafi Mahendra", "People", 12000000, 750000, 0, 0, 12750000],
+        ["Sari Wulandari", "Finance", 6800000, 350000, 135000, 150000, 7135000],
+        ["Budi Santoso", "Operations", 5500000, 400000, 192000, 0, 6092000],
+        ["Maya Anggraini", "Finance", 6200000, 350000, 0, 0, 6550000],
+      ],
+    },
   },
   {
     slug: "attendance-tracker",
@@ -77,10 +131,39 @@ export const templates: TemplateProduct[] = [
       "The summary tab counts common attendance statuses per employee.",
     ],
     previewSheets: [
-      { name: "Setup", description: "Month picker and status options" },
-      { name: "Monthly Tracker", description: "31-column date matrix with dropdowns" },
-      { name: "Summary", description: "Status counts per employee" },
+      {
+        name: "Setup",
+        description: "Month picker — change once, all dates update",
+      },
+      {
+        name: "Monthly Tracker",
+        description: "31-column matrix with dropdown status per day",
+      },
+      {
+        name: "Summary",
+        description: "COUNTIF-based status counts per employee",
+      },
     ],
+    operationalNotes: [
+      "Compatible with Excel 2016+ and Google Sheets",
+      "Weekend columns auto-highlighted in amber",
+      "Dropdown validation on every status cell",
+      "Change the month in Setup — date headers follow automatically",
+      "Works well for shift-based and office teams",
+    ],
+    useCase: "Daily attendance tracking in a shared spreadsheet",
+    teamSize: "5–50 employees",
+    previewData: {
+      title: "Monthly Tracker — May 2026",
+      headers: ["Employee", "Dept", "01", "02", "03", "04", "05", "06", "07"],
+      rows: [
+        ["Dina Prasetya", "Ops", "Present", "Present", "Off", "Off", "Present", "Present", "Present"],
+        ["Rafi Mahendra", "People", "Present", "Present", "Off", "Off", "Leave", "Present", "Present"],
+        ["Sari Wulandari", "Finance", "Sick", "Present", "Off", "Off", "Present", "Present", "Sick"],
+        ["Budi Santoso", "Ops", "Present", "Present", "Off", "Off", "Present", "Present", "Present"],
+        ["Maya Anggraini", "Finance", "Present", "Present", "Off", "Off", "Present", "Present", "Present"],
+      ],
+    },
   },
   {
     slug: "leave-tracker",
@@ -104,10 +187,46 @@ export const templates: TemplateProduct[] = [
       "Approved annual leave automatically rolls into the employee balance.",
     ],
     previewSheets: [
-      { name: "Setup", description: "Year and default entitlement" },
-      { name: "Leave Balance", description: "Entitlement, used, and remaining" },
-      { name: "Leave Usage", description: "Leave requests with status tracking" },
+      {
+        name: "Setup",
+        description: "Year and default annual entitlement",
+      },
+      {
+        name: "Leave Balance",
+        description: "Opening balance, entitlement, used, and remaining",
+      },
+      {
+        name: "Leave Usage",
+        description: "Leave requests with NETWORKDAYS formula and status dropdown",
+      },
     ],
+    operationalNotes: [
+      "Compatible with Excel 2016+ and Google Sheets",
+      "NETWORKDAYS formula calculates working days only",
+      "Status dropdown: Planned, Pending, Approved, Rejected, Cancelled",
+      "Approved annual leave auto-rolls into balance via SUMIFS",
+      "Supports multiple leave types (annual, sick, unpaid)",
+    ],
+    useCase: "Annual leave balance tracking without a dedicated system",
+    teamSize: "5–50 employees",
+    previewData: {
+      title: "Leave Balance",
+      headers: [
+        "Employee",
+        "Department",
+        "Opening",
+        "Entitlement",
+        "Used",
+        "Remaining",
+      ],
+      rows: [
+        ["Dina Prasetya", "Operations", 0, 12, 3, 9],
+        ["Rafi Mahendra", "People", 2, 12, 1, 13],
+        ["Sari Wulandari", "Finance", 0, 12, 4, 8],
+        ["Budi Santoso", "Operations", 1, 12, 2, 11],
+        ["Maya Anggraini", "Finance", 0, 12, 0, 12],
+      ],
+    },
   },
 ];
 

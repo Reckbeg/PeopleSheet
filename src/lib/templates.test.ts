@@ -28,6 +28,17 @@ describe("template catalog", () => {
       }
     }
   });
+
+  it("defines operationalNotes, useCase, teamSize, and previewData for every template", () => {
+    for (const template of templates) {
+      expect(template.operationalNotes.length).toBeGreaterThan(0);
+      expect(template.useCase).toBeTruthy();
+      expect(template.teamSize).toBeTruthy();
+      expect(template.previewData.title).toBeTruthy();
+      expect(template.previewData.headers.length).toBeGreaterThan(0);
+      expect(template.previewData.rows.length).toBeGreaterThan(0);
+    }
+  });
 });
 
 describe("workbook generation", () => {
