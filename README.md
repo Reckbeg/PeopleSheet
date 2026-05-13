@@ -1,17 +1,22 @@
 # PeopleSheet
 
-PeopleSheet is a lean HR operations MVP for Indonesian SMB teams. The current build follows the newer app direction from the product brief: employee management, attendance review, leave approval, payroll period workflow, role-based access, and exception-based review.
+PeopleSheet is a lightweight, privacy-first HR spreadsheet template library for Indonesian SMB teams.
 
-The uploaded PRD is preserved in spirit, but not followed literally. It describes a no-login XLSX generator toolkit; this repo starts as a Supabase-backed operational app.
+The product is intentionally simple: no employee database, no mandatory login, no Supabase backend, and no HRIS workflow layer. Users download ready-to-use XLSX templates and keep employee data in their own spreadsheet tools.
+
+## What Ships
+
+- Payroll Recap Template with 26-25 cut-off support, attendance summary, overtime, deductions, and payroll summary sheets.
+- Attendance Tracker Template with generated monthly dates, weekend highlighting, status columns, and summary counts.
+- Leave Tracker Template with annual leave balances, usage tracking, and simple operational formulas.
 
 ## Stack
 
 - Next.js App Router
 - TypeScript
 - Tailwind CSS
-- Supabase Auth and Postgres
-- Vitest for domain rules
-- Vercel deployment target
+- ExcelJS for XLSX generation
+- Vitest for lightweight workbook checks
 
 ## Local Setup
 
@@ -22,24 +27,7 @@ npm run dev
 
 Open `http://localhost:3000`.
 
-Without Supabase environment variables, the employee directory runs in read-only demo mode. To connect live data:
-
-```bash
-cp .env.example .env.local
-```
-
-Then set:
-
-```bash
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-```
-
-Apply the initial database schema from:
-
-```bash
-supabase/migrations/202605130001_initial_schema.sql
-```
+No environment variables are required.
 
 ## Scripts
 
@@ -50,18 +38,20 @@ npm run build
 npm test
 ```
 
-## MVP Build Order
+## Architecture
 
-1. Employee directory and organization-scoped roles.
-2. Attendance records and exception detection.
-3. Leave requests with supervisor decisions.
-4. Payroll period review and lock workflow.
-5. Mobile polish and Vercel deployment.
+PeopleSheet is a local-first template platform:
+
+- `src/app/page.tsx` renders the public template library.
+- `src/app/templates/[slug]/download/route.ts` generates XLSX downloads.
+- `src/lib/templates.ts` stores template catalog metadata.
+- `src/lib/xlsx/templates.ts` builds the workbooks with ExcelJS.
+
+The app does not store employee data. Download routes generate files in memory and return them directly to the browser.
 
 ## Product Guardrails
 
-- Payroll means payroll review workflow, not statutory payroll calculation.
-- No PPh21, BPJS, salary transfer, or accounting integration in the MVP.
-- Keep roles simple: admin, supervisor, employee.
-- Keep supervisor approval one level deep.
-- Prefer boring Supabase tables and server actions over custom backend services.
+- Keep workflows spreadsheet-native and practical.
+- Avoid database, auth, dashboard, and SaaS admin complexity unless the product direction changes.
+- Prefer clear templates over configurable systems.
+- Design for Indonesian HR operators who need useful files quickly.
