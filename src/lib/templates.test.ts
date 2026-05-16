@@ -4,11 +4,17 @@ import { getTemplate, templates } from "./templates";
 import { buildTemplateWorkbook } from "./xlsx/templates";
 
 describe("template catalog", () => {
-  it("contains the three launch templates", () => {
+  it("contains all templates", () => {
     expect(templates.map((template) => template.slug)).toEqual([
-      "payroll-recap",
       "attendance-tracker",
       "leave-tracker",
+      "pph21-tax-calculator",
+      "thr-tracker",
+      "bpjs-tracker",
+      "performance-review",
+      "employee-master-data",
+      "overtime-tracker",
+      "turnover-tracker",
     ]);
   });
 
