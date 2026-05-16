@@ -28,8 +28,8 @@ export default function Home() {
             HR spreadsheets that actually work
           </h1>
           <p className="mt-5 max-w-xl text-base leading-7 text-muted">
-            Ready-to-use XLSX templates for payroll, attendance, and leave
-            tracking. Designed for Indonesian teams. No login. No database.
+            Ready-to-use XLSX templates for Indonesian HR teams. Tax, payroll,
+            attendance, leave, performance, and more. No login. No database.
             Just download and open.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -40,7 +40,7 @@ export default function Home() {
               Browse templates
             </a>
             <DownloadButton
-              href="/templates/payroll-recap/download"
+              href="/templates/attendance-tracker/download"
               label="Download sample XLSX"
               variant="bordered"
             />
@@ -64,11 +64,11 @@ export default function Home() {
         <div>
           <p className="text-sm font-semibold text-accent">Templates</p>
           <h2 className="mt-2 text-2xl font-semibold tracking-normal">
-            Three operational basics
+            Free HR templates
           </h2>
           <p className="mt-2 max-w-lg text-sm text-muted">
             Each template is a complete workbook with sample data, formulas, and
-            formatting. Replace the sample rows with your own.
+            formatting. Replace the sample rows with your own. Free forever.
           </p>
         </div>
 
@@ -301,10 +301,56 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="border-t border-line bg-surface">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-sm font-semibold text-accent">Support</p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-normal">
+              PeopleSheet is free and always will be
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-muted">
+              If these templates saved you time, consider buying me a coffee.
+              Every donation helps keep this project alive and motivates new templates.
+            </p>
+            <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+              <a
+                href="https://saweria.co/peoplesheet"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-accent px-6 text-sm font-semibold text-white transition hover:bg-accent/90"
+              >
+                ☕ Buy me a coffee — Saweria
+              </a>
+              <a
+                href="https://trakteer.id/peoplesheet"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-line bg-white px-6 text-sm font-semibold text-foreground transition hover:bg-surface"
+              >
+                🎁 Support via Trakteer
+              </a>
+            </div>
+            <p className="mt-4 text-xs text-muted">
+              No pressure. The templates are free forever. This is just if you want to say thanks.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <footer className="border-t border-line bg-white">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-5 text-xs text-muted sm:px-6 lg:px-8">
-          <p>PeopleSheet</p>
-          <p>HR spreadsheet templates for Indonesian teams</p>
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-4 py-5 text-xs text-muted sm:flex-row sm:justify-between sm:px-6 lg:px-8">
+          <p>
+            PeopleSheet — made with ❤️ by{" "}
+            <a
+              href="https://linkedin.com/in/rofi-ibnu-haafizh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-foreground"
+            >
+              Rofi
+            </a>
+          </p>
+          <p>Free HR spreadsheet templates for Indonesian teams</p>
         </div>
       </footer>
     </main>
