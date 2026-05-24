@@ -4,6 +4,15 @@ import { buildTemplateWorkbook, type TemplateBuildOptions } from "@/lib/xlsx/tem
 
 export const runtime = "nodejs";
 
+/** Neutralize spreadsheet formula injection prefixes */
+function sanitizeCell(value: string): string {
+  const trimmed = value.trim();
+  if (/^[=+\-@\t\r]/.test(trimmed) || trimmed.startsWith("cmd|")) {
+    return "'" + trimmed;
+  }
+  return trimmed;
+}
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ slug: string }> },
@@ -22,15 +31,22 @@ export async function GET(
     if (!Number.isFinite(parsed)) return undefined;
     if (min !== undefined && parsed < min) return min;
     if (max !== undefined && parsed > max) return max;
-    return parsed;
+    return Math.floor(parsed);
   };
 
+  const sanitize = (value: string | null, maxLen: number): string | undefined => {
+    if (!value) return undefined;
+    return sanitizeCell(value.slice(0, maxLen));
+  };
+
+  const monthPattern = /^\d{4}-(0[1-9]|1[0-2])$/;
+
   const options: TemplateBuildOptions = {
-    companyName: searchParams.get("companyName")?.slice(0, 100) || undefined,
-    month: searchParams.get("month") || undefined,
+    companyName: sanitize(searchParams.get("companyName"), 100),
+    month: monthPattern.test(searchParams.get("month") || "") ? searchParams.get("month")! : undefined,
     year: parseNumber(searchParams.get("year"), 1900, 3000),
     annualEntitlement: parseNumber(searchParams.get("annualEntitlement"), 0, 365),
-    reviewPeriod: searchParams.get("reviewPeriod")?.slice(0, 50) || undefined,
+    reviewPeriod: sanitize(searchParams.get("reviewPeriod"), 50),
     taxYear: parseNumber(searchParams.get("taxYear"), 1900, 3000),
     thrYear: parseNumber(searchParams.get("thrYear"), 1900, 3000),
   };
