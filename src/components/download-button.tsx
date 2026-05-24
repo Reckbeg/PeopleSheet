@@ -125,7 +125,7 @@ export function DownloadButton({
                 strokeLinecap="round"
               />
             </svg>
-            Preparing...
+            Sedang menyiapkan...
           </span>
         ) : state === "done" ? (
           <span className="flex items-center gap-2">
@@ -140,7 +140,7 @@ export function DownloadButton({
             >
               <polyline points="20 6 9 17 4 12" />
             </svg>
-            Downloaded
+            Berhasil diunduh
           </span>
         ) : (
           label

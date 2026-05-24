@@ -161,7 +161,7 @@ export function CustomizeModal({ template, onClose, onConfirm, loading = false }
               disabled={loading}
               className="inline-flex h-10 flex-1 items-center justify-center rounded-md bg-teal-600 px-4 text-sm font-semibold text-white transition hover:bg-teal-500 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {loading ? "Menyiapkan..." : "Generate & Download"}
+              {loading ? "Sedang menyiapkan..." : "Buat & Unduh"}
             </button>
           </div>
         </form>

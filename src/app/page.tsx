@@ -41,7 +41,7 @@ export default function Home() {
             </a>
             <DownloadButton
               href="/templates/attendance-tracker/download"
-              label="Download Contoh XLSX"
+              label="Unduh Contoh XLSX"
               variant="bordered"
               template={templates[0]}
             />
@@ -69,7 +69,7 @@ export default function Home() {
           </h2>
           <p className="mt-2 max-w-lg text-sm text-muted">
             Setiap template adalah workbook lengkap dengan data contoh, rumus, dan
-            formatting. Ganti baris contoh dengan data Anda. Gratis selamanya.
+            pemformatan. Ganti baris contoh dengan data Anda. Gratis selamanya.
           </p>
         </div>
 
@@ -153,7 +153,7 @@ export default function Home() {
                       template={template}
                     />
                     <p className="mt-2 text-center text-xs text-muted">
-                      {template.sheets.length} sheet · XLSX · Tanpa Akun
+                      {template.sheets.length} lembar · XLSX · Tanpa akun
                     </p>
                   </div>
                 </div>
@@ -167,8 +167,7 @@ export default function Home() {
                     rows={template.previewData.rows}
                   />
                   <p className="mt-3 text-center text-[11px] text-muted">
-Preview — template asli berisi lengkap data contoh dan validasi dropdown
-                    formulas
+Pratinjau — template asli berisi data contoh lengkap beserta rumus validasi dropdown
                   </p>
                 </div>
               </div>
@@ -190,21 +189,21 @@ Preview — template asli berisi lengkap data contoh dan validasi dropdown
 
           <div className="mx-auto mt-8 max-w-2xl space-y-5 text-sm leading-7 text-muted">
             <p>
-              HR operators at small teams often start each month with a blank
-              spreadsheet atau template berantakan dari internet. Mereka menghabiskan
-              hours formatting columns and fixing broken formulas — just to
-              rebuild the same structure they had last month.
+              Tim HR di perusahaan kecil sering memulai tiap bulan dari spreadsheet kosong
+              atau template berantakan dari internet. Mereka menghabiskan waktu
+              berjam-jam memformat kolom dan memperbaiki rumus yang rusak — hanya untuk
+              membangun ulang struktur yang sama seperti bulan sebelumnya.
             </p>
             <p>
-              PeopleSheet gives those operators a calm starting point. Each
-              template is designed to be immediately useful: realistic sample
-              data, working formulas, and a structure that matches how
-              Indonesian HR teams actually operate.
+              PeopleSheet memberi tim HR titik awal yang rapi dan siap pakai. Setiap
+              template dirancang agar langsung berguna: data contoh yang realistis,
+              rumus yang berfungsi, dan struktur yang sesuai dengan cara kerja
+              tim HR Indonesia sebenarnya.
             </p>
             <p>
-              Tidak ada sistem akun. Tidak ada database karyawan. Tidak ada data
-              transmission. You download a file, replace the sample rows, and
-              keep working in your own spreadsheet tool.
+              Tidak ada sistem akun. Tidak ada database karyawan. Tidak ada pengiriman data.
+              Anda cukup mengunduh file, mengganti baris contoh dengan data asli,
+              lalu terus bekerja di spreadsheet favorit Anda.
             </p>
           </div>
         </div>
@@ -214,7 +213,7 @@ Preview — template asli berisi lengkap data contoh dan validasi dropdown
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-semibold text-accent">Cara kerja</p>
           <h2 className="mt-3 text-2xl font-semibold tracking-normal">
-            Download, Isi, Pakai
+            Unduh, Isi, Pakai
           </h2>
         </div>
 
@@ -222,8 +221,8 @@ Preview — template asli berisi lengkap data contoh dan validasi dropdown
           {[
             {
               step: "1",
-              title: "Download",
-              desc: "Pilih template. File XLSX langsung terdownload.",
+              title: "Unduh",
+              desc: "Pilih template. File XLSX langsung terunduh.",
             },
             {
               step: "2",
@@ -255,14 +254,14 @@ Preview — template asli berisi lengkap data contoh dan validasi dropdown
       <section id="privacy" className="border-t border-line bg-surface">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="text-sm font-semibold text-accent">Privacy</p>
+            <p className="text-sm font-semibold text-accent">Privasi</p>
             <h2 className="mt-3 text-2xl font-semibold tracking-normal">
-              PeopleSheet doesn&apos;t store anything
+              PeopleSheet tidak menyimpan data apa pun
             </h2>
             <p className="mt-3 text-sm leading-6 text-muted">
-              Anda download file template, buka di Excel atau Google Sheets,
-              and fill in your own employee data. The data stays in that file
-              on your machine. PeopleSheet never sees it.
+              Anda mengunduh file template, membukanya di Excel atau Google Sheets,
+              lalu mengisi data karyawan Anda sendiri. Data tetap tersimpan di file
+              tersebut di komputer Anda. PeopleSheet tidak pernah melihatnya.
             </p>
           </div>
 
@@ -271,20 +270,20 @@ Preview — template asli berisi lengkap data contoh dan validasi dropdown
               {
                 label: "Tidak perlu akun",
                 detail:
-                  "Klik download, langsung dapat file. Tanpa daftar, tanpa email, tanpa login.",
+                  "Klik unduh, langsung dapat file. Tanpa daftar, tanpa email, tanpa login.",
               },
               {
                 label: "Data Anda tidak pernah masuk sistem",
                 detail:
-                  "Template hanya berisi data contoh. Data karyawan Anda tidak pernah diupload atau dikirim.",
+                  "Template hanya berisi data contoh. Data karyawan Anda tidak pernah diunggah atau dikirim.",
               },
               {
                 label: "Anda pemilik file",
                 detail:
-                  "Setelah didownload, XLSX milik Anda. Edit, bagikan, simpan sesuai keinginan.",
+                  "Setelah diunduh, XLSX milik Anda. Edit, bagikan, simpan sesuai keinginan.",
               },
               {
-                label: "Sepenuhnya offline setelah download",
+                label: "Sepenuhnya luring setelah diunduh",
                 detail:
                   "Spreadsheet bekerja tanpa internet. Semua rumus berjalan lokal di Excel atau Google Sheets.",
               },
@@ -306,7 +305,7 @@ Preview — template asli berisi lengkap data contoh dan validasi dropdown
       <section className="border-t border-line bg-surface">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="text-sm font-semibold text-accent">Support</p>
+            <p className="text-sm font-semibold text-accent">Dukungan</p>
             <h2 className="mt-3 text-2xl font-semibold tracking-normal">
               PeopleSheet gratis dan akan selalu gratis
             </h2>
@@ -329,7 +328,7 @@ Preview — template asli berisi lengkap data contoh dan validasi dropdown
                 rel="noopener noreferrer"
                 className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-line bg-white px-6 text-sm font-semibold text-foreground transition hover:bg-surface"
               >
-                🎁 Support via Trakteer
+                🎁 Dukung via Trakteer
               </a>
             </div>
             <p className="mt-4 text-xs text-muted">
