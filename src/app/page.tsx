@@ -13,10 +13,10 @@ export default function Home() {
           </Link>
           <nav className="flex items-center gap-4 text-sm text-muted">
             <a className="transition hover:text-foreground" href="#templates">
-              Templates
+              Template
             </a>
             <a className="transition hover:text-foreground" href="#why">
-              Why this exists
+              Mengapa ini ada
             </a>
           </nav>
         </div>
@@ -25,34 +25,35 @@ export default function Home() {
       <section className="border-b border-line bg-surface">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center px-4 py-16 text-center sm:px-6 lg:px-8 lg:py-20">
           <h1 className="max-w-2xl text-4xl font-semibold tracking-normal text-foreground sm:text-5xl">
-            HR spreadsheets that actually work
+            Spreadsheet HR yang benar-benar bekerja
           </h1>
           <p className="mt-5 max-w-xl text-base leading-7 text-muted">
-            Ready-to-use XLSX templates for Indonesian HR teams. Tax, payroll,
-            attendance, leave, performance, and more. No login. No database.
-            Just download and open.
+            Template XLSX siap pakai untuk tim HR Indonesia. Pajak, payroll,
+            absensi, cuti, kinerja, dan lainnya. Tanpa login. Tanpa database.
+            Langsung download dan buka.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
               href="#templates"
               className="inline-flex h-11 items-center justify-center rounded-md bg-accent px-6 text-sm font-semibold text-white transition hover:bg-accent/90"
             >
-              Browse templates
+              Lihat Template
             </a>
             <DownloadButton
               href="/templates/attendance-tracker/download"
-              label="Download sample XLSX"
+              label="Download Contoh XLSX"
               variant="bordered"
+              template={templates[0]}
             />
           </div>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-xs text-muted">
-            <span>No signup</span>
+            <span>Tanpa daftar</span>
             <span className="text-line">·</span>
-            <span>No data stored</span>
+            <span>Data tidak disimpan</span>
             <span className="text-line">·</span>
             <span>Excel & Google Sheets</span>
             <span className="text-line">·</span>
-            <span>Formulas included</span>
+            <span>Termasuk rumus</span>
           </div>
         </div>
       </section>
@@ -62,13 +63,13 @@ export default function Home() {
         className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8"
       >
         <div>
-          <p className="text-sm font-semibold text-accent">Templates</p>
+          <p className="text-sm font-semibold text-accent">Template</p>
           <h2 className="mt-2 text-2xl font-semibold tracking-normal">
-            Free HR templates
+            Template HR Gratis
           </h2>
           <p className="mt-2 max-w-lg text-sm text-muted">
-            Each template is a complete workbook with sample data, formulas, and
-            formatting. Replace the sample rows with your own. Free forever.
+            Setiap template adalah workbook lengkap dengan data contoh, rumus, dan
+            formatting. Ganti baris contoh dengan data Anda. Gratis selamanya.
           </p>
         </div>
 
@@ -93,7 +94,7 @@ export default function Home() {
                   </p>
 
                   <div className="mt-5">
-                    <p className="text-sm font-semibold">Sheets</p>
+                    <p className="text-sm font-semibold">Lembar</p>
                     <div className="mt-2.5 space-y-1.5">
                       {template.previewSheets.map((sheet) => (
                         <div
@@ -116,7 +117,7 @@ export default function Home() {
                   </div>
 
                   <div className="mt-5">
-                    <p className="text-sm font-semibold">Notes</p>
+                    <p className="text-sm font-semibold">Catatan</p>
                     <ul className="mt-2 space-y-1 text-xs leading-5 text-muted">
                       {template.operationalNotes.map((note) => (
                         <li key={note} className="flex items-start gap-2">
@@ -132,14 +133,14 @@ export default function Home() {
                   <div className="mt-5 flex items-center gap-4 text-xs text-muted">
                     <span>
                       <span className="font-medium text-foreground">
-                        Best for:
+                        Cocok untuk:
                       </span>{" "}
                       {template.useCase}
                     </span>
                     <span className="text-line">·</span>
                     <span>
                       <span className="font-medium text-foreground">
-                        Team size:
+                        Ukuran tim:
                       </span>{" "}
                       {template.teamSize}
                     </span>
@@ -149,9 +150,10 @@ export default function Home() {
                     <DownloadButton
                       href={`/templates/${template.slug}/download`}
                       label={template.downloadLabel}
+                      template={template}
                     />
                     <p className="mt-2 text-center text-xs text-muted">
-                      {template.sheets.length} sheets · XLSX · No account
+                      {template.sheets.length} sheet · XLSX · Tanpa Akun
                     </p>
                   </div>
                 </div>
@@ -165,7 +167,7 @@ export default function Home() {
                     rows={template.previewData.rows}
                   />
                   <p className="mt-3 text-center text-[11px] text-muted">
-                    Preview — actual template includes full sample data and
+Preview — template asli berisi lengkap data contoh dan validasi dropdown
                     formulas
                   </p>
                 </div>
@@ -179,17 +181,17 @@ export default function Home() {
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-semibold text-accent">
-              Why this exists
+              Mengapa ini ada
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-normal">
-              Most Indonesian SMB teams still run HR on spreadsheets
+              Sebagian besar tim UMKM Indonesia masih menjalankan HR di spreadsheet
             </h2>
           </div>
 
           <div className="mx-auto mt-8 max-w-2xl space-y-5 text-sm leading-7 text-muted">
             <p>
               HR operators at small teams often start each month with a blank
-              spreadsheet or a messy template from the internet. They spend
+              spreadsheet atau template berantakan dari internet. Mereka menghabiskan
               hours formatting columns and fixing broken formulas — just to
               rebuild the same structure they had last month.
             </p>
@@ -200,7 +202,7 @@ export default function Home() {
               Indonesian HR teams actually operate.
             </p>
             <p>
-              There is no account system. No employee database. No data
+              Tidak ada sistem akun. Tidak ada database karyawan. Tidak ada data
               transmission. You download a file, replace the sample rows, and
               keep working in your own spreadsheet tool.
             </p>
@@ -210,9 +212,9 @@ export default function Home() {
 
       <section className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold text-accent">How it works</p>
+          <p className="text-sm font-semibold text-accent">Cara kerja</p>
           <h2 className="mt-3 text-2xl font-semibold tracking-normal">
-            Download, replace, use
+            Download, Isi, Pakai
           </h2>
         </div>
 
@@ -221,17 +223,17 @@ export default function Home() {
             {
               step: "1",
               title: "Download",
-              desc: "Choose a template. The XLSX file downloads immediately.",
+              desc: "Pilih template. File XLSX langsung terdownload.",
             },
             {
               step: "2",
-              title: "Replace",
-              desc: "Swap sample rows with your own data. Keep the formulas.",
+              title: "Isi Data",
+              desc: "Ganti baris contoh dengan data Anda. Rumus tetap tersimpan.",
             },
             {
               step: "3",
-              title: "Use",
-              desc: "Open in Excel or Google Sheets. Edit as needed.",
+              title: "Gunakan",
+              desc: "Buka di Excel atau Google Sheets. Edit sesuai kebutuhan.",
             },
           ].map((item) => (
             <div
@@ -258,7 +260,7 @@ export default function Home() {
               PeopleSheet doesn&apos;t store anything
             </h2>
             <p className="mt-3 text-sm leading-6 text-muted">
-              You download a template file, open it in Excel or Google Sheets,
+              Anda download file template, buka di Excel atau Google Sheets,
               and fill in your own employee data. The data stays in that file
               on your machine. PeopleSheet never sees it.
             </p>
@@ -267,24 +269,24 @@ export default function Home() {
           <div className="mx-auto mt-8 grid max-w-2xl gap-4 sm:grid-cols-2">
             {[
               {
-                label: "No account needed",
+                label: "Tidak perlu akun",
                 detail:
-                  "Click download, get the file. No signup, no email, no login wall.",
+                  "Klik download, langsung dapat file. Tanpa daftar, tanpa email, tanpa login.",
               },
               {
-                label: "Your data never enters the system",
+                label: "Data Anda tidak pernah masuk sistem",
                 detail:
-                  "Templates contain only sample data. Your employee information is never uploaded or transmitted.",
+                  "Template hanya berisi data contoh. Data karyawan Anda tidak pernah diupload atau dikirim.",
               },
               {
-                label: "You own the file",
+                label: "Anda pemilik file",
                 detail:
-                  "Once downloaded, the XLSX is yours. Edit it, share it, store it however you want.",
+                  "Setelah didownload, XLSX milik Anda. Edit, bagikan, simpan sesuai keinginan.",
               },
               {
-                label: "Fully offline after download",
+                label: "Sepenuhnya offline setelah download",
                 detail:
-                  "The spreadsheet works without internet. All formulas run locally in Excel or Google Sheets.",
+                  "Spreadsheet bekerja tanpa internet. Semua rumus berjalan lokal di Excel atau Google Sheets.",
               },
             ].map((item) => (
               <div
@@ -306,11 +308,11 @@ export default function Home() {
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-semibold text-accent">Support</p>
             <h2 className="mt-3 text-2xl font-semibold tracking-normal">
-              PeopleSheet is free and always will be
+              PeopleSheet gratis dan akan selalu gratis
             </h2>
             <p className="mt-3 text-sm leading-6 text-muted">
-              If these templates saved you time, consider buying me a coffee.
-              Every donation helps keep this project alive and motivates new templates.
+              Jika template ini menghemat waktu Anda, traktir saya kopi.
+              Setiap donasi membantu proyek ini terus berjalan dan memotivasi template baru.
             </p>
             <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <a
@@ -319,7 +321,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-accent px-6 text-sm font-semibold text-white transition hover:bg-accent/90"
               >
-                ☕ Buy me a coffee — Saweria
+                ☕ Traktir kopi — Saweria
               </a>
               <a
                 href="https://trakteer.id/peoplesheet"
@@ -331,7 +333,7 @@ export default function Home() {
               </a>
             </div>
             <p className="mt-4 text-xs text-muted">
-              No pressure. The templates are free forever. This is just if you want to say thanks.
+              Tidak dipaksa. Template gratis selamanya. Ini hanya jika Anda ingin mengucapkan terima kasih.
             </p>
           </div>
         </div>
@@ -340,7 +342,7 @@ export default function Home() {
       <footer className="border-t border-line bg-white">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-4 py-5 text-xs text-muted sm:flex-row sm:justify-between sm:px-6 lg:px-8">
           <p>
-            PeopleSheet — made with ❤️ by{" "}
+            PeopleSheet — dibuat dengan ❤️ oleh{" "}
             <a
               href="https://linkedin.com/in/rofi-ibnu-haafizh"
               target="_blank"
@@ -350,7 +352,7 @@ export default function Home() {
               Rofi
             </a>
           </p>
-          <p>Free HR spreadsheet templates for Indonesian teams</p>
+          <p>Template spreadsheet HR gratis untuk tim Indonesia</p>
         </div>
       </footer>
     </main>

@@ -17,7 +17,30 @@ const palette = {
 const statusList = '"Present,Leave,Sick,Absent,Holiday,Off"';
 const leaveStatusList = '"Planned,Pending,Approved,Rejected,Cancelled"';
 
-export async function buildTemplateWorkbook(slug: TemplateSlug) {
+export type TemplateBuildOptions = {
+  companyName?: string;
+  month?: string;
+  year?: number;
+  annualEntitlement?: number;
+  reviewPeriod?: string;
+  taxYear?: number;
+  thrYear?: number;
+};
+
+function resolveCompanyName(options?: TemplateBuildOptions) {
+  return options?.companyName?.trim() || "PT Contoh Indonesia";
+}
+
+function resolveMonthStart(options?: TemplateBuildOptions) {
+  const monthValue = options?.month;
+  if (monthValue && /^\d{4}-\d{2}$/.test(monthValue)) {
+    const [yearPart, monthPart] = monthValue.split("-").map(Number);
+    return new Date(yearPart, monthPart - 1, 1);
+  }
+  return new Date(2026, 4, 1);
+}
+
+export async function buildTemplateWorkbook(slug: TemplateSlug, options?: TemplateBuildOptions) {
   const template = getTemplate(slug);
 
   if (!template) {
@@ -32,39 +55,39 @@ export async function buildTemplateWorkbook(slug: TemplateSlug) {
   workbook.properties.date1904 = false;
 
   if (slug === "attendance-tracker") {
-    buildAttendanceTracker(workbook, template);
+    buildAttendanceTracker(workbook, template, options);
   }
 
   if (slug === "leave-tracker") {
-    buildLeaveTracker(workbook, template);
+    buildLeaveTracker(workbook, template, options);
   }
 
   if (slug === "pph21-tax-calculator") {
-    buildPph21TaxCalculator(workbook, template);
+    buildPph21TaxCalculator(workbook, template, options);
   }
 
   if (slug === "thr-tracker") {
-    buildThrTracker(workbook, template);
+    buildThrTracker(workbook, template, options);
   }
 
   if (slug === "bpjs-tracker") {
-    buildBpjsTracker(workbook, template);
+    buildBpjsTracker(workbook, template, options);
   }
 
   if (slug === "performance-review") {
-    buildPerformanceReview(workbook, template);
+    buildPerformanceReview(workbook, template, options);
   }
 
   if (slug === "employee-master-data") {
-    buildEmployeeMasterData(workbook, template);
+    buildEmployeeMasterData(workbook, template, options);
   }
 
   if (slug === "overtime-tracker") {
-    buildOvertimeTracker(workbook, template);
+    buildOvertimeTracker(workbook, template, options);
   }
 
   if (slug === "turnover-tracker") {
-    buildTurnoverTracker(workbook, template);
+    buildTurnoverTracker(workbook, template, options);
   }
 
   const rawBuffer = await workbook.xlsx.writeBuffer();
@@ -76,12 +99,12 @@ export async function buildTemplateWorkbook(slug: TemplateSlug) {
 }
 
 // ── PPh21 Tax Calculator ────────────────────────────────────────
-function buildPph21TaxCalculator(workbook: ExcelJS.Workbook, template: TemplateProduct) {
-  const setup = addSetupSheet(workbook, template);
+function buildPph21TaxCalculator(workbook: ExcelJS.Workbook, template: TemplateProduct, options?: TemplateBuildOptions) {
+  const setup = addSetupSheet(workbook, template, options);
   setup.getCell("A11").value = "Tax configuration";
   setup.getCell("A11").font = { bold: true, color: { argb: palette.ink } };
   setup.getCell("A12").value = "Tax year";
-  setup.getCell("B12").value = 2026;
+  setup.getCell("B12").value = options?.taxYear ?? options?.year ?? 2026;
   setup.getCell("A13").value = "PTKP Status";
   setup.getCell("B13").value = "TK/0, K/0, K/1, K/2, K/3";
   setup.getCell("A15").value = "PTKP Amounts (annual)";
@@ -172,12 +195,12 @@ function buildPph21TaxCalculator(workbook: ExcelJS.Workbook, template: TemplateP
 }
 
 // ── THR Tracker ─────────────────────────────────────────────────
-function buildThrTracker(workbook: ExcelJS.Workbook, template: TemplateProduct) {
-  const setup = addSetupSheet(workbook, template);
+function buildThrTracker(workbook: ExcelJS.Workbook, template: TemplateProduct, options?: TemplateBuildOptions) {
+  const setup = addSetupSheet(workbook, template, options);
   setup.getCell("A11").value = "THR configuration";
   setup.getCell("A11").font = { bold: true, color: { argb: palette.ink } };
   setup.getCell("A12").value = "THR year";
-  setup.getCell("B12").value = 2026;
+  setup.getCell("B12").value = options?.thrYear ?? options?.year ?? 2026;
   setup.getCell("A13").value = "Min tenure for full THR (months)";
   setup.getCell("B13").value = 12;
 
@@ -220,12 +243,12 @@ function buildThrTracker(workbook: ExcelJS.Workbook, template: TemplateProduct) 
 }
 
 // ── BPJS Tracker ────────────────────────────────────────────────
-function buildBpjsTracker(workbook: ExcelJS.Workbook, template: TemplateProduct) {
-  const setup = addSetupSheet(workbook, template);
+function buildBpjsTracker(workbook: ExcelJS.Workbook, template: TemplateProduct, options?: TemplateBuildOptions) {
+  const setup = addSetupSheet(workbook, template, options);
   setup.getCell("A11").value = "BPJS Rates";
   setup.getCell("A11").font = { bold: true, color: { argb: palette.ink } };
   setup.getCell("A12").value = "Year";
-  setup.getCell("B12").value = 2026;
+  setup.getCell("B12").value = options?.year ?? 2026;
   const rates = [
     ["JHT Employee", 0.02], ["JHT Company", 0.037],
     ["JP Employee", 0.01], ["JP Company", 0.02],
@@ -295,12 +318,12 @@ function buildBpjsTracker(workbook: ExcelJS.Workbook, template: TemplateProduct)
 }
 
 // ── Performance Review ──────────────────────────────────────────
-function buildPerformanceReview(workbook: ExcelJS.Workbook, template: TemplateProduct) {
-  const setup = addSetupSheet(workbook, template);
+function buildPerformanceReview(workbook: ExcelJS.Workbook, template: TemplateProduct, options?: TemplateBuildOptions) {
+  const setup = addSetupSheet(workbook, template, options);
   setup.getCell("A11").value = "Review configuration";
   setup.getCell("A11").font = { bold: true, color: { argb: palette.ink } };
   setup.getCell("A12").value = "Review period";
-  setup.getCell("B12").value = "H1 2026";
+  setup.getCell("B12").value = options?.reviewPeriod || "H1 2026";
   setup.getCell("A13").value = "Rating labels";
   setup.getCell("B13").value = "Excellent(>=23), Good(>=19), Meets(>=14), Needs Improvement(>=10), Poor(<10)";
 
@@ -351,12 +374,12 @@ function buildPerformanceReview(workbook: ExcelJS.Workbook, template: TemplatePr
 }
 
 // ── Employee Master Data ────────────────────────────────────────
-function buildEmployeeMasterData(workbook: ExcelJS.Workbook, template: TemplateProduct) {
-  const setup = addSetupSheet(workbook, template);
+function buildEmployeeMasterData(workbook: ExcelJS.Workbook, template: TemplateProduct, options?: TemplateBuildOptions) {
+  const setup = addSetupSheet(workbook, template, options);
   setup.getCell("A11").value = "Company info";
   setup.getCell("A11").font = { bold: true, color: { argb: palette.ink } };
   setup.getCell("A12").value = "Company name";
-  setup.getCell("B12").value = "PT Contoh Indonesia";
+  setup.getCell("B12").value = resolveCompanyName(options);
   setup.getCell("A13").value = "Data as of";
   setup.getCell("B13").value = new Date();
   setup.getCell("B13").numFmt = "dd mmm yyyy";
@@ -421,12 +444,13 @@ function buildEmployeeMasterData(workbook: ExcelJS.Workbook, template: TemplateP
 }
 
 // ── Overtime Tracker ────────────────────────────────────────────
-function buildOvertimeTracker(workbook: ExcelJS.Workbook, template: TemplateProduct) {
-  const setup = addSetupSheet(workbook, template);
+function buildOvertimeTracker(workbook: ExcelJS.Workbook, template: TemplateProduct, options?: TemplateBuildOptions) {
+  const setup = addSetupSheet(workbook, template, options);
   setup.getCell("A11").value = "Overtime configuration";
   setup.getCell("A11").font = { bold: true, color: { argb: palette.ink } };
+  const monthStart = resolveMonthStart(options);
   setup.getCell("A12").value = "Month";
-  setup.getCell("B12").value = new Date(2026, 4, 1);
+  setup.getCell("B12").value = monthStart;
   setup.getCell("B12").numFmt = "mmmm yyyy";
   setup.getCell("A14").value = "Rate reference (UU 13/2003)";
   setup.getCell("A14").font = { bold: true, color: { argb: palette.ink } };
@@ -450,11 +474,11 @@ function buildOvertimeTracker(workbook: ExcelJS.Workbook, template: TemplateProd
   ]);
   otLog.columns = widths([14, 22, 14, 14, 10, 16, 16, 14, 16, 12, 28]);
   addRows(otLog, 5, [
-    ["EMP-001", "Dina Prasetya", new Date(2026, 4, 5), "Weekday", 2, { formula: 'IF(D5="Weekday",IF(E5<=1,Setup!$B$15,Setup!$B$16),IF(E5<=8,Setup!$B$17,Setup!$B$18))' }, 7500000, { formula: `G5/Setup!$B$19` }, { formula: "E5*F5*H5" }, "Approved", ""],
-    ["EMP-003", "Sari Wulandari", new Date(2026, 4, 10), "Weekday", 3, { formula: 'IF(D6="Weekday",IF(E6<=1,Setup!$B$15,Setup!$B$16),IF(E6<=8,Setup!$B$17,Setup!$B$18))' }, 6800000, { formula: `G6/Setup!$B$19` }, { formula: "E6*F6*H6" }, "Approved", ""],
-    ["EMP-004", "Budi Santoso", new Date(2026, 4, 17), "Weekday", 4, { formula: 'IF(D7="Weekday",IF(E7<=1,Setup!$B$15,Setup!$B$16),IF(E7<=8,Setup!$B$17,Setup!$B$18))' }, 5500000, { formula: `G7/Setup!$B$19` }, { formula: "E7*F7*H7" }, "Approved", ""],
-    ["EMP-002", "Rafi Mahendra", new Date(2026, 4, 24), "Weekend", 4, { formula: 'IF(D8="Weekday",IF(E8<=1,Setup!$B$15,Setup!$B$16),IF(E8<=8,Setup!$B$17,Setup!$B$18))' }, 12000000, { formula: `G8/Setup!$B$19` }, { formula: "E8*F8*H8" }, "Approved", "Weekend shift"],
-    ["EMP-005", "Maya Anggraini", new Date(2026, 4, 25), "Weekend", 2, { formula: 'IF(D9="Weekday",IF(E9<=1,Setup!$B$15,Setup!$B$16),IF(E9<=8,Setup!$B$17,Setup!$B$18))' }, 6200000, { formula: `G9/Setup!$B$19` }, { formula: "E9*F9*H9" }, "Pending", ""],
+    ["EMP-001", "Dina Prasetya", new Date(monthStart.getFullYear(), monthStart.getMonth(), 5), "Weekday", 2, { formula: 'IF(D5="Weekday",IF(E5<=1,Setup!$B$15,Setup!$B$16),IF(E5<=8,Setup!$B$17,Setup!$B$18))' }, 7500000, { formula: `G5/Setup!$B$19` }, { formula: "E5*F5*H5" }, "Approved", ""],
+    ["EMP-003", "Sari Wulandari", new Date(monthStart.getFullYear(), monthStart.getMonth(), 10), "Weekday", 3, { formula: 'IF(D6="Weekday",IF(E6<=1,Setup!$B$15,Setup!$B$16),IF(E6<=8,Setup!$B$17,Setup!$B$18))' }, 6800000, { formula: `G6/Setup!$B$19` }, { formula: "E6*F6*H6" }, "Approved", ""],
+    ["EMP-004", "Budi Santoso", new Date(monthStart.getFullYear(), monthStart.getMonth(), 17), "Weekday", 4, { formula: 'IF(D7="Weekday",IF(E7<=1,Setup!$B$15,Setup!$B$16),IF(E7<=8,Setup!$B$17,Setup!$B$18))' }, 5500000, { formula: `G7/Setup!$B$19` }, { formula: "E7*F7*H7" }, "Approved", ""],
+    ["EMP-002", "Rafi Mahendra", new Date(monthStart.getFullYear(), monthStart.getMonth(), 24), "Weekend", 4, { formula: 'IF(D8="Weekday",IF(E8<=1,Setup!$B$15,Setup!$B$16),IF(E8<=8,Setup!$B$17,Setup!$B$18))' }, 12000000, { formula: `G8/Setup!$B$19` }, { formula: "E8*F8*H8" }, "Approved", "Weekend shift"],
+    ["EMP-005", "Maya Anggraini", new Date(monthStart.getFullYear(), monthStart.getMonth(), 25), "Weekend", 2, { formula: 'IF(D9="Weekday",IF(E9<=1,Setup!$B$15,Setup!$B$16),IF(E9<=8,Setup!$B$17,Setup!$B$18))' }, 6200000, { formula: `G9/Setup!$B$19` }, { formula: "E9*F9*H9" }, "Pending", ""],
   ], { alternate: true });
   for (let row = 5; row <= 25; row += 1) {
     otLog.getCell(row, 4).dataValidation = { type: "list", allowBlank: true, formulae: ['"Weekday,Weekend,Holiday"'] };
@@ -481,12 +505,12 @@ function buildOvertimeTracker(workbook: ExcelJS.Workbook, template: TemplateProd
 }
 
 // ── Turnover Tracker ────────────────────────────────────────────
-function buildTurnoverTracker(workbook: ExcelJS.Workbook, template: TemplateProduct) {
-  const setup = addSetupSheet(workbook, template);
+function buildTurnoverTracker(workbook: ExcelJS.Workbook, template: TemplateProduct, options?: TemplateBuildOptions) {
+  const setup = addSetupSheet(workbook, template, options);
   setup.getCell("A11").value = "Turnover configuration";
   setup.getCell("A11").font = { bold: true, color: { argb: palette.ink } };
   setup.getCell("A12").value = "Year";
-  setup.getCell("B12").value = 2026;
+  setup.getCell("B12").value = options?.year ?? 2026;
   setup.getCell("A13").value = "Total headcount (start of year)";
   setup.getCell("B13").value = 20;
 
@@ -544,12 +568,12 @@ function buildTurnoverTracker(workbook: ExcelJS.Workbook, template: TemplateProd
   freeze(summary);
 }
 
-function buildAttendanceTracker(workbook: ExcelJS.Workbook, template: TemplateProduct) {
-  const setup = addSetupSheet(workbook, template);
+function buildAttendanceTracker(workbook: ExcelJS.Workbook, template: TemplateProduct, options?: TemplateBuildOptions) {
+  const setup = addSetupSheet(workbook, template, options);
   setup.getCell("A11").value = "Tracker month";
   setup.getCell("A11").font = { bold: true, color: { argb: palette.ink } };
   setup.getCell("A12").value = "Month";
-  setup.getCell("B12").value = new Date(2026, 4, 1);
+  setup.getCell("B12").value = resolveMonthStart(options);
   setup.getCell("B12").numFmt = "mmmm yyyy";
   setup.getCell("A13").value = "Status options";
   setup.getCell("B13").value = "Present, Leave, Sick, Absent, Holiday, Off";
@@ -602,14 +626,14 @@ function buildAttendanceTracker(workbook: ExcelJS.Workbook, template: TemplatePr
   freeze(summary);
 }
 
-function buildLeaveTracker(workbook: ExcelJS.Workbook, template: TemplateProduct) {
-  const setup = addSetupSheet(workbook, template);
+function buildLeaveTracker(workbook: ExcelJS.Workbook, template: TemplateProduct, options?: TemplateBuildOptions) {
+  const setup = addSetupSheet(workbook, template, options);
   setup.getCell("A11").value = "Leave year";
   setup.getCell("A11").font = { bold: true, color: { argb: palette.ink } };
   setup.getCell("A12").value = "Year";
-  setup.getCell("B12").value = 2026;
+  setup.getCell("B12").value = options?.year ?? 2026;
   setup.getCell("A13").value = "Default annual entitlement";
-  setup.getCell("B13").value = 12;
+  setup.getCell("B13").value = options?.annualEntitlement ?? 12;
 
   const balance = workbook.addWorksheet("Leave Balance");
   title(balance, "Leave Balance", "Annual entitlement, approved usage, and remaining balance.");
@@ -625,11 +649,11 @@ function buildLeaveTracker(workbook: ExcelJS.Workbook, template: TemplateProduct
   ]);
   balance.columns = widths([16, 24, 18, 18, 18, 24, 18, 28]);
   addRows(balance, 5, [
-    ["EMP-001", "Dina Prasetya", "Operations", 0, 12, { formula: 'SUMIFS(\'Leave Usage\'!$F:$F,\'Leave Usage\'!$A:$A,A5,\'Leave Usage\'!$C:$C,"Annual Leave",\'Leave Usage\'!$G:$G,"Approved")' }, { formula: "D5+E5-F5" }, ""],
-    ["EMP-002", "Rafi Mahendra", "People", 2, 12, { formula: 'SUMIFS(\'Leave Usage\'!$F:$F,\'Leave Usage\'!$A:$A,A6,\'Leave Usage\'!$C:$C,"Annual Leave",\'Leave Usage\'!$G:$G,"Approved")' }, { formula: "D6+E6-F6" }, ""],
-    ["EMP-003", "Sari Wulandari", "Finance", 0, 12, { formula: 'SUMIFS(\'Leave Usage\'!$F:$F,\'Leave Usage\'!$A:$A,A7,\'Leave Usage\'!$C:$C,"Annual Leave",\'Leave Usage\'!$G:$G,"Approved")' }, { formula: "D7+E7-F7" }, ""],
-    ["EMP-004", "Budi Santoso", "Operations", 1, 12, { formula: 'SUMIFS(\'Leave Usage\'!$F:$F,\'Leave Usage\'!$A:$A,A8,\'Leave Usage\'!$C:$C,"Annual Leave",\'Leave Usage\'!$G:$G,"Approved")' }, { formula: "D8+E8-F8" }, ""],
-    ["EMP-005", "Maya Anggraini", "Finance", 0, 12, { formula: 'SUMIFS(\'Leave Usage\'!$F:$F,\'Leave Usage\'!$A:$A,A9,\'Leave Usage\'!$C:$C,"Annual Leave",\'Leave Usage\'!$G:$G,"Approved")' }, { formula: "D9+E9-F9" }, ""],
+    ["EMP-001", "Dina Prasetya", "Operations", 0, { formula: "Setup!$B$13" }, { formula: 'SUMIFS(\'Leave Usage\'!$F:$F,\'Leave Usage\'!$A:$A,A5,\'Leave Usage\'!$C:$C,"Annual Leave",\'Leave Usage\'!$G:$G,"Approved")' }, { formula: "D5+E5-F5" }, ""],
+    ["EMP-002", "Rafi Mahendra", "People", 2, { formula: "Setup!$B$13" }, { formula: 'SUMIFS(\'Leave Usage\'!$F:$F,\'Leave Usage\'!$A:$A,A6,\'Leave Usage\'!$C:$C,"Annual Leave",\'Leave Usage\'!$G:$G,"Approved")' }, { formula: "D6+E6-F6" }, ""],
+    ["EMP-003", "Sari Wulandari", "Finance", 0, { formula: "Setup!$B$13" }, { formula: 'SUMIFS(\'Leave Usage\'!$F:$F,\'Leave Usage\'!$A:$A,A7,\'Leave Usage\'!$C:$C,"Annual Leave",\'Leave Usage\'!$G:$G,"Approved")' }, { formula: "D7+E7-F7" }, ""],
+    ["EMP-004", "Budi Santoso", "Operations", 1, { formula: "Setup!$B$13" }, { formula: 'SUMIFS(\'Leave Usage\'!$F:$F,\'Leave Usage\'!$A:$A,A8,\'Leave Usage\'!$C:$C,"Annual Leave",\'Leave Usage\'!$G:$G,"Approved")' }, { formula: "D8+E8-F8" }, ""],
+    ["EMP-005", "Maya Anggraini", "Finance", 0, { formula: "Setup!$B$13" }, { formula: 'SUMIFS(\'Leave Usage\'!$F:$F,\'Leave Usage\'!$A:$A,A9,\'Leave Usage\'!$C:$C,"Annual Leave",\'Leave Usage\'!$G:$G,"Approved")' }, { formula: "D9+E9-F9" }, ""],
   ], { alternate: true });
   freeze(balance);
 
@@ -666,12 +690,13 @@ function buildLeaveTracker(workbook: ExcelJS.Workbook, template: TemplateProduct
   freeze(usage);
 }
 
-function addSetupSheet(workbook: ExcelJS.Workbook, template: TemplateProduct) {
+function addSetupSheet(workbook: ExcelJS.Workbook, template: TemplateProduct, options?: TemplateBuildOptions) {
   const sheet = workbook.addWorksheet("Setup");
   title(sheet, "PeopleSheet Template Setup", template.detail);
   sheet.columns = widths([26, 32, 48]);
   addRows(sheet, 5, [
     ["Template", template.name, ""],
+    ["Company", resolveCompanyName(options), ""],
     ["Privacy note", "No login. No employee database. Work locally in your spreadsheet.", ""],
     ["How to use", "Replace sample rows, keep formulas, then upload to Google Sheets if needed.", ""],
   ]);

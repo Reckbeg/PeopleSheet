@@ -45,6 +45,13 @@ describe("template catalog", () => {
       expect(template.previewData.rows.length).toBeGreaterThan(0);
     }
   });
+
+  it("ensures customization-enabled templates include companyName field", () => {
+    for (const template of templates) {
+      if (!template.customizations) continue;
+      expect(template.customizations.fields.some((field) => field.key === "companyName")).toBe(true);
+    }
+  });
 });
 
 describe("workbook generation", () => {
@@ -59,5 +66,19 @@ describe("workbook generation", () => {
 
       expect(workbook.worksheets.map((sheet) => sheet.name)).toEqual(template.sheets);
     }
+  });
+
+  it("accepts customization options without errors", async () => {
+    await expect(
+      buildTemplateWorkbook("attendance-tracker", {
+        companyName: "PT Maju Bersama",
+        month: "2026-05",
+        year: 2026,
+        annualEntitlement: 14,
+        reviewPeriod: "H2 2026",
+        taxYear: 2027,
+        thrYear: 2027,
+      }),
+    ).resolves.toMatchObject({ fileName: expect.any(String), buffer: expect.any(Buffer) });
   });
 });

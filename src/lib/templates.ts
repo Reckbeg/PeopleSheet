@@ -24,6 +24,19 @@ export type PreviewData = {
   rows: (string | number)[][];
 };
 
+export type CustomField = {
+  key: string;
+  label: string;
+  type: "text" | "number" | "select" | "month" | "year";
+  default: string | number;
+  options?: string[];
+  placeholder?: string;
+};
+
+export type CustomizationConfig = {
+  fields: CustomField[];
+};
+
 export type TemplateProduct = {
   slug: TemplateSlug;
   name: string;
@@ -40,7 +53,10 @@ export type TemplateProduct = {
   useCase: string;
   teamSize: string;
   previewData: PreviewData;
+  customizations?: CustomizationConfig;
 };
+
+const currentMonthDefault = new Date().toISOString().slice(0, 7);
 
 export const templates: TemplateProduct[] = [
   {
@@ -87,6 +103,23 @@ export const templates: TemplateProduct[] = [
     ],
     useCase: "Daily attendance tracking in a shared spreadsheet",
     teamSize: "5–50 employees",
+    customizations: {
+      fields: [
+        {
+          key: "companyName",
+          label: "Nama perusahaan",
+          type: "text",
+          default: "PT Contoh Indonesia",
+          placeholder: "Contoh: PT Maju Jaya",
+        },
+        {
+          key: "month",
+          label: "Bulan",
+          type: "month",
+          default: currentMonthDefault,
+        },
+      ],
+    },
     previewData: {
       title: "Monthly Tracker — May 2026",
       headers: ["Employee", "Dept", "01", "02", "03", "04", "05", "06", "07"],
@@ -143,6 +176,23 @@ export const templates: TemplateProduct[] = [
     ],
     useCase: "Annual leave balance tracking without a dedicated system",
     teamSize: "5–50 employees",
+    customizations: {
+      fields: [
+        {
+          key: "companyName",
+          label: "Nama perusahaan",
+          type: "text",
+          default: "PT Contoh Indonesia",
+          placeholder: "Contoh: PT Maju Jaya",
+        },
+        {
+          key: "annualEntitlement",
+          label: "Hak cuti tahunan (hari)",
+          type: "number",
+          default: 12,
+        },
+      ],
+    },
     previewData: {
       title: "Leave Balance",
       headers: [
@@ -211,6 +261,23 @@ export const templates: TemplateProduct[] = [
     ],
     useCase: "Monthly PPh21 tax withholding calculation for payroll",
     teamSize: "5–100 employees",
+    customizations: {
+      fields: [
+        {
+          key: "companyName",
+          label: "Nama perusahaan",
+          type: "text",
+          default: "PT Contoh Indonesia",
+          placeholder: "Contoh: PT Maju Jaya",
+        },
+        {
+          key: "taxYear",
+          label: "Tahun pajak",
+          type: "year",
+          default: 2026,
+        },
+      ],
+    },
     previewData: {
       title: "Employee Tax Summary",
       headers: [
@@ -274,6 +341,23 @@ export const templates: TemplateProduct[] = [
     ],
     useCase: "THR disbursement tracking before religious holidays",
     teamSize: "5–200 employees",
+    customizations: {
+      fields: [
+        {
+          key: "companyName",
+          label: "Nama perusahaan",
+          type: "text",
+          default: "PT Contoh Indonesia",
+          placeholder: "Contoh: PT Maju Jaya",
+        },
+        {
+          key: "thrYear",
+          label: "Periode THR",
+          type: "year",
+          default: 2026,
+        },
+      ],
+    },
     previewData: {
       title: "THR Calculation",
       headers: [
@@ -338,6 +422,23 @@ export const templates: TemplateProduct[] = [
     ],
     useCase: "Monthly BPJS contribution calculation for payroll",
     teamSize: "5–200 employees",
+    customizations: {
+      fields: [
+        {
+          key: "companyName",
+          label: "Nama perusahaan",
+          type: "text",
+          default: "PT Contoh Indonesia",
+          placeholder: "Contoh: PT Maju Jaya",
+        },
+        {
+          key: "year",
+          label: "Tahun",
+          type: "year",
+          default: 2026,
+        },
+      ],
+    },
     previewData: {
       title: "BPJS Contributions",
       headers: [
@@ -403,6 +504,24 @@ export const templates: TemplateProduct[] = [
     ],
     useCase: "Periodic performance review and rating",
     teamSize: "5–100 employees",
+    customizations: {
+      fields: [
+        {
+          key: "companyName",
+          label: "Nama perusahaan",
+          type: "text",
+          default: "PT Contoh Indonesia",
+          placeholder: "Contoh: PT Maju Jaya",
+        },
+        {
+          key: "reviewPeriod",
+          label: "Periode Evaluasi",
+          type: "text",
+          default: "H1 2026",
+          placeholder: "Contoh: H2 2026",
+        },
+      ],
+    },
     previewData: {
       title: "Performance Review — H1 2026",
       headers: [
@@ -467,6 +586,17 @@ export const templates: TemplateProduct[] = [
     ],
     useCase: "Centralized employee directory and master data",
     teamSize: "5–200 employees",
+    customizations: {
+      fields: [
+        {
+          key: "companyName",
+          label: "Nama perusahaan",
+          type: "text",
+          default: "PT Contoh Indonesia",
+          placeholder: "Contoh: PT Maju Jaya",
+        },
+      ],
+    },
     previewData: {
       title: "Employee Data",
       headers: [
@@ -532,6 +662,23 @@ export const templates: TemplateProduct[] = [
     ],
     useCase: "Monthly overtime tracking and cost calculation",
     teamSize: "5–100 employees",
+    customizations: {
+      fields: [
+        {
+          key: "companyName",
+          label: "Nama perusahaan",
+          type: "text",
+          default: "PT Contoh Indonesia",
+          placeholder: "Contoh: PT Maju Jaya",
+        },
+        {
+          key: "month",
+          label: "Bulan",
+          type: "month",
+          default: currentMonthDefault,
+        },
+      ],
+    },
     previewData: {
       title: "Overtime Log — May 2026",
       headers: [
@@ -596,6 +743,23 @@ export const templates: TemplateProduct[] = [
     ],
     useCase: "Tracking employee departures and analyzing turnover trends",
     teamSize: "5–200 employees",
+    customizations: {
+      fields: [
+        {
+          key: "companyName",
+          label: "Nama perusahaan",
+          type: "text",
+          default: "PT Contoh Indonesia",
+          placeholder: "Contoh: PT Maju Jaya",
+        },
+        {
+          key: "year",
+          label: "Tahun",
+          type: "year",
+          default: 2026,
+        },
+      ],
+    },
     previewData: {
       title: "Resignation Log — 2026",
       headers: [
