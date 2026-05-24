@@ -77,7 +77,7 @@ export default function Home() {
           {templates.map((template, index) => (
             <article
               key={template.slug}
-              className="rounded-lg border border-line bg-white"
+              className="overflow-hidden rounded-lg border border-line bg-white"
             >
               <div className="grid gap-0 lg:grid-cols-[1fr_1fr]">
                 <div
@@ -130,14 +130,14 @@ export default function Home() {
                     </ul>
                   </div>
 
-                  <div className="mt-5 flex items-center gap-4 text-xs text-muted">
+                  <div className="mt-5 flex flex-col gap-2 text-xs text-muted sm:flex-row sm:items-center sm:gap-4">
                     <span>
                       <span className="font-medium text-foreground">
                         Cocok untuk:
                       </span>{" "}
                       {template.useCase}
                     </span>
-                    <span className="text-line">·</span>
+                    <span className="hidden text-line sm:inline">·</span>
                     <span>
                       <span className="font-medium text-foreground">
                         Ukuran tim:
@@ -166,7 +166,7 @@ export default function Home() {
                     headers={template.previewData.headers}
                     rows={template.previewData.rows}
                   />
-                  <p className="mt-3 text-center text-[11px] text-muted">
+                  <p className="mt-3 text-center text-xs text-muted sm:text-[11px]">
 Pratinjau — template asli berisi data contoh lengkap beserta rumus validasi dropdown
                   </p>
                 </div>

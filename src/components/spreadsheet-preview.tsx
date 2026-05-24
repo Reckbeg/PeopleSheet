@@ -25,8 +25,8 @@ export function SpreadsheetPreview({
         </div>
         <span className="ml-1 text-xs font-medium text-muted">{title}</span>
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-left text-[11px] leading-tight">
+      <div className="overflow-x-auto overscroll-x-contain">
+        <table className="w-full text-left text-xs leading-tight sm:text-[11px]">
           <thead>
             <tr className="bg-[#F1F5F9]">
               <th className="w-8 border-b border-r border-line px-1.5 py-1.5 text-center text-[10px] font-medium text-[#94A3B8]">
@@ -35,7 +35,7 @@ export function SpreadsheetPreview({
               {headers.map((header) => (
                 <th
                   key={header}
-                  className="border-b border-r border-line px-2 py-1.5 font-semibold text-[#1F2933]"
+                  className="border-b border-r border-line px-1.5 py-1.5 font-semibold text-[#1F2933] sm:px-2"
                 >
                   {header}
                 </th>
@@ -54,7 +54,7 @@ export function SpreadsheetPreview({
                 {row.map((cell, cellIndex) => (
                   <td
                     key={cellIndex}
-                    className="border-b border-r border-line px-2 py-1 text-[#334155]"
+                    className="border-b border-r border-line px-1.5 py-1 text-[#334155] sm:px-2"
                   >
                     {typeof cell === "number"
                       ? cell.toLocaleString("id-ID")

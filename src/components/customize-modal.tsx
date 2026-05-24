@@ -66,7 +66,7 @@ export function CustomizeModal({ template, onClose, onConfirm, loading = false }
 
   const renderInput = (field: CustomField) => {
     const baseClassName =
-      "mt-2 w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white outline-none transition placeholder:text-slate-400 focus:border-teal-400";
+      "mt-2 w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2.5 text-sm text-white outline-none transition placeholder:text-slate-400 focus:border-teal-400";
 
     if (field.type === "select") {
       return (
@@ -108,14 +108,14 @@ export function CustomizeModal({ template, onClose, onConfirm, loading = false }
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-3 sm:p-4"
       onClick={() => {
         if (!loading) onClose();
       }}
     >
       <div
         ref={modalRef}
-        className="w-full max-w-lg rounded-xl border border-white/10 bg-slate-900 p-5 shadow-xl"
+        className="w-full max-w-lg rounded-xl border border-white/10 bg-slate-900 p-4 shadow-xl sm:p-5"
         role="dialog"
         aria-modal="true"
         aria-labelledby="customize-title"
