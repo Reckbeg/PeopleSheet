@@ -1,66 +1,103 @@
 # PeopleSheet
 
-Practical HR spreadsheet templates for Indonesian teams.
+Template spreadsheet HR siap pakai untuk tim Indonesia.
 
-PeopleSheet is a lightweight, privacy-first template library. No employee database. No mandatory login. No HRIS complexity. Just download ready-to-use XLSX files and keep your data in your own spreadsheet.
+PeopleSheet adalah perpustakaan template HR yang ringan dan mengutamakan privasi. Tidak perlu database karyawan. Tidak perlu login. Tidak perlu HRIS. Cukup download file XLSX yang sudah jadi dan isi dengan data Anda sendiri.
 
-## Templates
+## Template
 
-| Template | Sheets | Description |
-|----------|--------|-------------|
-| Payroll Recap | 5 | 26-25 cut-off, attendance, overtime, deductions, summary |
-| Attendance Tracker | 3 | Monthly matrix with weekend highlighting |
-| Leave Tracker | 3 | Annual entitlement, usage log, balance formulas |
+9 template HR lengkap, masing-masing dengan data contoh, rumus, dan validasi dropdown:
 
-## Philosophy
+| Template | Sheet | Deskripsi |
+|----------|-------|-----------|
+| Attendance Tracker | 3 | Matriks absensi bulanan dengan tanggal otomatis dan sorotan akhir pekan |
+| Leave Tracker | 3 | Hak cuti tahunan, log penggunaan, rumus saldo |
+| PPh21 Tax Calculator | 4 | Kalkulator pajak penghasilan dengan tarif progresif dan status PTKP |
+| THR Tracker | 3 | Kelayakan, perhitungan, dan status pembayaran THR |
+| BPJS Tracker | 3 | Iuran BPJS Kesehatan dan Ketenagakerjaan untuk karyawan dan perusahaan |
+| Performance Review | 3 | Evaluasi kinerja dengan penilaian KPI dan rating otomatis |
+| Employee Master Data | 3 | Data pribadi, kepegawaian, dan karyawan dalam satu tempat |
+| Overtime Tracker | 3 | Jam lembur dengan pengali tarif sesuai UU Ketenagakerjaan |
+| Turnover Tracker | 3 | Catat resign, lacak alasan, hitung tingkat turnover per divisi |
 
-PeopleSheet is built for HR operators who need useful files quickly:
+## Fitur
 
-- **Privacy-first** — Templates generate in-memory. No data is stored, transmitted, or logged.
-- **Spreadsheet-native** — Every template is designed to work in Excel and Google Sheets.
-- **Operational** — Focus on practical HR routines, not dashboard theater.
-- **Indonesian context** — IDR formatting, 26-25 payroll cut-off, local leave conventions.
+- 🎨 **Semi-Customization** — Sesuaikan template sebelum download (tahun, hak cuti, periode THR, dll)
+- 🇮🇩 **Bahasa Indonesia** — Semua UI dan konten dalam bahasa Indonesia untuk UMKM
+- 🔒 **Privacy-first** — Template dibuat di memori server. Tidak ada data yang disimpan atau dikirim.
+- 📊 **Spreadsheet-native** — Setiap template dirancang untuk Excel dan Google Sheets.
+- 💼 **Konteks Indonesia** — Format Rupiah, tarif PPh21, iuran BPJS, cuti tahunan.
+- ♿ **Aksesibel** — Focus trap, aria labels, navigasi keyboard
+- 🧪 **Tested** — 7 unit test untuk semua template
 
-## Stack
+## Customization
+
+Setiap template mendukung kustomisasi sebelum download:
+
+- **Attendance Tracker** — Nama perusahaan, bulan
+- **Leave Tracker** — Tahun, hak cuti tahunan default
+- **PPh21 Tax Calculator** — Tahun pajak
+- **THR Tracker** — Tahun THR
+- **BPJS Tracker** — Tahun
+- **Performance Review** — Periode evaluasi
+- **Employee Master Data** — Nama perusahaan
+- **Overtime Tracker** — Bulan
+- **Turnover Tracker** — Tahun
+
+Cukup klik "Sesuaikan" pada template, atur parameter, lalu klik "Buat & Unduh".
+
+## Tech Stack
 
 - Next.js App Router
 - TypeScript
 - Tailwind CSS
-- ExcelJS for XLSX generation
-- Vitest for workbook checks
+- ExcelJS untuk generasi XLSX
+- Vitest untuk testing
 
-## Local Setup
+## Quick Start
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`. No environment variables required.
+Buka `http://localhost:3000`. Tidak perlu environment variables.
 
 ## Scripts
 
 ```bash
-npm run dev        # Start development server
+npm run dev        # Development server
 npm run build      # Production build
-npm run lint       # Run ESLint
-npm test           # Run Vitest
+npm run lint       # ESLint
+npm test           # Vitest (7 tests)
 ```
 
 ## Architecture
 
 ```
-src/app/page.tsx                    → Public template library page
-src/app/templates/[slug]/download/  → XLSX download API route
-src/lib/templates.ts                → Template catalog metadata
-src/lib/xlsx/templates.ts           → ExcelJS workbook builder
+src/
+├── app/
+│   ├── page.tsx                         → Landing page (Indonesian)
+│   └── templates/[slug]/
+│       └── download/route.ts            → XLSX download API (accepts customization params)
+├── components/
+│   ├── customize-modal.tsx              → Customization modal (focus trap, accessibility)
+│   ├── download-button.tsx              → Download button with error handling
+│   └── spreadsheet-preview.tsx          → Preview table component
+└── lib/
+    ├── templates.ts                     → Template catalog + customization configs
+    ├── templates.test.ts                → Unit tests (7)
+    └── xlsx/
+        └── templates.ts                 → ExcelJS workbook builders (all 9 templates)
 ```
 
-Download routes generate files in memory and return them directly to the browser. No files are cached or stored.
+## Filosofi
 
-## Guardrails
+- **Privasi di atas segalanya** — Tidak ada database, tidak ada tracking, tidak ada akun.
+- **Spreadsheet adalah source of truth** — Data karyawan tetap di tangan Anda.
+- **Praktis untuk HR Indonesia** — Format Rupiah, regulasi lokal, konteks UMKM.
+- **Terbuka dan gratis** — Open-source, gratis selamanya.
 
-- No database, auth, dashboard, or SaaS admin complexity
-- No employee data storage
-- Clear templates over configurable systems
-- Practical for Indonesian HR operators
+## License
+
+MIT — Made with 🐱 for Indonesian HR teams
