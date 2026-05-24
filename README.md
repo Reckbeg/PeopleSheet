@@ -10,7 +10,7 @@ PeopleSheet adalah perpustakaan template HR yang ringan dan mengutamakan privasi
 
 | Template | Sheet | Deskripsi |
 |----------|-------|-----------|
-| Attendance Tracker | 3 | Matriks absensi bulanan dengan tanggal otomatis dan sorotan akhir pekan |
+| Attendance Tracker | 3 | Matriks presensi bulanan dengan tanggal otomatis dan sorotan akhir pekan |
 | Leave Tracker | 3 | Hak cuti tahunan, log penggunaan, rumus saldo |
 | PPh21 Tax Calculator | 4 | Kalkulator pajak penghasilan dengan tarif progresif dan status PTKP |
 | THR Tracker | 3 | Kelayakan, perhitungan, dan status pembayaran THR |

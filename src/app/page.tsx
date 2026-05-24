@@ -29,7 +29,7 @@ export default function Home() {
           </h1>
           <p className="mt-5 max-w-xl text-base leading-7 text-muted">
             Template XLSX siap pakai untuk tim HR Indonesia. Pajak, payroll,
-            absensi, cuti, kinerja, dan lainnya. Tanpa login. Tanpa database.
+            presensi, cuti, kinerja, dan lainnya. Tanpa login. Tanpa database.
             Langsung download dan buka.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
