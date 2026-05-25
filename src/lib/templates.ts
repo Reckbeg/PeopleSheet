@@ -159,7 +159,7 @@ export const templates: TemplateProduct[] = [
         description: "Tahun dan hak cuti tahunan default",
       },
       {
-        name: "Saldo Cuti",
+        name: "Leave Balance",
         description: "Saldo awal, hak, terpakai, dan sisa",
       },
       {
@@ -184,6 +184,12 @@ export const templates: TemplateProduct[] = [
           type: "text",
           default: "PT Contoh Indonesia",
           placeholder: "Contoh: PT Maju Jaya",
+        },
+        {
+          key: "year",
+          label: "Tahun",
+          type: "year",
+          default: 2026,
         },
         {
           key: "annualEntitlement",
@@ -261,6 +267,7 @@ export const templates: TemplateProduct[] = [
       "Dropdown status PTKP (TK/0 sampai K/3) untuk kemudahan pengisian",
       "Format mata uang Rupiah sudah diterapkan",
       "Catatan: TER berlaku untuk PPh21 bulanan. Rekonsiliasi tahunan tetap menggunakan tarif progresif.",
+      "Disclaimer: template ini alat bantu operasional, bukan nasihat pajak atau hukum.",
     ],
     useCase: "Perhitungan potongan PPh21 bulanan untuk payroll",
     teamSize: "5–100 karyawan",
@@ -328,7 +335,7 @@ export const templates: TemplateProduct[] = [
         description: "Tahun THR, aturan kelayakan, referensi hari raya keagamaan",
       },
       {
-        name: "Perhitungan THR",
+        name: "THR Calculation",
         description: "Cek kelayakan, jumlah THR, status pembayaran per karyawan",
       },
       {
@@ -342,6 +349,7 @@ export const templates: TemplateProduct[] = [
       "Dropdown status pembayaran (Menunggu, Dibayar)",
       "Format mata uang Rupiah sudah diterapkan",
       "Sesuai PP 78/2015 tentang pedoman THR",
+      "Disclaimer: template ini alat bantu operasional, bukan nasihat hukum ketenagakerjaan.",
     ],
     useCase: "Pemantauan pencairan THR sebelum hari raya keagamaan",
     teamSize: "5–200 karyawan",
@@ -409,7 +417,7 @@ export const templates: TemplateProduct[] = [
         description: "Tahun, semua tarif iuran BPJS (karyawan + perusahaan)",
       },
       {
-        name: "Iuran BPJS",
+        name: "BPJS Contributions",
         description: "Rincian semua komponen BPJS per karyawan",
       },
       {
@@ -423,6 +431,7 @@ export const templates: TemplateProduct[] = [
       "Mencakup JHT, JP, JK, JKK, JPensiun, dan BPJS Kesehatan",
       "Format mata uang Rupiah sudah diterapkan",
       "Sesuai regulasi BPJS Indonesia terkini",
+      "Disclaimer: verifikasi tarif iuran terbaru sebelum dipakai untuk payroll resmi.",
     ],
     useCase: "Perhitungan iuran BPJS bulanan untuk payroll",
     teamSize: "5–200 karyawan",
@@ -573,7 +582,7 @@ export const templates: TemplateProduct[] = [
         description: "Nama perusahaan, tanggal data",
       },
       {
-        name: "Data Karyawan",
+        name: "Employee Data",
         description: "Profil karyawan lengkap dengan 17+ field per baris",
       },
       {
@@ -663,6 +672,7 @@ export const templates: TemplateProduct[] = [
       "Dropdown tipe hari (Hari Kerja, Akhir Pekan, Hari Libur)",
       "Dropdown status persetujuan",
       "Format mata uang Rupiah sudah diterapkan",
+      "Disclaimer: verifikasi aturan lembur terbaru sebelum dipakai sebagai dasar kepatuhan.",
     ],
     useCase: "Pemantauan lembur dan perhitungan biaya bulanan",
     teamSize: "5–100 karyawan",

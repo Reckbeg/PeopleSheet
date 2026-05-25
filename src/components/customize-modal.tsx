@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import type { CustomField, TemplateProduct } from "@/lib/templates";
 
 type CustomizeModalProps = {
@@ -8,6 +8,7 @@ type CustomizeModalProps = {
   onClose: () => void;
   onConfirm: (values: Record<string, string | number>) => void;
   loading?: boolean;
+  returnFocusRef?: RefObject<HTMLElement | null>;
 };
 
 const categoryIcons: Record<TemplateProduct["category"], string> = {
@@ -24,24 +25,24 @@ function fieldDefaultValue(field: CustomField): string | number {
   return field.default;
 }
 
-export function CustomizeModal({ template, onClose, onConfirm, loading = false }: CustomizeModalProps) {
-  const fields = template.customizations?.fields ?? [];
+export function CustomizeModal({
+  template,
+  onClose,
+  onConfirm,
+  loading = false,
+  returnFocusRef,
+}: CustomizeModalProps) {
+  const fields = useMemo(() => template.customizations?.fields ?? [], [template.customizations?.fields]);
 
-  const initialValues = useMemo(
-    () =>
-      Object.fromEntries(fields.map((field) => [field.key, fieldDefaultValue(field)])) as Record<
-        string,
-        string | number
-      >,
-    [fields],
-  );
+  const initialValues = useMemo(() => {
+    return Object.fromEntries(fields.map((field) => [field.key, fieldDefaultValue(field)])) as Record<
+      string,
+      string | number
+    >;
+  }, [fields]);
 
   const [values, setValues] = useState<Record<string, string | number>>(initialValues);
   const modalRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setValues(initialValues);
-  }, [initialValues]);
 
   // Focus first input on mount
   useEffect(() => {
@@ -50,15 +51,49 @@ export function CustomizeModal({ template, onClose, onConfirm, loading = false }
   }, []);
 
   useEffect(() => {
-    const onEsc = (event: KeyboardEvent) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape" && !loading) {
         onClose();
+        return;
+      }
+
+      if (event.key !== "Tab") {
+        return;
+      }
+
+      const focusableElements = Array.from(
+        modalRef.current?.querySelectorAll<HTMLElement>(
+          "button:not([disabled]), input:not([disabled]), select:not([disabled]), a[href], [tabindex]:not([tabindex='-1'])",
+        ) ?? [],
+      );
+
+      if (focusableElements.length === 0) {
+        return;
+      }
+
+      const first = focusableElements[0];
+      const last = focusableElements[focusableElements.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
       }
     };
 
-    window.addEventListener("keydown", onEsc);
-    return () => window.removeEventListener("keydown", onEsc);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [loading, onClose]);
+
+  useEffect(() => {
+    const returnFocusElement = returnFocusRef?.current;
+    return () => {
+      returnFocusElement?.focus();
+    };
+  }, [returnFocusRef]);
 
   const setValue = (key: string, value: string | number) => {
     setValues((prev) => ({ ...prev, [key]: value }));
@@ -119,6 +154,7 @@ export function CustomizeModal({ template, onClose, onConfirm, loading = false }
         role="dialog"
         aria-modal="true"
         aria-labelledby="customize-title"
+        aria-describedby="customize-description"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="mb-4 flex items-start gap-3">
@@ -130,6 +166,9 @@ export function CustomizeModal({ template, onClose, onConfirm, loading = false }
             <h3 id="customize-title" className="text-base font-semibold text-white">
               {template.name}
             </h3>
+            <p id="customize-description" className="mt-1 text-xs text-slate-300">
+              Atur parameter template lalu lanjutkan untuk mengunduh file XLSX.
+            </p>
           </div>
         </div>
 

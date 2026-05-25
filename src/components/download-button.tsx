@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { TemplateProduct } from "@/lib/templates";
 import { CustomizeModal } from "@/components/customize-modal";
 
@@ -18,10 +18,31 @@ export function DownloadButton({
   template,
 }: DownloadButtonProps) {
   const [state, setState] = useState<"idle" | "loading" | "done">("idle");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const triggerRef = useRef<HTMLAnchorElement>(null);
+
+  const getFileName = (response: Response, fallbackHref: string) => {
+    const disposition = response.headers.get("content-disposition");
+    if (disposition) {
+      const utf8Match = disposition.match(/filename\*=UTF-8''([^;]+)/i);
+      if (utf8Match?.[1]) {
+        return decodeURIComponent(utf8Match[1]);
+      }
+
+      const basicMatch = disposition.match(/filename="([^"]+)"/i);
+      if (basicMatch?.[1]) {
+        return basicMatch[1];
+      }
+    }
+
+    return fallbackHref.split("/").slice(-2, -1)[0] + ".xlsx";
+  };
+
   const downloadFile = async (customValues?: Record<string, string | number>) => {
     if (state === "loading") return false;
 
+    setErrorMessage(null);
     setState("loading");
 
     try {
@@ -39,13 +60,14 @@ export function DownloadButton({
       const response = await fetch(url);
       if (!response.ok) {
         setState("idle");
+        setErrorMessage("Unduhan gagal. Coba lagi beberapa saat.");
         return false;
       }
       const blob = await response.blob();
       const objectUrl = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = objectUrl;
-      a.download = href.split("/").slice(-2, -1)[0] + ".xlsx";
+      a.download = getFileName(response, href);
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -56,6 +78,7 @@ export function DownloadButton({
       return true;
     } catch {
       setState("idle");
+      setErrorMessage("Terjadi kendala jaringan saat mengunduh template.");
       return false;
     }
   };
@@ -98,6 +121,7 @@ export function DownloadButton({
   return (
     <>
       <a
+        ref={triggerRef}
         href={href}
         onClick={handleClick}
         className={`${baseClasses} ${stateClasses}`}
@@ -146,12 +170,20 @@ export function DownloadButton({
           label
         )}
       </a>
+      {errorMessage ? (
+        <p className="mt-2 text-center text-xs text-rose-700" aria-live="polite">
+          {errorMessage}
+        </p>
+      ) : null}
 
       {showModal && template ? (
         <CustomizeModal
           template={template}
           loading={state === "loading"}
-          onClose={() => setShowModal(false)}
+          returnFocusRef={triggerRef}
+          onClose={() => {
+            setShowModal(false);
+          }}
           onConfirm={async (values) => {
             const success = await downloadFile(values);
             if (success) setShowModal(false);

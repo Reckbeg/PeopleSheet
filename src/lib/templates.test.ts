@@ -35,6 +35,12 @@ describe("template catalog", () => {
     }
   });
 
+  it("keeps preview sheet names aligned with workbook sheet names", () => {
+    for (const template of templates) {
+      expect(template.previewSheets.map((sheet) => sheet.name)).toEqual(template.sheets);
+    }
+  });
+
   it("defines operationalNotes, useCase, teamSize, and previewData for every template", () => {
     for (const template of templates) {
       expect(template.operationalNotes.length).toBeGreaterThan(0);
@@ -51,6 +57,14 @@ describe("template catalog", () => {
       if (!template.customizations) continue;
       expect(template.customizations.fields.some((field) => field.key === "companyName")).toBe(true);
     }
+  });
+
+  it("requires leave tracker to expose year customization", () => {
+    const leaveTracker = getTemplate("leave-tracker");
+    expect(leaveTracker).toBeTruthy();
+    expect(
+      leaveTracker?.customizations?.fields.some((field) => field.key === "year"),
+    ).toBe(true);
   });
 });
 

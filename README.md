@@ -25,10 +25,11 @@ PeopleSheet adalah perpustakaan template HR yang ringan dan mengutamakan privasi
 - 🎨 **Semi-Customization** — Sesuaikan template sebelum download (tahun, hak cuti, periode THR, dll)
 - 🇮🇩 **Bahasa Indonesia** — Semua UI dan konten dalam bahasa Indonesia untuk UMKM
 - 🔒 **Privacy-first** — Template dibuat di memori server. Tidak ada data yang disimpan atau dikirim.
+- 🛡️ **Security hardening** — Sanitasi formula injection, rate limiting sederhana, dan header keamanan
 - 📊 **Spreadsheet-native** — Setiap template dirancang untuk Excel dan Google Sheets.
 - 💼 **Konteks Indonesia** — Format Rupiah, tarif PPh21, iuran BPJS, cuti tahunan.
-- ♿ **Aksesibel** — Focus trap, aria labels, navigasi keyboard
-- 🧪 **Tested** — 7 unit test untuk semua template
+- ♿ **Aksesibel** — Focus trap modal, aria labels, navigasi keyboard
+- 🧪 **Tested** — Unit test katalog + route download + workbook generation
 
 ## Customization
 
@@ -45,6 +46,12 @@ Setiap template mendukung kustomisasi sebelum download:
 - **Turnover Tracker** — Tahun
 
 Cukup klik "Sesuaikan" pada template, atur parameter, lalu klik "Buat & Unduh".
+
+## Operasional
+
+- Health check endpoint: `GET /api/health`
+- Sitemap: `https://peoplesheet.id/sitemap.xml`
+- CI: lint + test + build via GitHub Actions
 
 ## Tech Stack
 
@@ -69,7 +76,7 @@ Buka `http://localhost:3000`. Tidak perlu environment variables.
 npm run dev        # Development server
 npm run build      # Production build
 npm run lint       # ESLint
-npm test           # Vitest (7 tests)
+npm test           # Vitest
 ```
 
 ## Architecture
@@ -86,9 +93,11 @@ src/
 │   └── spreadsheet-preview.tsx          → Preview table component
 └── lib/
     ├── templates.ts                     → Template catalog + customization configs
-    ├── templates.test.ts                → Unit tests (7)
+    ├── templates.test.ts                → Unit tests for catalog + workbook
     └── xlsx/
-        └── templates.ts                 → ExcelJS workbook builders (all 9 templates)
+        ├── templates.ts                 → Workbook orchestrator
+        ├── shared.ts                    → Shared styling + helper utilities
+        └── builders/                    → Builder per template
 ```
 
 ## Filosofi

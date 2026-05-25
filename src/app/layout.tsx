@@ -2,27 +2,27 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "PeopleSheet - HR spreadsheet templates",
+  title: "PeopleSheet - Template spreadsheet HR Indonesia",
   description:
-    "Practical HR spreadsheet templates for Indonesian teams. No login. No database. Just download and use.",
+    "Template spreadsheet HR praktis untuk tim Indonesia. Tanpa login, tanpa database, langsung unduh dan pakai.",
   metadataBase: new URL("https://peoplesheet.id"),
   icons: {
     icon: "/favicon.svg",
   },
   openGraph: {
-    title: "PeopleSheet - HR spreadsheet templates",
+    title: "PeopleSheet - Template spreadsheet HR Indonesia",
     description:
-      "Practical HR spreadsheet templates for Indonesian teams. No login. No database. Just download and use.",
+      "Template spreadsheet HR praktis untuk tim Indonesia. Tanpa login, tanpa database, langsung unduh dan pakai.",
     url: "https://peoplesheet.id",
     siteName: "PeopleSheet",
-    locale: "en_US",
+    locale: "id_ID",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "PeopleSheet - HR spreadsheet templates",
+    title: "PeopleSheet - Template spreadsheet HR Indonesia",
     description:
-      "Practical HR spreadsheet templates for Indonesian teams. No login. No database. Just download and use.",
+      "Template spreadsheet HR praktis untuk tim Indonesia. Tanpa login, tanpa database, langsung unduh dan pakai.",
   },
   other: {
     "theme-color": "#0F766E",
@@ -35,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full scroll-smooth antialiased">
+    <html lang="id" className="h-full scroll-smooth antialiased">
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>

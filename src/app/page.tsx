@@ -155,6 +155,16 @@ export default function Home() {
                     <p className="mt-2 text-center text-xs text-muted">
                       {template.sheets.length} lembar · XLSX · Tanpa akun
                     </p>
+                    {[
+                      "pph21-tax-calculator",
+                      "thr-tracker",
+                      "bpjs-tracker",
+                      "overtime-tracker",
+                    ].includes(template.slug) ? (
+                      <p className="mt-1 text-center text-[11px] text-amber-700">
+                        Disclaimer: alat bantu operasional. Verifikasi dengan aturan resmi terbaru.
+                      </p>
+                    ) : null}
                   </div>
                 </div>
 
@@ -167,7 +177,7 @@ export default function Home() {
                     rows={template.previewData.rows}
                   />
                   <p className="mt-3 text-center text-xs text-muted sm:text-[11px]">
-Pratinjau — template asli berisi data contoh lengkap beserta rumus validasi dropdown
+                    Pratinjau — template asli berisi data contoh lengkap beserta rumus validasi dropdown
                   </p>
                 </div>
               </div>
