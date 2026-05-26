@@ -28,9 +28,10 @@ export default function Home() {
             Spreadsheet HR yang benar-benar bekerja
           </h1>
           <p className="mt-5 max-w-xl text-base leading-7 text-muted">
-            Template XLSX siap pakai untuk tim HR Indonesia. Pajak, payroll,
-            presensi, cuti, kinerja, dan lainnya. Tanpa login. Tanpa database.
-            Langsung download dan buka.
+            Hemat jam kerja tiap bulan dengan template XLSX siap pakai untuk
+            tim HR Indonesia. Lewati setup dari nol, langsung pakai untuk
+            pajak, payroll, presensi, cuti, kinerja, dan lainnya — tanpa
+            login, tanpa database.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
@@ -58,6 +59,35 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="border-b border-line bg-white">
+        <div className="mx-auto w-full max-w-6xl px-4 py-5 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm font-medium text-foreground sm:gap-x-6">
+            <span>9 Template</span>
+            <span className="text-line">•</span>
+            <span>100% Gratis</span>
+            <span className="text-line">•</span>
+            <span>Untuk Tim 5-50 Orang</span>
+            <span className="text-line">•</span>
+            <span>Tanpa Login</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="rounded-lg border border-line bg-surface px-5 py-6 sm:px-8">
+          <p className="text-sm font-semibold text-accent">Siap dipakai oleh</p>
+          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-foreground sm:gap-x-4">
+            <span>UMKM</span>
+            <span className="text-line">•</span>
+            <span>Startup</span>
+            <span className="text-line">•</span>
+            <span>Konsultan HR</span>
+            <span className="text-line">•</span>
+            <span>Freelancer</span>
+          </div>
+        </div>
+      </section>
+
       <section
         id="templates"
         className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8"
@@ -71,6 +101,28 @@ export default function Home() {
             Setiap template adalah workbook lengkap dengan data contoh, rumus, dan
             pemformatan. Ganti baris contoh dengan data Anda. Gratis selamanya.
           </p>
+        </div>
+
+        <div className="mt-8">
+          <p className="text-sm font-semibold text-accent">Template Populer</p>
+          <div className="mt-3 grid gap-3 sm:grid-cols-3">
+            {templates.slice(0, 3).map((template) => (
+              <div
+                key={`popular-${template.slug}`}
+                className="rounded-md border border-line bg-surface p-4"
+              >
+                <p className="text-xs font-semibold uppercase tracking-wide text-accent">
+                  {template.category}
+                </p>
+                <h3 className="mt-1.5 text-sm font-semibold tracking-normal">
+                  {template.name}
+                </h3>
+                <p className="mt-1.5 text-xs leading-5 text-muted">
+                  {template.summary}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="mt-8 space-y-8">
@@ -344,6 +396,24 @@ export default function Home() {
             <p className="mt-4 text-xs text-muted">
               Tidak dipaksa. Template gratis selamanya. Ini hanya jika Anda ingin mengucapkan terima kasih.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-line bg-white">
+        <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl rounded-lg border border-line bg-surface px-6 py-10 text-center sm:px-10">
+            <h2 className="text-2xl font-semibold tracking-normal">
+              Mulai sekarang — unduh template pertama Anda dalam 30 detik
+            </h2>
+            <div className="mt-6">
+              <a
+                href="#templates"
+                className="inline-flex h-11 items-center justify-center rounded-md bg-accent px-6 text-sm font-semibold text-white transition hover:bg-accent/90"
+              >
+                Pilih Template Gratis
+              </a>
+            </div>
           </div>
         </div>
       </section>
