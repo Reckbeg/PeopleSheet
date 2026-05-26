@@ -16,7 +16,7 @@ export default function Home() {
               Template
             </a>
             <a className="transition hover:text-foreground" href="#why">
-              Mengapa ini ada
+              Kenapa PeopleSheet
             </a>
           </nav>
         </div>
@@ -25,13 +25,11 @@ export default function Home() {
       <section className="border-b border-line bg-surface">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center px-4 py-16 text-center sm:px-6 lg:px-8 lg:py-20">
           <h1 className="max-w-2xl text-4xl font-semibold tracking-normal text-foreground sm:text-5xl">
-            Spreadsheet HR yang benar-benar bekerja
+            Spreadsheet HR siap pakai untuk tim kecil
           </h1>
           <p className="mt-5 max-w-xl text-base leading-7 text-muted">
-            Hemat jam kerja tiap bulan dengan template XLSX siap pakai untuk
-            tim HR Indonesia. Lewati setup dari nol, langsung pakai untuk
-            pajak, payroll, presensi, cuti, kinerja, dan lainnya — tanpa
-            login, tanpa database.
+            Owner, admin, HR, finance — siapapun yang butuh. Rumus PPh21 TER,
+            presensi, payroll. Unduh XLSX, isi data, selesai. Tanpa login.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
@@ -242,30 +240,27 @@ export default function Home() {
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-semibold text-accent">
-              Mengapa ini ada
+              Kenapa PeopleSheet
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-normal">
-              Sebagian besar tim UMKM Indonesia masih menjalankan HR di spreadsheet
+              Bikin spreadsheet HR dari nol itu melelahkan
             </h2>
           </div>
 
           <div className="mx-auto mt-8 max-w-2xl space-y-5 text-sm leading-7 text-muted">
             <p>
-              Tim HR di perusahaan kecil sering memulai tiap bulan dari spreadsheet kosong
-              atau template berantakan dari internet. Mereka menghabiskan waktu
-              berjam-jam memformat kolom dan memperbaiki rumus yang rusak — hanya untuk
-              membangun ulang struktur yang sama seperti bulan sebelumnya.
+              Apalagi kalau kamu juga yang ngurus operasional, payroll, cuti,
+              pajak. Tiap bulan mulai dari spreadsheet kosong atau template
+              berantakan dari internet. Jam habis untuk format kolom dan
+              perbaiki rumus yang rusak.
             </p>
             <p>
-              PeopleSheet memberi tim HR titik awal yang rapi dan siap pakai. Setiap
-              template dirancang agar langsung berguna: data contoh yang realistis,
-              rumus yang berfungsi, dan struktur yang sesuai dengan cara kerja
-              tim HR Indonesia sebenarnya.
+              PeopleSheet hadir untuk menghemat waktu kamu. Tinggal unduh
+              template, isi data, rumus langsung jalan. Tanpa daftar, tanpa
+              database, tanpa takut data bocor.
             </p>
             <p>
-              Tidak ada sistem akun. Tidak ada database karyawan. Tidak ada pengiriman data.
-              Anda cukup mengunduh file, mengganti baris contoh dengan data asli,
-              lalu terus bekerja di spreadsheet favorit Anda.
+              Data tetap di perangkat kamu. Privasi tetap di tangan kamu.
             </p>
           </div>
         </div>

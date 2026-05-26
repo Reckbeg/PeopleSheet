@@ -2,27 +2,27 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "PeopleSheet - Template spreadsheet HR Indonesia",
+  title: "PeopleSheet – Template HR Gratis untuk UMKM Indonesia | Unduh XLSX 30 Detik",
   description:
-    "Template spreadsheet HR praktis untuk tim Indonesia. Tanpa login, tanpa database, langsung unduh dan pakai.",
-  metadataBase: new URL("https://peoplesheet.id"),
+    "Template spreadsheet HR gratis untuk UMKM Indonesia (5–50 karyawan). Termasuk rumus PPh21 TER, presensi, payroll. Unduh XLSX langsung tanpa login. Hemat 4+ jam per bulan.",
+  metadataBase: new URL("https://peoplesheet.vercel.app"),
   icons: {
     icon: "/favicon.svg",
   },
   openGraph: {
-    title: "PeopleSheet - Template spreadsheet HR Indonesia",
+    title: "PeopleSheet – Template HR Gratis untuk UMKM Indonesia",
     description:
-      "Template spreadsheet HR praktis untuk tim Indonesia. Tanpa login, tanpa database, langsung unduh dan pakai.",
-    url: "https://peoplesheet.id",
+      "Udah capek bikin tabel HR dari nol? PeopleSheet siap pakai, gratis, tanpa database. 9 template buat payroll, presensi, cuti. Unduh dalam 30 detik.",
+    url: "https://peoplesheet.vercel.app",
     siteName: "PeopleSheet",
     locale: "id_ID",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "PeopleSheet - Template spreadsheet HR Indonesia",
+    title: "PeopleSheet – Template HR Gratis untuk UMKM Indonesia",
     description:
-      "Template spreadsheet HR praktis untuk tim Indonesia. Tanpa login, tanpa database, langsung unduh dan pakai.",
+      "Template spreadsheet HR gratis untuk UMKM Indonesia. Rumus PPh21 TER, presensi, payroll. Unduh XLSX langsung tanpa login.",
   },
   other: {
     "theme-color": "#0F766E",
