@@ -29,7 +29,7 @@ export default function Home() {
           </h1>
           <p className="mt-5 max-w-xl text-base leading-7 text-muted">
             Owner, admin, HR, finance — siapapun yang butuh. Rumus PPh21 TER,
-            presensi, payroll. Unduh XLSX, isi data, selesai. Tanpa login.
+            presensi, payroll. Unduh XLSX, isi data, selesai. Nggak perlu login.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
@@ -255,12 +255,12 @@ export default function Home() {
               perbaiki rumus yang rusak.
             </p>
             <p>
-              PeopleSheet hadir untuk menghemat waktu kamu. Tinggal unduh
-              template, isi data, rumus langsung jalan. Tanpa daftar, tanpa
-              database, tanpa takut data bocor.
+              PeopleSheet solusinya. Tinggal unduh template, isi data,
+              rumus langsung jalan. Nggak perlu daftar, nggak ada database,
+              data nggak bocor ke mana-mana.
             </p>
             <p>
-              Data tetap di perangkat kamu. Privasi tetap di tangan kamu.
+              Data tetap di laptop kamu. Titik.
             </p>
           </div>
         </div>
