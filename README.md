@@ -12,9 +12,9 @@ PeopleSheet adalah perpustakaan template HR yang ringan dan mengutamakan privasi
 |----------|-------|-----------|
 | Attendance Tracker | 3 | Matriks presensi bulanan dengan tanggal otomatis dan sorotan akhir pekan |
 | Leave Tracker | 3 | Hak cuti tahunan, log penggunaan, rumus saldo |
-| PPh21 Tax Calculator | 4 | Kalkulator pajak penghasilan dengan tarif progresif dan status PTKP |
+| PPh21 Tax Calculator | 4 | Kalkulator PPh21 bulanan dengan TER PP 58/2023 dan status PTKP |
 | THR Tracker | 3 | Kelayakan, perhitungan, dan status pembayaran THR |
-| BPJS Tracker | 3 | Iuran BPJS Kesehatan dan Ketenagakerjaan untuk karyawan dan perusahaan |
+| BPJS Tracker | 3 | Iuran JHT, JP, JKK, JKM, dan BPJS Kesehatan untuk karyawan dan perusahaan |
 | Performance Review | 3 | Evaluasi kinerja dengan penilaian KPI dan rating otomatis |
 | Employee Master Data | 3 | Data pribadi, kepegawaian, dan karyawan dalam satu tempat |
 | Overtime Tracker | 3 | Jam lembur dengan pengali tarif sesuai UU Ketenagakerjaan |
@@ -27,7 +27,7 @@ PeopleSheet adalah perpustakaan template HR yang ringan dan mengutamakan privasi
 - 🔒 **Privacy-first** — Template dibuat di memori server. Tidak ada data yang disimpan atau dikirim.
 - 🛡️ **Security hardening** — Sanitasi formula injection, rate limiting sederhana, dan header keamanan
 - 📊 **Spreadsheet-native** — Setiap template dirancang untuk Excel dan Google Sheets.
-- 💼 **Konteks Indonesia** — Format Rupiah, tarif PPh21, iuran BPJS, cuti tahunan.
+- 💼 **Konteks Indonesia** — Format Rupiah, PPh21 TER, iuran BPJS, cuti tahunan.
 - ♿ **Aksesibel** — Focus trap modal, aria labels, navigasi keyboard
 - 🧪 **Tested** — Unit test katalog + route download + workbook generation
 

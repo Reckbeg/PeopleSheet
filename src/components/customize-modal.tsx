@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
-import type { CustomField, TemplateProduct } from "@/lib/templates";
+import { getCustomFieldDefaultValue, type CustomField, type TemplateProduct } from "@/lib/templates";
 
 type CustomizeModalProps = {
   template: TemplateProduct;
@@ -22,7 +22,7 @@ const categoryIcons: Record<TemplateProduct["category"], string> = {
 };
 
 function fieldDefaultValue(field: CustomField): string | number {
-  return field.default;
+  return getCustomFieldDefaultValue(field);
 }
 
 export function CustomizeModal({

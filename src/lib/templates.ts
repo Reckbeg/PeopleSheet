@@ -56,7 +56,19 @@ export type TemplateProduct = {
   customizations?: CustomizationConfig;
 };
 
-const currentMonthDefault = new Date().toISOString().slice(0, 7);
+const currentMonthDefault = "__current_month__";
+
+export function getDefaultMonthValue(date = new Date()): string {
+  return date.toISOString().slice(0, 7);
+}
+
+export function getCustomFieldDefaultValue(field: CustomField, date = new Date()): string | number {
+  if (field.type === "month" && field.default === currentMonthDefault) {
+    return getDefaultMonthValue(date);
+  }
+
+  return field.default;
+}
 
 export const templates: TemplateProduct[] = [
   {
@@ -222,25 +234,25 @@ export const templates: TemplateProduct[] = [
     slug: "pph21-tax-calculator",
     name: "PPh21 Tax Calculator",
     category: "Tax",
-    summary: "Kalkulator PPh21 bulanan dengan metode TER (Tarif Efektif Rata-rata) sesuai PER-2/PJ/2024.",
+    summary: "Kalkulator PPh21 bulanan dengan metode TER (Tarif Efektif Rata-rata) sesuai PP 58/2023.",
     detail:
       "Hitung potongan pajak PPh21 bulanan untuk setiap karyawan menggunakan metode TER, potongan BPJS, dan pilihan status PTKP (TK/0 sampai K/3).",
     fileName: "peoplesheet-pph21-tax-calculator.xlsx",
     downloadLabel: "Unduh template pajak",
     sheets: ["Setup", "TER", "Employee Tax", "Summary"],
     features: [
-      "Metode TER (Tarif Efektif Rata-rata) sesuai PER-2/PJ/2024",
-      "8 kategori TER berdasarkan status PTKP (A–F)",
-      "Tabel tarif TER lengkap per kategori dan braket penghasilan",
+      "Metode TER (Tarif Efektif Rata-rata) sesuai PP 58/2023",
+      "3 kategori TER berdasarkan status PTKP (A, B, C)",
+      "Tabel tarif TER bulanan lengkap per kategori dan braket penghasilan",
       "Dropdown status PTKP (TK/0 sampai K/3)",
-      "Perhitungan potongan BPJS otomatis",
-      "Rumus PPh21 bulanan berdasarkan tarif TER",
+      "Rumus PPh21 bulanan Januari-November berdasarkan penghasilan bruto",
+      "Catatan masa pajak terakhir untuk rekonsiliasi Pasal 17",
     ],
     preview: [
       "Atur tahun pajak dan pilih status PTKP per karyawan di Setup.",
       "Sheet TER berisi tabel tarif efektif rata-rata lengkap per kategori.",
-      "Sheet Employee Tax menghitung PPh21 bulanan menggunakan rumus TER.",
-      "Sheet Summary menunjukkan total pajak dan tarif efektif per karyawan.",
+      "Sheet Employee Tax menghitung PPh21 bulanan Januari-November menggunakan rumus TER.",
+      "Sheet Summary menunjukkan estimasi pemotongan Januari-November per karyawan.",
     ],
     previewSheets: [
       {
@@ -249,24 +261,23 @@ export const templates: TemplateProduct[] = [
       },
       {
         name: "TER",
-        description: "Tabel tarif efektif rata-rata per kategori (A–F) sesuai PER-2/PJ/2024",
+        description: "Tabel tarif efektif rata-rata per kategori (A, B, C) sesuai PP 58/2023",
       },
       {
         name: "Employee Tax",
-        description: "Gaji kotor, iuran BPJS, DPP, tarif TER, PPh21 bulanan",
+        description: "Gaji bruto bulanan, status PTKP, kategori TER, tarif TER, PPh21 bulanan",
       },
       {
         name: "Summary",
-        description: "Total pajak tahunan dan bulanan per karyawan dengan tarif efektif",
+        description: "Estimasi pemotongan Januari-November per karyawan dengan tarif efektif",
       },
     ],
     operationalNotes: [
       "Kompatibel dengan Excel 2016+ dan Google Sheets",
-      "Menggunakan metode TER sesuai PER-2/PJ/2024 (berlaku sejak 2024)",
-      "Potongan BPJS dihitung otomatis dari gaji kotor",
+      "Menggunakan metode TER sesuai PP 58/2023 (berlaku sejak 2024)",
       "Dropdown status PTKP (TK/0 sampai K/3) untuk kemudahan pengisian",
       "Format mata uang Rupiah sudah diterapkan",
-      "Catatan: TER berlaku untuk PPh21 bulanan. Rekonsiliasi tahunan tetap menggunakan tarif progresif.",
+      "Catatan: TER berlaku untuk masa pajak selain masa pajak terakhir. Rekonsiliasi masa terakhir tetap menggunakan Pasal 17.",
       "Disclaimer: template ini alat bantu operasional, bukan nasihat pajak atau hukum.",
     ],
     useCase: "Perhitungan potongan PPh21 bulanan untuk payroll",
@@ -296,15 +307,15 @@ export const templates: TemplateProduct[] = [
         "Gaji Bruto/Bln",
         "PTKP",
         "Kategori TER",
-        "DPP",
-        "PPh21 Bulanan",
+        "Tarif TER",
+        "PPh21 Jan-Nov",
       ],
       rows: [
-        ["Dina Prasetya", "Operasional", 7500000, "TK/0", "A", 55800000, 172500],
-        ["Rafi Mahendra", "HR", 12000000, "K/1", "D", 105600000, 525000],
-        ["Sari Wulandari", "Keuangan", 6800000, "K/0", "C", 49680000, 124000],
-        ["Budi Santoso", "Operasional", 5500000, "TK/0", "A", 37200000, 60000],
-        ["Maya Anggraini", "Keuangan", 6200000, "K/0", "C", 42480000, 87000],
+        ["Dina Prasetya", "Operasional", 7500000, "TK/0", "A", "1,25%", 93750],
+        ["Rafi Mahendra", "HR", 12000000, "K/1", "B", "3%", 360000],
+        ["Sari Wulandari", "Keuangan", 6800000, "K/0", "A", "1,25%", 85000],
+        ["Budi Santoso", "Operasional", 5500000, "TK/0", "A", "0,25%", 13750],
+        ["Maya Anggraini", "Keuangan", 6200000, "K/0", "A", "0,75%", 46500],
       ],
     },
   },
@@ -396,14 +407,14 @@ export const templates: TemplateProduct[] = [
     category: "Compensation",
     summary: "Hitung iuran BPJS Kesehatan dan Ketenagakerjaan untuk karyawan dan perusahaan.",
     detail:
-      "Pantau seluruh iuran BPJS (JHT, JP, JK, JKK, JPensiun, BPJS Kesehatan) untuk porsi karyawan dan perusahaan dengan tarif yang dapat diatur di Setup.",
+      "Pantau seluruh iuran BPJS (JHT, JP, JKK, JKM, dan BPJS Kesehatan) untuk porsi karyawan dan perusahaan dengan tarif yang dapat diatur di Setup.",
     fileName: "peoplesheet-bpjs-tracker.xlsx",
     downloadLabel: "Unduh template BPJS",
     sheets: ["Setup", "BPJS Contributions", "Summary"],
     features: [
       "Tarif iuran yang dapat diatur di sheet Setup",
       "Perhitungan iuran karyawan dan perusahaan melalui rumus",
-      "6 komponen BPJS lengkap (JHT, JP, JK, JKK, JPensiun, Kesehatan)",
+      "5 komponen BPJS lengkap (JHT, JP, JKK, JKM, BPJS Kesehatan)",
       "Total biaya perusahaan per karyawan",
     ],
     preview: [
@@ -428,7 +439,7 @@ export const templates: TemplateProduct[] = [
     operationalNotes: [
       "Kompatibel dengan Excel 2016+ dan Google Sheets",
       "Semua tarif dapat diatur di Setup — rumus otomatis menyesuaikan",
-      "Mencakup JHT, JP, JK, JKK, JPensiun, dan BPJS Kesehatan",
+      "Mencakup JHT, JP, JKK, JKM, dan BPJS Kesehatan",
       "Format mata uang Rupiah sudah diterapkan",
       "Sesuai regulasi BPJS Indonesia terkini",
       "Disclaimer: verifikasi tarif iuran terbaru sebelum dipakai untuk payroll resmi.",
@@ -465,11 +476,11 @@ export const templates: TemplateProduct[] = [
         "Total Prsh",
       ],
       rows: [
-        ["Dina Prasetya", "Operasional", 7500000, 150000, 75000, 75000, 375000, 585000],
-        ["Rafi Mahendra", "HR", 12000000, 240000, 120000, 120000, 600000, 936000],
-        ["Sari Wulandari", "Keuangan", 6800000, 136000, 68000, 68000, 340000, 530400],
-        ["Budi Santoso", "Operasional", 5500000, 110000, 55000, 55000, 275000, 429000],
-        ["Maya Anggraini", "Keuangan", 6200000, 124000, 62000, 62000, 310000, 483600],
+        ["Dina Prasetya", "Operasional", 7500000, 150000, 75000, 75000, 300000, 768000],
+        ["Rafi Mahendra", "HR", 12000000, 240000, 110863, 120000, 470863, 1210526],
+        ["Sari Wulandari", "Keuangan", 6800000, 136000, 68000, 68000, 272000, 696320],
+        ["Budi Santoso", "Operasional", 5500000, 110000, 55000, 55000, 220000, 563200],
+        ["Maya Anggraini", "Keuangan", 6200000, 124000, 62000, 62000, 248000, 634880],
       ],
     },
   },

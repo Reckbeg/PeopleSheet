@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "PeopleSheet – Template HR Gratis untuk UMKM Indonesia | Unduh XLSX 30 Detik",
   description:
     "Template spreadsheet HR gratis untuk UMKM Indonesia (5–50 karyawan). Termasuk rumus PPh21 TER, presensi, payroll. Unduh XLSX langsung tanpa login. Hemat 4+ jam per bulan.",
-  metadataBase: new URL("https://peoplesheet.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   icons: {
     icon: "/favicon.svg",
   },
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
     title: "PeopleSheet – Template HR Gratis untuk UMKM Indonesia",
     description:
       "Udah capek bikin tabel HR dari nol? PeopleSheet siap pakai, gratis, tanpa database. 9 template buat payroll, presensi, cuti. Unduh dalam 30 detik.",
-    url: "https://peoplesheet.vercel.app",
+    url: SITE_URL,
     siteName: "PeopleSheet",
     locale: "id_ID",
     type: "website",

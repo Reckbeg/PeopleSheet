@@ -37,13 +37,13 @@ export function resolveCompanyName(options?: TemplateBuildOptions) {
   return options?.companyName?.trim() || "PT Contoh Indonesia";
 }
 
-export function resolveMonthStart(options?: TemplateBuildOptions) {
+export function resolveMonthStart(options?: TemplateBuildOptions, fallbackDate = new Date()) {
   const monthValue = options?.month;
   if (monthValue && /^\d{4}-\d{2}$/.test(monthValue)) {
     const [yearPart, monthPart] = monthValue.split("-").map(Number);
     return new Date(yearPart, monthPart - 1, 1);
   }
-  return new Date(2026, 4, 1);
+  return new Date(fallbackDate.getFullYear(), fallbackDate.getMonth(), 1);
 }
 
 export function addSetupSheet(workbook: ExcelJS.Workbook, template: TemplateProduct, options?: TemplateBuildOptions) {

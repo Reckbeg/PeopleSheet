@@ -13,6 +13,140 @@ import {
   widths,
 } from "../shared";
 
+const TER_FIRST_DATA_ROW = 5;
+const OPEN_ENDED_INCOME = 9_999_999_999_999;
+
+type TerRate = [category: "A" | "B" | "C", fromExclusive: number, toInclusive: number, rate: number];
+
+const terRates: TerRate[] = [
+  ["A", -1, 5_400_000, 0],
+  ["A", 5_400_000, 5_650_000, 0.0025],
+  ["A", 5_650_000, 5_950_000, 0.005],
+  ["A", 5_950_000, 6_300_000, 0.0075],
+  ["A", 6_300_000, 6_750_000, 0.01],
+  ["A", 6_750_000, 7_500_000, 0.0125],
+  ["A", 7_500_000, 8_550_000, 0.015],
+  ["A", 8_550_000, 9_650_000, 0.0175],
+  ["A", 9_650_000, 10_050_000, 0.02],
+  ["A", 10_050_000, 10_350_000, 0.0225],
+  ["A", 10_350_000, 10_700_000, 0.025],
+  ["A", 10_700_000, 11_050_000, 0.03],
+  ["A", 11_050_000, 11_600_000, 0.035],
+  ["A", 11_600_000, 12_500_000, 0.04],
+  ["A", 12_500_000, 13_750_000, 0.05],
+  ["A", 13_750_000, 15_100_000, 0.06],
+  ["A", 15_100_000, 16_950_000, 0.07],
+  ["A", 16_950_000, 19_750_000, 0.08],
+  ["A", 19_750_000, 24_150_000, 0.09],
+  ["A", 24_150_000, 26_450_000, 0.1],
+  ["A", 26_450_000, 28_000_000, 0.11],
+  ["A", 28_000_000, 30_050_000, 0.12],
+  ["A", 30_050_000, 32_400_000, 0.13],
+  ["A", 32_400_000, 35_400_000, 0.14],
+  ["A", 35_400_000, 39_100_000, 0.15],
+  ["A", 39_100_000, 43_850_000, 0.16],
+  ["A", 43_850_000, 47_800_000, 0.17],
+  ["A", 47_800_000, 51_400_000, 0.18],
+  ["A", 51_400_000, 56_300_000, 0.19],
+  ["A", 56_300_000, 62_200_000, 0.2],
+  ["A", 62_200_000, 68_600_000, 0.21],
+  ["A", 68_600_000, 77_500_000, 0.22],
+  ["A", 77_500_000, 89_000_000, 0.23],
+  ["A", 89_000_000, 103_000_000, 0.24],
+  ["A", 103_000_000, 125_000_000, 0.25],
+  ["A", 125_000_000, 157_000_000, 0.26],
+  ["A", 157_000_000, 206_000_000, 0.27],
+  ["A", 206_000_000, 337_000_000, 0.28],
+  ["A", 337_000_000, 454_000_000, 0.29],
+  ["A", 454_000_000, 550_000_000, 0.3],
+  ["A", 550_000_000, 695_000_000, 0.31],
+  ["A", 695_000_000, 910_000_000, 0.32],
+  ["A", 910_000_000, 1_400_000_000, 0.33],
+  ["A", 1_400_000_000, OPEN_ENDED_INCOME, 0.34],
+  ["B", -1, 6_200_000, 0],
+  ["B", 6_200_000, 6_500_000, 0.0025],
+  ["B", 6_500_000, 6_850_000, 0.005],
+  ["B", 6_850_000, 7_300_000, 0.0075],
+  ["B", 7_300_000, 9_200_000, 0.01],
+  ["B", 9_200_000, 10_750_000, 0.015],
+  ["B", 10_750_000, 11_250_000, 0.02],
+  ["B", 11_250_000, 11_600_000, 0.025],
+  ["B", 11_600_000, 12_600_000, 0.03],
+  ["B", 12_600_000, 13_600_000, 0.04],
+  ["B", 13_600_000, 14_950_000, 0.05],
+  ["B", 14_950_000, 16_400_000, 0.06],
+  ["B", 16_400_000, 18_450_000, 0.07],
+  ["B", 18_450_000, 21_850_000, 0.08],
+  ["B", 21_850_000, 26_000_000, 0.09],
+  ["B", 26_000_000, 27_700_000, 0.1],
+  ["B", 27_700_000, 29_350_000, 0.11],
+  ["B", 29_350_000, 31_450_000, 0.12],
+  ["B", 31_450_000, 33_950_000, 0.13],
+  ["B", 33_950_000, 37_100_000, 0.14],
+  ["B", 37_100_000, 41_100_000, 0.15],
+  ["B", 41_100_000, 45_800_000, 0.16],
+  ["B", 45_800_000, 49_500_000, 0.17],
+  ["B", 49_500_000, 53_800_000, 0.18],
+  ["B", 53_800_000, 58_500_000, 0.19],
+  ["B", 58_500_000, 64_000_000, 0.2],
+  ["B", 64_000_000, 71_000_000, 0.21],
+  ["B", 71_000_000, 80_000_000, 0.22],
+  ["B", 80_000_000, 93_000_000, 0.23],
+  ["B", 93_000_000, 109_000_000, 0.24],
+  ["B", 109_000_000, 129_000_000, 0.25],
+  ["B", 129_000_000, 163_000_000, 0.26],
+  ["B", 163_000_000, 211_000_000, 0.27],
+  ["B", 211_000_000, 374_000_000, 0.28],
+  ["B", 374_000_000, 459_000_000, 0.29],
+  ["B", 459_000_000, 555_000_000, 0.3],
+  ["B", 555_000_000, 704_000_000, 0.31],
+  ["B", 704_000_000, 957_000_000, 0.32],
+  ["B", 957_000_000, 1_405_000_000, 0.33],
+  ["B", 1_405_000_000, OPEN_ENDED_INCOME, 0.34],
+  ["C", -1, 6_600_000, 0],
+  ["C", 6_600_000, 6_950_000, 0.0025],
+  ["C", 6_950_000, 7_350_000, 0.005],
+  ["C", 7_350_000, 7_800_000, 0.0075],
+  ["C", 7_800_000, 8_850_000, 0.01],
+  ["C", 8_850_000, 9_800_000, 0.0125],
+  ["C", 9_800_000, 10_950_000, 0.015],
+  ["C", 10_950_000, 11_200_000, 0.0175],
+  ["C", 11_200_000, 12_050_000, 0.02],
+  ["C", 12_050_000, 12_950_000, 0.03],
+  ["C", 12_950_000, 14_150_000, 0.04],
+  ["C", 14_150_000, 15_550_000, 0.05],
+  ["C", 15_550_000, 17_050_000, 0.06],
+  ["C", 17_050_000, 19_500_000, 0.07],
+  ["C", 19_500_000, 22_700_000, 0.08],
+  ["C", 22_700_000, 26_600_000, 0.09],
+  ["C", 26_600_000, 28_100_000, 0.1],
+  ["C", 28_100_000, 30_100_000, 0.11],
+  ["C", 30_100_000, 32_600_000, 0.12],
+  ["C", 32_600_000, 35_400_000, 0.13],
+  ["C", 35_400_000, 38_900_000, 0.14],
+  ["C", 38_900_000, 43_000_000, 0.15],
+  ["C", 43_000_000, 47_400_000, 0.16],
+  ["C", 47_400_000, 51_200_000, 0.17],
+  ["C", 51_200_000, 55_800_000, 0.18],
+  ["C", 55_800_000, 60_400_000, 0.19],
+  ["C", 60_400_000, 66_700_000, 0.2],
+  ["C", 66_700_000, 74_500_000, 0.21],
+  ["C", 74_500_000, 83_200_000, 0.22],
+  ["C", 83_200_000, 95_600_000, 0.23],
+  ["C", 95_600_000, 110_000_000, 0.24],
+  ["C", 110_000_000, 134_000_000, 0.25],
+  ["C", 134_000_000, 169_000_000, 0.26],
+  ["C", 169_000_000, 221_000_000, 0.27],
+  ["C", 221_000_000, 390_000_000, 0.28],
+  ["C", 390_000_000, 463_000_000, 0.29],
+  ["C", 463_000_000, 561_000_000, 0.3],
+  ["C", 561_000_000, 709_000_000, 0.31],
+  ["C", 709_000_000, 965_000_000, 0.32],
+  ["C", 965_000_000, 1_419_000_000, 0.33],
+  ["C", 1_419_000_000, OPEN_ENDED_INCOME, 0.34],
+];
+const TER_RANGE_END_ROW = TER_FIRST_DATA_ROW + terRates.length - 1;
+
 export function buildPph21TaxCalculator(workbook: ExcelJS.Workbook, template: TemplateProduct, options?: TemplateBuildOptions) {
   const setup = addSetupSheet(workbook, template, options);
   setup.getCell("A11").value = "Konfigurasi Pajak";
@@ -24,7 +158,7 @@ export function buildPph21TaxCalculator(workbook: ExcelJS.Workbook, template: Te
   setup.getCell("A14").value = "Status PTKP";
   setup.getCell("B14").value = "TK/0, TK/1, TK/2, TK/3, K/0, K/1, K/2, K/3";
   setup.getCell("A15").value = "Catatan";
-  setup.getCell("B15").value = "TER berdasarkan PER-2/PJ/2024. Berlaku untuk PPh21 bulanan.";
+  setup.getCell("B15").value = "TER bulanan berdasarkan PP 58/2023 untuk masa pajak selain masa pajak terakhir.";
   setup.getCell("B15").font = { italic: true, color: { argb: palette.muted } };
   setup.getCell("A16").value = "Disclaimer";
   setup.getCell("B16").value = "Template ini alat bantu operasional, bukan nasihat pajak atau hukum.";
@@ -33,7 +167,7 @@ export function buildPph21TaxCalculator(workbook: ExcelJS.Workbook, template: Te
   setup.getCell("A17").value = "Jumlah PTKP (tahunan)";
   setup.getCell("A17").font = { bold: true, color: { argb: palette.ink } };
   const ptkpLabels = ["TK/0", "TK/1", "TK/2", "TK/3", "K/0", "K/1", "K/2", "K/3"];
-  const ptkpAmounts = [54000000, 58500000, 63000000, 67500000, 63000000, 67500000, 72000000, 76500000];
+  const ptkpAmounts = [54_000_000, 58_500_000, 63_000_000, 67_500_000, 58_500_000, 63_000_000, 67_500_000, 72_000_000];
   ptkpLabels.forEach((label, i) => {
     setup.getCell(18 + i, 1).value = label;
     setup.getCell(18 + i, 1).font = { bold: true };
@@ -43,216 +177,106 @@ export function buildPph21TaxCalculator(workbook: ExcelJS.Workbook, template: Te
 
   setup.getCell("A27").value = "Pemetaan Kategori TER";
   setup.getCell("A27").font = { bold: true, color: { argb: palette.ink } };
-  const terMapping = [
-    ["TK/0", "A"], ["TK/1", "B"], ["TK/2", "B"], ["TK/3", "B"],
-    ["K/0", "C"], ["K/1", "D"], ["K/2", "E"], ["K/3", "F"],
-  ];
   addHeader(setup, 28, ["PTKP", "Kategori TER"]);
-  addRows(setup, 29, terMapping);
+  addRows(setup, 29, [
+    ["TK/0", "A"],
+    ["TK/1", "A"],
+    ["TK/2", "B"],
+    ["TK/3", "B"],
+    ["K/0", "A"],
+    ["K/1", "B"],
+    ["K/2", "B"],
+    ["K/3", "C"],
+  ]);
 
   const terSheet = workbook.addWorksheet("TER");
-  title(terSheet, "Tarif Efektif Rata-rata (TER)", "PER-2/PJ/2024 — Tarif untuk PPh21 bulanan.");
-  addHeader(terSheet, 4, ["Kategori", "PTKP", "Dari", "Sampai", "Tarif"]);
-  terSheet.columns = widths([12, 12, 20, 20, 12]);
-
-  const terRates: [string, string, number, number | null, string][] = [
-    ["A", "TK/0", 0, 5400000, "0%"],
-    ["A", "TK/0", 5400000, 5650000, "0.25%"],
-    ["A", "TK/0", 5650000, 5950000, "0.50%"],
-    ["A", "TK/0", 5950000, 6300000, "0.75%"],
-    ["A", "TK/0", 6300000, 6600000, "1.00%"],
-    ["A", "TK/0", 6600000, 7000000, "1.25%"],
-    ["A", "TK/0", 7000000, 7500000, "1.50%"],
-    ["A", "TK/0", 7500000, 8050000, "1.75%"],
-    ["A", "TK/0", 8050000, 8650000, "2.00%"],
-    ["A", "TK/0", 8650000, 9350000, "2.25%"],
-    ["A", "TK/0", 9350000, 10100000, "2.50%"],
-    ["A", "TK/0", 10100000, 11000000, "3.00%"],
-    ["A", "TK/0", 11000000, 12050000, "3.50%"],
-    ["A", "TK/0", 12050000, 13350000, "4.00%"],
-    ["A", "TK/0", 13350000, 15100000, "5.00%"],
-    ["A", "TK/0", 15100000, 17500000, "6.00%"],
-    ["A", "TK/0", 17500000, 21100000, "7.00%"],
-    ["A", "TK/0", 21100000, 26500000, "8.00%"],
-    ["A", "TK/0", 26500000, 33700000, "9.00%"],
-    ["A", "TK/0", 33700000, 43700000, "10.00%"],
-    ["A", "TK/0", 43700000, 56500000, "11.00%"],
-    ["A", "TK/0", 56500000, null, "12.50%"],
-    ["B", "TK/1-3", 0, 6200000, "0%"],
-    ["B", "TK/1-3", 6200000, 6500000, "0.25%"],
-    ["B", "TK/1-3", 6500000, 6850000, "0.50%"],
-    ["B", "TK/1-3", 6850000, 7250000, "0.75%"],
-    ["B", "TK/1-3", 7250000, 7600000, "1.00%"],
-    ["B", "TK/1-3", 7600000, 8050000, "1.25%"],
-    ["B", "TK/1-3", 8050000, 8550000, "1.50%"],
-    ["B", "TK/1-3", 8550000, 9200000, "1.75%"],
-    ["B", "TK/1-3", 9200000, 9900000, "2.00%"],
-    ["B", "TK/1-3", 9900000, 10700000, "2.25%"],
-    ["B", "TK/1-3", 10700000, 11600000, "2.50%"],
-    ["B", "TK/1-3", 11600000, 12700000, "3.00%"],
-    ["B", "TK/1-3", 12700000, 14050000, "3.50%"],
-    ["B", "TK/1-3", 14050000, 15600000, "4.00%"],
-    ["B", "TK/1-3", 15600000, 17700000, "5.00%"],
-    ["B", "TK/1-3", 17700000, 20600000, "6.00%"],
-    ["B", "TK/1-3", 20600000, 25000000, "7.00%"],
-    ["B", "TK/1-3", 25000000, 31500000, "8.00%"],
-    ["B", "TK/1-3", 31500000, 40800000, "9.00%"],
-    ["B", "TK/1-3", 40800000, 53500000, "10.00%"],
-    ["B", "TK/1-3", 53500000, 70500000, "11.00%"],
-    ["B", "TK/1-3", 70500000, null, "12.50%"],
-    ["C", "K/0", 0, 5850000, "0%"],
-    ["C", "K/0", 5850000, 6150000, "0.25%"],
-    ["C", "K/0", 6150000, 6450000, "0.50%"],
-    ["C", "K/0", 6450000, 6800000, "0.75%"],
-    ["C", "K/0", 6800000, 7150000, "1.00%"],
-    ["C", "K/0", 7150000, 7550000, "1.25%"],
-    ["C", "K/0", 7550000, 8050000, "1.50%"],
-    ["C", "K/0", 8050000, 8600000, "1.75%"],
-    ["C", "K/0", 8600000, 9250000, "2.00%"],
-    ["C", "K/0", 9250000, 9950000, "2.25%"],
-    ["C", "K/0", 9950000, 10750000, "2.50%"],
-    ["C", "K/0", 10750000, 11750000, "3.00%"],
-    ["C", "K/0", 11750000, 12950000, "3.50%"],
-    ["C", "K/0", 12950000, 14350000, "4.00%"],
-    ["C", "K/0", 14350000, 16350000, "5.00%"],
-    ["C", "K/0", 16350000, 19100000, "6.00%"],
-    ["C", "K/0", 19100000, 23000000, "7.00%"],
-    ["C", "K/0", 23000000, 28800000, "8.00%"],
-    ["C", "K/0", 28800000, 37100000, "9.00%"],
-    ["C", "K/0", 37100000, 48100000, "10.00%"],
-    ["C", "K/0", 48100000, 62500000, "11.00%"],
-    ["C", "K/0", 62500000, null, "12.50%"],
-    ["D", "K/1", 0, 6300000, "0%"],
-    ["D", "K/1", 6300000, 6600000, "0.25%"],
-    ["D", "K/1", 6600000, 6950000, "0.50%"],
-    ["D", "K/1", 6950000, 7350000, "0.75%"],
-    ["D", "K/1", 7350000, 7700000, "1.00%"],
-    ["D", "K/1", 7700000, 8150000, "1.25%"],
-    ["D", "K/1", 8150000, 8650000, "1.50%"],
-    ["D", "K/1", 8650000, 9300000, "1.75%"],
-    ["D", "K/1", 9300000, 10000000, "2.00%"],
-    ["D", "K/1", 10000000, 10800000, "2.25%"],
-    ["D", "K/1", 10800000, 11700000, "2.50%"],
-    ["D", "K/1", 11700000, 12700000, "3.00%"],
-    ["D", "K/1", 12700000, 14000000, "3.50%"],
-    ["D", "K/1", 14000000, 15500000, "4.00%"],
-    ["D", "K/1", 15500000, 17500000, "5.00%"],
-    ["D", "K/1", 17500000, 20300000, "6.00%"],
-    ["D", "K/1", 20300000, 24500000, "7.00%"],
-    ["D", "K/1", 24500000, 30600000, "8.00%"],
-    ["D", "K/1", 30600000, 39500000, "9.00%"],
-    ["D", "K/1", 39500000, 51000000, "10.00%"],
-    ["D", "K/1", 51000000, null, "12.50%"],
-    ["E", "K/2", 0, 6750000, "0%"],
-    ["E", "K/2", 6750000, 7050000, "0.25%"],
-    ["E", "K/2", 7050000, 7400000, "0.50%"],
-    ["E", "K/2", 7400000, 7850000, "0.75%"],
-    ["E", "K/2", 7850000, 8250000, "1.00%"],
-    ["E", "K/2", 8250000, 8700000, "1.25%"],
-    ["E", "K/2", 8700000, 9250000, "1.50%"],
-    ["E", "K/2", 9250000, 9850000, "1.75%"],
-    ["E", "K/2", 9850000, 10600000, "2.00%"],
-    ["E", "K/2", 10600000, 11450000, "2.25%"],
-    ["E", "K/2", 11450000, 12400000, "2.50%"],
-    ["E", "K/2", 12400000, 13500000, "3.00%"],
-    ["E", "K/2", 13500000, 14850000, "3.50%"],
-    ["E", "K/2", 14850000, 16450000, "4.00%"],
-    ["E", "K/2", 16450000, 18700000, "5.00%"],
-    ["E", "K/2", 18700000, 21800000, "6.00%"],
-    ["E", "K/2", 21800000, 26500000, "7.00%"],
-    ["E", "K/2", 26500000, 33500000, "8.00%"],
-    ["E", "K/2", 33500000, 43300000, "9.00%"],
-    ["E", "K/2", 43300000, null, "11.50%"],
-    ["F", "K/3", 0, 7200000, "0%"],
-    ["F", "K/3", 7200000, 7550000, "0.25%"],
-    ["F", "K/3", 7550000, 7900000, "0.50%"],
-    ["F", "K/3", 7900000, 8350000, "0.75%"],
-    ["F", "K/3", 8350000, 8800000, "1.00%"],
-    ["F", "K/3", 8800000, 9250000, "1.25%"],
-    ["F", "K/3", 9250000, 9800000, "1.50%"],
-    ["F", "K/3", 9800000, 10400000, "1.75%"],
-    ["F", "K/3", 10400000, 11200000, "2.00%"],
-    ["F", "K/3", 11200000, 12050000, "2.25%"],
-    ["F", "K/3", 12050000, 13100000, "2.50%"],
-    ["F", "K/3", 13100000, 14300000, "3.00%"],
-    ["F", "K/3", 14300000, 15750000, "3.50%"],
-    ["F", "K/3", 15750000, 17450000, "4.00%"],
-    ["F", "K/3", 17450000, 19850000, "5.00%"],
-    ["F", "K/3", 19850000, 23200000, "6.00%"],
-    ["F", "K/3", 23200000, 28300000, "7.00%"],
-    ["F", "K/3", 28300000, 35700000, "8.00%"],
-    ["F", "K/3", 35700000, null, "10.50%"],
-  ];
-
-  addRows(terSheet, 5, terRates.map(([cat, ptkp, from, to, rate]) => [
-    cat, ptkp, from, to ?? "—", rate,
+  title(terSheet, "Tarif Efektif Rata-rata (TER)", "PP 58/2023 - Tarif bulanan untuk masa pajak selain masa pajak terakhir.");
+  addHeader(terSheet, 4, ["Kategori", "Dari (lebih dari)", "Sampai dengan", "Tarif"]);
+  terSheet.columns = widths([12, 20, 20, 12]);
+  addRows(terSheet, TER_FIRST_DATA_ROW, terRates.map(([category, from, to, rate]) => [
+    category,
+    from < 0 ? 0 : from,
+    to,
+    rate,
   ]), { alternate: true });
-  setCurrency(terSheet, ["C", "D"]);
+  setCurrency(terSheet, ["B", "C"]);
+  terSheet.getColumn("D").numFmt = "0.00%";
   freeze(terSheet);
 
   const empTax = workbook.addWorksheet("Employee Tax");
-  title(empTax, "Perhitungan PPh21", "PPh21 bulanan dengan metode TER (PER-2/PJ/2024).");
+  title(empTax, "Perhitungan PPh21", "PPh21 bulanan dengan metode TER (PP 58/2023).");
   addHeader(empTax, 4, [
-    "No. Karyawan", "Nama", "Divisi", "Gaji Bruto/Bulan",
-    "Status PTKP", "Kategori TER", "Bruto Tahunan",
-    "Iuran BPJS", "Dasar Pengenaan Pajak", "Tarif TER",
-    "PPh21 Tahunan", "PPh21 Bulanan",
+    "No. Karyawan",
+    "Nama",
+    "Divisi",
+    "Gaji Bruto/Bulan",
+    "Status PTKP",
+    "Kategori TER",
+    "Catatan",
+    "Tarif TER",
+    "PPh21 Bulanan",
+    "Estimasi Jan-Nov",
   ]);
-  empTax.columns = widths([14, 22, 16, 18, 14, 14, 18, 18, 20, 12, 18, 18]);
+  empTax.columns = widths([14, 22, 16, 18, 14, 14, 36, 12, 18, 18]);
 
   const employees = [
-    ["EMP-001", "Dina Prasetya", "Operasional", 7500000, "TK/0"],
-    ["EMP-002", "Rafi Mahendra", "HR", 12000000, "K/1"],
-    ["EMP-003", "Sari Wulandari", "Keuangan", 6800000, "K/0"],
-    ["EMP-004", "Budi Santoso", "Operasional", 5500000, "TK/0"],
-    ["EMP-005", "Maya Anggraini", "Keuangan", 6200000, "K/0"],
+    ["EMP-001", "Dina Prasetya", "Operasional", 7_500_000, "TK/0"],
+    ["EMP-002", "Rafi Mahendra", "HR", 12_000_000, "K/1"],
+    ["EMP-003", "Sari Wulandari", "Keuangan", 6_800_000, "K/0"],
+    ["EMP-004", "Budi Santoso", "Operasional", 5_500_000, "TK/0"],
+    ["EMP-005", "Maya Anggraini", "Keuangan", 6_200_000, "K/0"],
   ];
 
-  // TER rate lookup: uses employee's PTKP category (col F) and monthly gross (col D)
-  // to find the correct rate from the TER sheet via INDEX/MATCH with multiple criteria
-  const terLookup = (r: number) =>
-    `IF(I${r}<=0,0,INDEX(TER!$E$5:$E$184,MATCH(1,(TER!$A$5:$A$184=F${r})*(TER!$C$5:$C$184<=D${r})*((TER!$D$5:$D$184>=D${r})+(TER!$D$5:$D$184="—")),0)))`;
+  const terLookup = (row: number) =>
+    `SUMIFS(TER!$D$${TER_FIRST_DATA_ROW}:$D$${TER_RANGE_END_ROW},TER!$A$${TER_FIRST_DATA_ROW}:$A$${TER_RANGE_END_ROW},F${row},TER!$B$${TER_FIRST_DATA_ROW}:$B$${TER_RANGE_END_ROW},"<"&D${row},TER!$C$${TER_FIRST_DATA_ROW}:$C$${TER_RANGE_END_ROW},">="&D${row})`;
 
-  addRows(empTax, 5, employees.map((emp, i) => {
-    const r = i + 5;
+  addRows(empTax, 5, employees.map((employee, index) => {
+    const row = index + 5;
     return [
-      emp[0], emp[1], emp[2], emp[3], emp[4],
-      { formula: `VLOOKUP(E${r},Setup!$A$29:$B$36,2,FALSE)` },
-      { formula: `D${r}*12` },
-      { formula: `G${r}*0.05` },
-      { formula: `G${r}-H${r}-VLOOKUP(E${r},Setup!$A$18:$B$25,2,FALSE)` },
-      { formula: terLookup(r) },
-      { formula: `IF(I${r}<=0,0,I${r}*J${r})` },
-      { formula: `K${r}/12` },
+      employee[0],
+      employee[1],
+      employee[2],
+      employee[3],
+      employee[4],
+      { formula: `VLOOKUP(E${row},Setup!$A$29:$B$36,2,FALSE)` },
+      "TER dipakai untuk masa pajak selain masa pajak terakhir.",
+      { formula: terLookup(row) },
+      { formula: `D${row}*H${row}` },
+      { formula: `I${row}*11` },
     ];
   }), { alternate: true });
 
   for (let row = 5; row <= 25; row += 1) {
     empTax.getCell(row, 5).dataValidation = {
-      type: "list", allowBlank: true,
+      type: "list",
+      allowBlank: true,
       formulae: ['"TK/0,TK/1,TK/2,TK/3,K/0,K/1,K/2,K/3"'],
     };
   }
-  setCurrency(empTax, ["D", "G", "H", "I", "K", "L"]);
-  empTax.getColumn("J").numFmt = "0.00%";
-  addAutoFilter(empTax, 4, "L");
+  setCurrency(empTax, ["D", "I", "J"]);
+  empTax.getColumn("H").numFmt = "0.00%";
+  addAutoFilter(empTax, 4, "J");
   freeze(empTax, 5, 3);
 
   const summary = workbook.addWorksheet("Summary");
-  title(summary, "Rekap Pajak", "PPh21 tahunan dan bulanan per karyawan.");
+  title(summary, "Rekap Pajak", "Estimasi PPh21 TER untuk Januari-November per karyawan.");
   addHeader(summary, 4, [
-    "No. Karyawan", "Nama", "Bruto Tahunan", "Pajak Tahunan",
-    "Pajak Bulanan", "Tarif Efektif",
+    "No. Karyawan",
+    "Nama",
+    "Gaji Bruto/Bulan",
+    "Pajak Bulanan",
+    "Estimasi Jan-Nov",
+    "Tarif Efektif",
   ]);
   summary.columns = widths([14, 22, 18, 18, 18, 14]);
   addRows(summary, 5, [
-    ["EMP-001", "Dina Prasetya", { formula: "'Employee Tax'!G5" }, { formula: "'Employee Tax'!K5" }, { formula: "'Employee Tax'!L5" }, { formula: "IF(C5=0,0,D5/C5)" }],
-    ["EMP-002", "Rafi Mahendra", { formula: "'Employee Tax'!G6" }, { formula: "'Employee Tax'!K6" }, { formula: "'Employee Tax'!L6" }, { formula: "IF(C6=0,0,D6/C6)" }],
-    ["EMP-003", "Sari Wulandari", { formula: "'Employee Tax'!G7" }, { formula: "'Employee Tax'!K7" }, { formula: "'Employee Tax'!L7" }, { formula: "IF(C7=0,0,D7/C7)" }],
-    ["EMP-004", "Budi Santoso", { formula: "'Employee Tax'!G8" }, { formula: "'Employee Tax'!K8" }, { formula: "'Employee Tax'!L8" }, { formula: "IF(C8=0,0,D8/C8)" }],
-    ["EMP-005", "Maya Anggraini", { formula: "'Employee Tax'!G9" }, { formula: "'Employee Tax'!K9" }, { formula: "'Employee Tax'!L9" }, { formula: "IF(C9=0,0,D9/C9)" }],
+    ["EMP-001", "Dina Prasetya", { formula: "'Employee Tax'!D5" }, { formula: "'Employee Tax'!I5" }, { formula: "'Employee Tax'!J5" }, { formula: "'Employee Tax'!H5" }],
+    ["EMP-002", "Rafi Mahendra", { formula: "'Employee Tax'!D6" }, { formula: "'Employee Tax'!I6" }, { formula: "'Employee Tax'!J6" }, { formula: "'Employee Tax'!H6" }],
+    ["EMP-003", "Sari Wulandari", { formula: "'Employee Tax'!D7" }, { formula: "'Employee Tax'!I7" }, { formula: "'Employee Tax'!J7" }, { formula: "'Employee Tax'!H7" }],
+    ["EMP-004", "Budi Santoso", { formula: "'Employee Tax'!D8" }, { formula: "'Employee Tax'!I8" }, { formula: "'Employee Tax'!J8" }, { formula: "'Employee Tax'!H8" }],
+    ["EMP-005", "Maya Anggraini", { formula: "'Employee Tax'!D9" }, { formula: "'Employee Tax'!I9" }, { formula: "'Employee Tax'!J9" }, { formula: "'Employee Tax'!H9" }],
   ], { alternate: true });
   setCurrency(summary, ["C", "D", "E"]);
-  summary.getColumn("F").numFmt = "0.0%";
+  summary.getColumn("F").numFmt = "0.00%";
   freeze(summary);
 }
