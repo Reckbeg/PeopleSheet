@@ -26,10 +26,10 @@ export function SpreadsheetPreview({
         <span className="ml-1 text-xs font-medium text-muted">{title}</span>
       </div>
       <div className="overflow-x-auto overscroll-x-contain">
-        <table className="w-full text-left text-xs leading-tight sm:text-[11px]">
+        <table className="w-full text-left text-xs leading-tight">
           <thead>
             <tr className="bg-[#F1F5F9]">
-              <th className="w-8 border-b border-r border-line px-1.5 py-1.5 text-center text-[10px] font-medium text-[#94A3B8]">
+              <th className="w-8 border-b border-r border-line px-1.5 py-1.5 text-center text-[10px] font-medium text-slate-500">
                 #
               </th>
               {headers.map((header) => (
@@ -48,7 +48,7 @@ export function SpreadsheetPreview({
                 key={rowIndex}
                 className={rowIndex % 2 === 1 ? "bg-[#F8FAFC]" : ""}
               >
-                <td className="border-b border-r border-line px-1.5 py-1 text-center text-[10px] text-[#94A3B8]">
+                <td className="border-b border-r border-line px-1.5 py-1 text-center text-[10px] text-slate-500">
                   {rowIndex + 2}
                 </td>
                 {row.map((cell, cellIndex) => (

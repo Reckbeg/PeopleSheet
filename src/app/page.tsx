@@ -6,35 +6,37 @@ import { DownloadButton } from "@/components/download-button";
 export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground">
+      {/* Header — #9: shortened nav labels for mobile */}
       <header className="border-b border-line bg-white">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
           <Link href="/" className="text-base font-semibold tracking-normal">
             PeopleSheet
           </Link>
-          <nav className="flex items-center gap-4 text-sm text-muted">
+          <nav className="flex items-center gap-3 text-sm text-muted sm:gap-4">
             <a className="transition hover:text-foreground" href="#templates">
               Template
             </a>
             <a className="transition hover:text-foreground" href="#why">
-              Kenapa PeopleSheet
+              Kenapa
             </a>
           </nav>
         </div>
       </header>
 
+      {/* Hero — #1: concrete value prop, #2: semi-formal tone, #12: button sizing */}
       <section className="border-b border-line bg-surface">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center px-4 py-16 text-center sm:px-6 lg:px-8 lg:py-20">
           <h1 className="max-w-2xl text-4xl font-semibold tracking-normal text-foreground sm:text-5xl">
-            Spreadsheet HR siap pakai untuk tim kecil
+            Template Excel HR gratis untuk payroll, cuti, presensi, dan pajak
           </h1>
           <p className="mt-5 max-w-xl text-base leading-7 text-muted">
-            Owner, admin, HR, finance — siapapun yang butuh. Rumus PPh21 TER,
-            presensi, payroll. Unduh XLSX, isi data, selesai. Nggak perlu login.
+            Unduh file XLSX, isi data karyawan, selesai. Rumus PPh21 TER,
+            presensi, THR sudah tersedia. Tidak perlu login. Tidak perlu daftar.
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-8 flex w-full max-w-md flex-col gap-3 sm:flex-row sm:w-auto">
             <a
               href="#templates"
-              className="inline-flex h-11 items-center justify-center rounded-md bg-accent px-6 text-sm font-semibold text-white transition hover:bg-accent/90"
+              className="inline-flex h-11 items-center justify-center rounded-md bg-accent px-6 text-sm font-semibold text-white transition hover:bg-accent/90 sm:min-w-[180px]"
             >
               Lihat Template
             </a>
@@ -57,6 +59,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Stats bar */}
       <section className="border-b border-line bg-white">
         <div className="mx-auto w-full max-w-6xl px-4 py-5 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm font-medium text-foreground sm:gap-x-6">
@@ -71,21 +74,23 @@ export default function Home() {
         </div>
       </section>
 
+      {/* #8: Sharpened audience strip */}
       <section className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="rounded-lg border border-line bg-surface px-5 py-6 sm:px-8">
-          <p className="text-sm font-semibold text-accent">Siap dipakai oleh</p>
+          <p className="text-sm font-semibold text-accent">Cocok untuk Anda yang</p>
           <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-foreground sm:gap-x-4">
-            <span>UMKM</span>
+            <span>Owner UMKM yang belum pakai HRIS</span>
             <span className="text-line">•</span>
-            <span>Startup</span>
+            <span>Admin HR butuh template cepat</span>
             <span className="text-line">•</span>
-            <span>Konsultan HR</span>
+            <span>Finance kelola payroll manual</span>
             <span className="text-line">•</span>
-            <span>Freelancer</span>
+            <span>Konsultan HR sering bikin spreadsheet klien</span>
           </div>
         </div>
       </section>
 
+      {/* Templates section */}
       <section
         id="templates"
         className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8"
@@ -123,6 +128,7 @@ export default function Home() {
           </div>
         </div>
 
+        {/* #5: Simplified template cards */}
         <div className="mt-8 space-y-8">
           {templates.map((template, index) => (
             <article
@@ -143,10 +149,11 @@ export default function Home() {
                     {template.summary}
                   </p>
 
+                  {/* Key sheets — show first 3 */}
                   <div className="mt-5">
                     <p className="text-sm font-semibold">Lembar</p>
                     <div className="mt-2.5 space-y-1.5">
-                      {template.previewSheets.map((sheet) => (
+                      {template.previewSheets.slice(0, 3).map((sheet) => (
                         <div
                           key={sheet.name}
                           className="flex items-start gap-2 text-sm"
@@ -166,35 +173,22 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="mt-5">
-                    <p className="text-sm font-semibold">Catatan</p>
-                    <ul className="mt-2 space-y-1 text-xs leading-5 text-muted">
-                      {template.operationalNotes.map((note) => (
-                        <li key={note} className="flex items-start gap-2">
-                          <span className="mt-0.5 text-[10px] text-accent">
-                            ✓
-                          </span>
-                          {note}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="mt-5 flex flex-col gap-2 text-xs text-muted sm:flex-row sm:items-center sm:gap-4">
-                    <span>
-                      <span className="font-medium text-foreground">
-                        Cocok untuk:
-                      </span>{" "}
-                      {template.useCase}
-                    </span>
-                    <span className="hidden text-line sm:inline">·</span>
-                    <span>
-                      <span className="font-medium text-foreground">
-                        Ukuran tim:
-                      </span>{" "}
-                      {template.teamSize}
-                    </span>
-                  </div>
+                  {/* Top 2 notes only */}
+                  {template.operationalNotes.length > 0 && (
+                    <div className="mt-5">
+                      <p className="text-sm font-semibold">Catatan</p>
+                      <ul className="mt-2 space-y-1 text-xs leading-5 text-muted">
+                        {template.operationalNotes.slice(0, 2).map((note) => (
+                          <li key={note} className="flex items-start gap-2">
+                            <span className="mt-0.5 text-[10px] text-accent">
+                              ✓
+                            </span>
+                            {note}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                   <div className="mt-6">
                     <DownloadButton
@@ -226,7 +220,7 @@ export default function Home() {
                     headers={template.previewData.headers}
                     rows={template.previewData.rows}
                   />
-                  <p className="mt-3 text-center text-xs text-muted sm:text-[11px]">
+                  <p className="mt-3 text-center text-xs text-muted">
                     Pratinjau — template asli berisi data contoh lengkap beserta rumus validasi dropdown
                   </p>
                 </div>
@@ -236,6 +230,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* #2: Semi-formal Indonesian tone throughout */}
       <section id="why" className="border-t border-line bg-surface">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
@@ -243,24 +238,24 @@ export default function Home() {
               Kenapa PeopleSheet
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-normal">
-              Bikin spreadsheet HR dari nol itu melelahkan
+              Membuat spreadsheet HR dari awal itu melelahkan
             </h2>
           </div>
 
           <div className="mx-auto mt-8 max-w-2xl space-y-5 text-sm leading-7 text-muted">
             <p>
-              Apalagi kalau kamu juga yang ngurus operasional, payroll, cuti,
+              Apalagi jika Anda juga mengurus operasional, payroll, cuti,
               pajak. Tiap bulan mulai dari spreadsheet kosong atau template
-              berantakan dari internet. Jam habis untuk format kolom dan
-              perbaiki rumus yang rusak.
+              berantakan dari internet. Waktu habis untuk format kolom dan
+              memperbaiki rumus yang rusak.
             </p>
             <p>
-              PeopleSheet solusinya. Tinggal unduh template, isi data,
-              rumus langsung jalan. Nggak perlu daftar, nggak ada database,
-              data nggak bocor ke mana-mana.
+              PeopleSheet solusinya. Unduh template, isi data,
+              rumus langsung jalan. Tidak perlu daftar, tidak ada database,
+              data tidak bocor ke mana-mana.
             </p>
             <p>
-              Data tetap di laptop kamu. Titik.
+              Data tetap di perangkat Anda. Sepenuhnya milik Anda.
             </p>
           </div>
         </div>
@@ -359,6 +354,29 @@ export default function Home() {
         </div>
       </section>
 
+      {/* #7: Strengthened final CTA — full-width band */}
+      <section className="border-t border-line bg-accent">
+        <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-2xl font-semibold tracking-normal text-white">
+              Pilih template pertama Anda
+            </h2>
+            <p className="mt-2 text-sm text-white/80">
+              Unduh file XLSX gratis. Tidak perlu akun.
+            </p>
+            <div className="mt-6">
+              <a
+                href="#templates"
+                className="inline-flex h-11 items-center justify-center rounded-md bg-white px-6 text-sm font-semibold text-accent transition hover:bg-white/90"
+              >
+                Lihat Semua Template
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* #4: Donation section moved AFTER final CTA, #6: emojis removed */}
       <section className="border-t border-line bg-surface">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
@@ -367,8 +385,8 @@ export default function Home() {
               PeopleSheet gratis dan akan selalu gratis
             </h2>
             <p className="mt-3 text-sm leading-6 text-muted">
-              Jika template ini menghemat waktu Anda, traktir saya kopi.
-              Setiap donasi membantu proyek ini terus berjalan dan memotivasi template baru.
+              Jika template ini menghemat waktu Anda, Anda dapat mendukung proyek ini.
+              Setiap donasi membantu kami terus membuat template baru.
             </p>
             <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <a
@@ -377,7 +395,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-accent px-6 text-sm font-semibold text-white transition hover:bg-accent/90"
               >
-                ☕ Traktir kopi — Saweria
+                Dukung via Saweria
               </a>
               <a
                 href="https://trakteer.id/peoplesheet"
@@ -385,7 +403,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-line bg-white px-6 text-sm font-semibold text-foreground transition hover:bg-surface"
               >
-                🎁 Dukung via Trakteer
+                Dukung via Trakteer
               </a>
             </div>
             <p className="mt-4 text-xs text-muted">
@@ -395,28 +413,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-t border-line bg-white">
-        <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl rounded-lg border border-line bg-surface px-6 py-10 text-center sm:px-10">
-            <h2 className="text-2xl font-semibold tracking-normal">
-              Mulai sekarang — unduh template pertama Anda dalam 30 detik
-            </h2>
-            <div className="mt-6">
-              <a
-                href="#templates"
-                className="inline-flex h-11 items-center justify-center rounded-md bg-accent px-6 text-sm font-semibold text-white transition hover:bg-accent/90"
-              >
-                Pilih Template Gratis
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      {/* #6: Emoji removed from footer */}
       <footer className="border-t border-line bg-white">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-4 py-5 text-xs text-muted sm:flex-row sm:justify-between sm:px-6 lg:px-8">
           <p>
-            PeopleSheet — dibuat dengan ❤️ oleh{" "}
+            PeopleSheet — dibuat oleh{" "}
             <a
               href="https://linkedin.com/in/rofi-ibnu-haafizh"
               target="_blank"

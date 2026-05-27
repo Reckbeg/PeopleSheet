@@ -96,7 +96,7 @@ export function DownloadButton({
   };
 
   const baseClasses =
-    "inline-flex h-11 w-full items-center justify-center rounded-md px-6 text-sm font-semibold transition";
+    "inline-flex h-11 w-full items-center justify-center rounded-md px-6 text-sm font-semibold transition sm:min-w-[180px]";
 
   const variantClasses =
     variant === "bordered"
@@ -106,8 +106,8 @@ export function DownloadButton({
           done: "border border-accent bg-accent-soft text-accent",
         }
       : {
-          idle: "bg-foreground text-white hover:bg-foreground/90",
-          loading: "bg-foreground/70 text-white",
+          idle: "bg-accent text-white hover:bg-accent/90",
+          loading: "bg-accent/70 text-white",
           done: "bg-accent text-white",
         };
 
