@@ -65,11 +65,11 @@ export default function Home() {
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm font-medium text-foreground sm:gap-x-6">
             <span>9 Template</span>
             <span className="text-line">•</span>
-            <span>100% Gratis</span>
+            <span>Gratis</span>
+            <span className="text-line">•</span>
+            <span>XLSX Siap Pakai</span>
             <span className="text-line">•</span>
             <span>Untuk Tim 5-50 Orang</span>
-            <span className="text-line">•</span>
-            <span>Tanpa Login</span>
           </div>
         </div>
       </section>
