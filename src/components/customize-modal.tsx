@@ -11,16 +11,6 @@ type CustomizeModalProps = {
   returnFocusRef?: RefObject<HTMLElement | null>;
 };
 
-const categoryIcons: Record<TemplateProduct["category"], string> = {
-  Attendance: "🕒",
-  Leave: "🌴",
-  Tax: "🧾",
-  Compensation: "💼",
-  Employee: "👥",
-  Performance: "📈",
-  HR: "🗂️",
-};
-
 function fieldDefaultValue(field: CustomField): string | number {
   return getCustomFieldDefaultValue(field);
 }
@@ -101,7 +91,7 @@ export function CustomizeModal({
 
   const renderInput = (field: CustomField) => {
     const baseClassName =
-      "mt-2 w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2.5 text-sm text-white outline-none transition placeholder:text-slate-400 focus:border-teal-400";
+      "mt-2 w-full rounded-md border border-line bg-white px-3 py-2.5 text-sm text-foreground outline-none transition placeholder:text-muted focus:border-accent focus:ring-2 focus:ring-accent-soft";
 
     if (field.type === "select") {
       return (
@@ -112,7 +102,7 @@ export function CustomizeModal({
           className={baseClassName}
         >
           {(field.options ?? []).map((option) => (
-            <option key={option} value={option} className="bg-slate-900">
+            <option key={option} value={option}>
               {option}
             </option>
           ))}
@@ -143,14 +133,14 @@ export function CustomizeModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-3 sm:p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 p-3 sm:p-4"
       onClick={() => {
         if (!loading) onClose();
       }}
     >
       <div
         ref={modalRef}
-        className="w-full max-w-lg rounded-xl border border-white/10 bg-slate-900 p-4 shadow-xl sm:p-5"
+        className="max-h-[calc(100vh-24px)] w-full max-w-lg overflow-y-auto rounded-lg border border-line bg-white p-4 shadow-xl sm:max-h-[calc(100vh-32px)] sm:p-5"
         role="dialog"
         aria-modal="true"
         aria-labelledby="customize-title"
@@ -158,15 +148,15 @@ export function CustomizeModal({
         onClick={(event) => event.stopPropagation()}
       >
         <div className="mb-4 flex items-start gap-3">
-          <span className="mt-0.5 text-xl" aria-hidden>
-            {categoryIcons[template.category] ?? "📄"}
+          <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-accent-soft text-xs font-semibold text-accent" aria-hidden>
+            XLSX
           </span>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-teal-300">Sesuaikan Template</p>
-            <h3 id="customize-title" className="text-base font-semibold text-white">
+            <p className="text-xs font-semibold uppercase tracking-wide text-accent">Sesuaikan Template</p>
+            <h3 id="customize-title" className="text-base font-semibold text-foreground">
               {template.name}
             </h3>
-            <p id="customize-description" className="mt-1 text-xs text-slate-300">
+            <p id="customize-description" className="mt-1 text-xs leading-5 text-muted">
               Atur parameter template lalu lanjutkan untuk mengunduh file XLSX.
             </p>
           </div>
@@ -180,7 +170,7 @@ export function CustomizeModal({
           }}
         >
           {fields.map((field) => (
-            <label key={field.key} htmlFor={field.key} className="block text-sm text-slate-200">
+            <label key={field.key} htmlFor={field.key} className="block text-sm font-medium text-foreground">
               {field.label}
               {renderInput(field)}
             </label>
@@ -191,14 +181,14 @@ export function CustomizeModal({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="inline-flex h-10 flex-1 items-center justify-center rounded-md border border-white/10 bg-white/[0.03] px-4 text-sm font-semibold text-slate-200 transition hover:bg-white/[0.06] disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-11 flex-1 items-center justify-center rounded-md border border-line bg-white px-4 text-sm font-semibold text-foreground transition hover:bg-surface disabled:cursor-not-allowed disabled:opacity-50"
             >
               Batal
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex h-10 flex-1 items-center justify-center rounded-md bg-teal-600 px-4 text-sm font-semibold text-white transition hover:bg-teal-500 disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex h-11 flex-1 items-center justify-center rounded-md bg-accent px-4 text-sm font-semibold text-white transition hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading ? "Sedang menyiapkan..." : "Buat & Unduh"}
             </button>

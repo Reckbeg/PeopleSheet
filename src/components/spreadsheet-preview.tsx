@@ -15,7 +15,7 @@ export function SpreadsheetPreview({
 }: SpreadsheetPreviewProps) {
   return (
     <div
-      className={`overflow-hidden rounded-md border border-line bg-white ${className}`}
+      className={`min-w-0 overflow-hidden rounded-md border border-line bg-white ${className}`}
     >
       <div className="flex items-center gap-2 border-b border-line bg-[#F8FAFC] px-3 py-2">
         <div className="flex gap-1">
@@ -23,10 +23,10 @@ export function SpreadsheetPreview({
           <span className="h-2.5 w-2.5 rounded-full bg-[#E2E8F0]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#E2E8F0]" />
         </div>
-        <span className="ml-1 text-xs font-medium text-muted">{title}</span>
+        <span className="ml-1 min-w-0 truncate text-xs font-medium text-muted">{title}</span>
       </div>
-      <div className="overflow-x-auto overscroll-x-contain">
-        <table className="w-full text-left text-xs leading-tight">
+      <div className="max-w-full overflow-x-auto overscroll-x-contain">
+        <table className="w-full min-w-max text-left text-xs leading-tight">
           <thead>
             <tr className="bg-[#F1F5F9]">
               <th className="w-8 border-b border-r border-line px-1.5 py-1.5 text-center text-[10px] font-medium text-slate-500">

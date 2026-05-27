@@ -6,17 +6,16 @@ import { DownloadButton } from "@/components/download-button";
 export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground">
-      {/* Header — #9: shortened nav labels for mobile */}
       <header className="border-b border-line bg-white">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
-          <Link href="/" className="text-base font-semibold tracking-normal">
+          <Link href="/" className="inline-flex h-11 items-center text-base font-semibold tracking-normal">
             PeopleSheet
           </Link>
           <nav className="flex items-center gap-3 text-sm text-muted sm:gap-4">
-            <a className="transition hover:text-foreground" href="#templates">
+            <a className="inline-flex h-11 items-center transition hover:text-foreground" href="#templates">
               Template
             </a>
-            <a className="transition hover:text-foreground" href="#why">
+            <a className="inline-flex h-11 items-center transition hover:text-foreground" href="#why">
               Kenapa
             </a>
           </nav>
@@ -107,122 +106,82 @@ export default function Home() {
         </div>
 
         <div className="mt-8">
-          <p className="text-sm font-semibold text-accent">Template Populer</p>
-          <div className="mt-3 grid gap-3 sm:grid-cols-3">
+          <p className="text-sm font-semibold text-accent">Mulai cepat</p>
+          <div className="mt-3 flex flex-wrap gap-2">
             {templates.slice(0, 3).map((template) => (
-              <div
+              <a
+                href={`#${template.slug}`}
                 key={`popular-${template.slug}`}
-                className="rounded-md border border-line bg-surface p-4"
+                className="inline-flex min-h-11 items-center rounded-md border border-line bg-surface px-4 py-2 text-sm font-medium transition hover:border-accent hover:text-accent"
               >
-                <p className="text-xs font-semibold uppercase tracking-wide text-accent">
-                  {template.category}
-                </p>
-                <h3 className="mt-1.5 text-sm font-semibold tracking-normal">
-                  {template.name}
-                </h3>
-                <p className="mt-1.5 text-xs leading-5 text-muted">
-                  {template.summary}
-                </p>
-              </div>
+                {template.name}
+              </a>
             ))}
           </div>
         </div>
 
-        {/* #5: Simplified template cards */}
-        <div className="mt-8 space-y-8">
-          {templates.map((template, index) => (
+        <div className="mt-8 grid min-w-0 gap-5 lg:grid-cols-3">
+          {templates.map((template) => (
             <article
+              id={template.slug}
               key={template.slug}
-              className="overflow-hidden rounded-lg border border-line bg-white"
+              className="flex min-w-0 flex-col overflow-hidden rounded-lg border border-line bg-white"
             >
-              <div className="grid gap-0 lg:grid-cols-[1fr_1fr]">
-                <div
-                  className={`p-6 sm:p-8 ${index % 2 === 1 ? "lg:order-2" : ""}`}
-                >
-                  <p className="text-xs font-semibold uppercase tracking-wide text-accent">
-                    {template.category}
-                  </p>
-                  <h3 className="mt-2 text-xl font-semibold tracking-normal">
-                    {template.name}
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-muted">
-                    {template.summary}
-                  </p>
+              <div className="min-w-0 border-b border-line bg-[#F8FAFC] p-4">
+                <SpreadsheetPreview
+                  title={template.previewData.title}
+                  headers={template.previewData.headers}
+                  rows={template.previewData.rows}
+                />
+              </div>
 
-                  {/* Key sheets — show first 3 */}
-                  <div className="mt-5">
-                    <p className="text-sm font-semibold">Lembar</p>
-                    <div className="mt-2.5 space-y-1.5">
-                      {template.previewSheets.slice(0, 3).map((sheet) => (
-                        <div
-                          key={sheet.name}
-                          className="flex items-start gap-2 text-sm"
-                        >
-                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                          <div>
-                            <span className="font-medium text-foreground">
-                              {sheet.name}
-                            </span>
-                            <span className="text-muted">
-                              {" "}
-                              — {sheet.description}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+              <div className="flex min-w-0 flex-1 flex-col p-5">
+                <p className="text-xs font-semibold uppercase tracking-wide text-accent">
+                  {template.category}
+                </p>
+                <h3 className="mt-2 text-lg font-semibold tracking-normal">
+                  {template.name}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-muted">
+                  {template.summary}
+                </p>
 
-                  {/* Top 2 notes only */}
-                  {template.operationalNotes.length > 0 && (
-                    <div className="mt-5">
-                      <p className="text-sm font-semibold">Catatan</p>
-                      <ul className="mt-2 space-y-1 text-xs leading-5 text-muted">
-                        {template.operationalNotes.slice(0, 2).map((note) => (
-                          <li key={note} className="flex items-start gap-2">
-                            <span className="mt-0.5 text-[10px] text-accent">
-                              ✓
-                            </span>
-                            {note}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  <div className="mt-6">
-                    <DownloadButton
-                      href={`/templates/${template.slug}/download`}
-                      label={template.downloadLabel}
-                      template={template}
-                    />
-                    <p className="mt-2 text-center text-xs text-muted">
-                      {template.sheets.length} lembar · XLSX · Tanpa akun
-                    </p>
-                    {[
-                      "pph21-tax-calculator",
-                      "thr-tracker",
-                      "bpjs-tracker",
-                      "overtime-tracker",
-                    ].includes(template.slug) ? (
-                      <p className="mt-1 text-center text-[11px] text-amber-700">
-                        Disclaimer: alat bantu operasional. Verifikasi dengan aturan resmi terbaru.
-                      </p>
-                    ) : null}
-                  </div>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {template.previewSheets.slice(0, 3).map((sheet) => (
+                    <span
+                      key={sheet.name}
+                      className="rounded-md bg-accent-soft px-2 py-1 text-xs font-medium text-accent"
+                    >
+                      {sheet.name}
+                    </span>
+                  ))}
                 </div>
 
-                <div
-                  className={`border-t border-line bg-[#F8FAFC] p-4 sm:p-6 lg:border-t-0 lg:border-l ${index % 2 === 1 ? "lg:order-1" : ""}`}
-                >
-                  <SpreadsheetPreview
-                    title={template.previewData.title}
-                    headers={template.previewData.headers}
-                    rows={template.previewData.rows}
-                  />
-                  <p className="mt-3 text-center text-xs text-muted">
-                    Pratinjau — template asli berisi data contoh lengkap beserta rumus validasi dropdown
+                {template.operationalNotes[0] ? (
+                  <p className="mt-4 text-xs leading-5 text-muted">
+                    {template.operationalNotes[0]}
                   </p>
+                ) : null}
+
+                <div className="mt-auto pt-5">
+                  <DownloadButton
+                    href={`/templates/${template.slug}/download`}
+                    label={template.downloadLabel}
+                    template={template}
+                  />
+                  <p className="mt-2 text-center text-xs text-muted">
+                    {template.sheets.length} lembar · XLSX · Tanpa akun
+                  </p>
+                  {[
+                    "pph21-tax-calculator",
+                    "thr-tracker",
+                    "bpjs-tracker",
+                    "overtime-tracker",
+                  ].includes(template.slug) ? (
+                    <p className="mt-1 text-center text-[11px] text-amber-700">
+                      Verifikasi aturan resmi terbaru sebelum payroll final.
+                    </p>
+                  ) : null}
                 </div>
               </div>
             </article>
@@ -354,7 +313,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* #7: Strengthened final CTA — full-width band */}
       <section className="border-t border-line bg-accent">
         <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
           <div className="text-center">
@@ -376,58 +334,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* #4: Donation section moved AFTER final CTA, #6: emojis removed */}
-      <section className="border-t border-line bg-surface">
-        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="text-sm font-semibold text-accent">Dukungan</p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-normal">
-              PeopleSheet gratis dan akan selalu gratis
-            </h2>
-            <p className="mt-3 text-sm leading-6 text-muted">
-              Jika template ini menghemat waktu Anda, Anda dapat mendukung proyek ini.
-              Setiap donasi membantu kami terus membuat template baru.
-            </p>
-            <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-              <a
-                href="https://saweria.co/peoplesheet"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-accent px-6 text-sm font-semibold text-white transition hover:bg-accent/90"
-              >
-                Dukung via Saweria
-              </a>
-              <a
-                href="https://trakteer.id/peoplesheet"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-line bg-white px-6 text-sm font-semibold text-foreground transition hover:bg-surface"
-              >
-                Dukung via Trakteer
-              </a>
-            </div>
-            <p className="mt-4 text-xs text-muted">
-              Tidak dipaksa. Template gratis selamanya. Ini hanya jika Anda ingin mengucapkan terima kasih.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* #6: Emoji removed from footer */}
       <footer className="border-t border-line bg-white">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-4 py-5 text-xs text-muted sm:flex-row sm:justify-between sm:px-6 lg:px-8">
-          <p>
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-5 text-xs text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+          <p className="text-center sm:text-left">
             PeopleSheet — dibuat oleh{" "}
             <a
               href="https://linkedin.com/in/rofi-ibnu-haafizh"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline hover:text-foreground"
+              className="inline-flex min-h-11 min-w-11 items-center justify-center underline hover:text-foreground sm:min-h-0 sm:min-w-0"
             >
               Rofi
             </a>
           </p>
-          <p>Template spreadsheet HR gratis untuk tim Indonesia</p>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+            <span>Template HR gratis</span>
+            <a
+              href="https://saweria.co/peoplesheet"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center underline hover:text-foreground sm:min-h-0"
+            >
+              Saweria
+            </a>
+            <a
+              href="https://trakteer.id/peoplesheet"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center underline hover:text-foreground sm:min-h-0"
+            >
+              Trakteer
+            </a>
+          </div>
         </div>
       </footer>
     </main>
