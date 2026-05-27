@@ -208,6 +208,11 @@ export function buildPph21TaxCalculator(workbook: ExcelJS.Workbook, template: Te
     ["EMP-005", "Maya Anggraini", "Keuangan", 6200000, "K/0"],
   ];
 
+  // TER rate lookup: uses employee's PTKP category (col F) and monthly gross (col D)
+  // to find the correct rate from the TER sheet via INDEX/MATCH with multiple criteria
+  const terLookup = (r: number) =>
+    `IF(I${r}<=0,0,INDEX(TER!$E$5:$E$184,MATCH(1,(TER!$A$5:$A$184=F${r})*(TER!$C$5:$C$184<=D${r})*((TER!$D$5:$D$184>=D${r})+(TER!$D$5:$D$184="—")),0)))`;
+
   addRows(empTax, 5, employees.map((emp, i) => {
     const r = i + 5;
     return [
@@ -216,7 +221,7 @@ export function buildPph21TaxCalculator(workbook: ExcelJS.Workbook, template: Te
       { formula: `D${r}*12` },
       { formula: `G${r}*0.05` },
       { formula: `G${r}-H${r}-VLOOKUP(E${r},Setup!$A$18:$B$25,2,FALSE)` },
-      { formula: `IF(I${r}<=0,0,IF(D${r}<=5400000,0,IF(D${r}<=6600000,0.01,IF(D${r}<=8050000,0.0175,IF(D${r}<=10100000,0.025,IF(D${r}<=13350000,0.04,IF(D${r}<=17500000,0.06,IF(D${r}<=26500000,0.08,IF(D${r}<=43700000,0.1,0.125)))))))))` },
+      { formula: terLookup(r) },
       { formula: `IF(I${r}<=0,0,I${r}*J${r})` },
       { formula: `K${r}/12` },
     ];

@@ -34,11 +34,11 @@ export function buildThrTracker(workbook: ExcelJS.Workbook, template: TemplatePr
   ]);
   calc.columns = widths([14, 22, 16, 14, 16, 16, 12, 16, 12, 14, 28]);
   addRows(calc, 5, [
-    ["EMP-001", "Dina Prasetya", "Operations", new Date(2024, 2, 1), { formula: 'DATEDIF(D5,TODAY(),"M")' }, 7500000, { formula: 'IF(E5>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G5="Yes",F5,F5*E5/12)' }, "Paid", new Date(2026, 3, 15), ""],
-    ["EMP-002", "Rafi Mahendra", "People", new Date(2023, 5, 15), { formula: 'DATEDIF(D6,TODAY(),"M")' }, 12000000, { formula: 'IF(E6>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G6="Yes",F6,F6*E6/12)' }, "Paid", new Date(2026, 3, 15), ""],
-    ["EMP-003", "Sari Wulandari", "Finance", new Date(2025, 0, 1), { formula: 'DATEDIF(D7,TODAY(),"M")' }, 6800000, { formula: 'IF(E7>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G7="Yes",F7,F7*E7/12)' }, "Pending", "", ""],
-    ["EMP-004", "Budi Santoso", "Operations", new Date(2025, 10, 10), { formula: 'DATEDIF(D8,TODAY(),"M")' }, 5500000, { formula: 'IF(E8>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G8="Yes",F8,F8*E8/12)' }, "Pending", "", "Pro-rated"],
-    ["EMP-005", "Maya Anggraini", "Finance", new Date(2024, 8, 1), { formula: 'DATEDIF(D9,TODAY(),"M")' }, 6200000, { formula: 'IF(E9>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G9="Yes",F9,F9*E9/12)' }, "Paid", new Date(2026, 3, 15), ""],
+    ["EMP-001", "Dina Prasetya", "Operations", new Date(2024, 2, 1), { formula: 'DATEDIF(D5,DATE(Setup!$B$12,12,31),"M")' }, 7500000, { formula: 'IF(E5>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G5="Yes",F5,F5*E5/12)' }, "Paid", new Date(2026, 3, 15), ""],
+    ["EMP-002", "Rafi Mahendra", "People", new Date(2023, 5, 15), { formula: 'DATEDIF(D6,DATE(Setup!$B$12,12,31),"M")' }, 12000000, { formula: 'IF(E6>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G6="Yes",F6,F6*E6/12)' }, "Paid", new Date(2026, 3, 15), ""],
+    ["EMP-003", "Sari Wulandari", "Finance", new Date(2025, 0, 1), { formula: 'DATEDIF(D7,DATE(Setup!$B$12,12,31),"M")' }, 6800000, { formula: 'IF(E7>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G7="Yes",F7,F7*E7/12)' }, "Pending", "", ""],
+    ["EMP-004", "Budi Santoso", "Operations", new Date(2025, 10, 10), { formula: 'DATEDIF(D8,DATE(Setup!$B$12,12,31),"M")' }, 5500000, { formula: 'IF(E8>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G8="Yes",F8,F8*E8/12)' }, "Pending", "", "Pro-rated"],
+    ["EMP-005", "Maya Anggraini", "Finance", new Date(2024, 8, 1), { formula: 'DATEDIF(D9,DATE(Setup!$B$12,12,31),"M")' }, 6200000, { formula: 'IF(E9>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G9="Yes",F9,F9*E9/12)' }, "Paid", new Date(2026, 3, 15), ""],
   ], { alternate: true });
   for (let row = 5; row <= 25; row += 1) {
     calc.getCell(row, 9).dataValidation = { type: "list", allowBlank: true, formulae: ['"Pending,Paid"'] };
