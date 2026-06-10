@@ -84,3 +84,17 @@ textarea {
 .reveal-delay-3 {
   transition-delay: 0.3s;
 }
+
+/* FAQ Accordion */
+details summary {
+  list-style: none;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details summary::marker {
+  display: none;
+  content: "";
+}

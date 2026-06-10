@@ -4,6 +4,8 @@ import type { TemplateCategory } from "@/lib/templates";
 import { SpreadsheetPreview } from "@/components/spreadsheet-preview";
 import { DownloadButton } from "@/components/download-button";
 import { ScrollReveal } from "@/components/scroll-reveal";
+import { FaqAccordion } from "@/components/faq-accordion";
+import { landingFaqItems } from "@/lib/landing-faq";
 
 function CategoryIcon({ category, className = "" }: { category: TemplateCategory; className?: string }) {
   const cls = `h-5 w-5 ${className}`;
@@ -66,6 +68,24 @@ function CategoryIcon({ category, className = "" }: { category: TemplateCategory
 export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: landingFaqItems.map((item) => ({
+              "@type": "Question",
+              name: item.question,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.answer,
+              },
+            })),
+          }),
+        }}
+      />
+
       {/* Header */}
       <header className="border-b border-line bg-white">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
@@ -451,6 +471,21 @@ export default function Home() {
                 ))}
               </div>
             </div>
+          </div>
+        </section>
+      </ScrollReveal>
+
+      {/* FAQ */}
+      <ScrollReveal>
+        <section className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-sm font-semibold text-accent">Pertanyaan Umum</p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-normal">
+              Yang sering ditanyakan
+            </h2>
+          </div>
+          <div className="mx-auto mt-8 max-w-2xl">
+            <FaqAccordion />
           </div>
         </section>
       </ScrollReveal>
