@@ -50,7 +50,7 @@ Cukup klik "Sesuaikan" pada template, atur parameter, lalu klik "Buat & Unduh".
 ## Operasional
 
 - Health check endpoint: `GET /api/health`
-- Sitemap: `https://peoplesheet.id/sitemap.xml`
+- Sitemap: `https://peoplesheet.rofiibnu.com/sitemap.xml`
 - CI: lint + test + build via GitHub Actions
 
 ## Tech Stack
