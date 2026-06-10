@@ -37,6 +37,11 @@ export type CustomizationConfig = {
   fields: CustomField[];
 };
 
+export type FaqItem = {
+  question: string;
+  answer: string;
+};
+
 export type TemplateProduct = {
   slug: TemplateSlug;
   name: string;
@@ -54,6 +59,7 @@ export type TemplateProduct = {
   teamSize: string;
   previewData: PreviewData;
   customizations?: CustomizationConfig;
+  faq: FaqItem[];
 };
 
 const currentMonthDefault = "__current_month__";
@@ -143,6 +149,20 @@ export const templates: TemplateProduct[] = [
         ["Maya Anggraini", "Keuangan", "Hadir", "Hadir", "Libur", "Libur", "Hadir", "Hadir", "Hadir"],
       ],
     },
+    faq: [
+      {
+        question: "Apakah template ini kompatibel dengan Google Sheets?",
+        answer: "Ya, file XLSX bisa dibuka langsung di Google Sheets. Semua rumus dan dropdown tetap berfungsi.",
+      },
+      {
+        question: "Bulan apa saja yang bisa dipilih?",
+        answer: "Semua bulan. Cukup ubah bulan di sheet Setup dan header tanggal otomatis menyesuaikan.",
+      },
+      {
+        question: "Berapa karyawan yang bisa dicatat?",
+        answer: "Template dirancang untuk 5-50 karyawan. Bisa ditambah baris manual kalau tim lebih besar.",
+      },
+    ],
   },
   {
     slug: "leave-tracker",
@@ -229,6 +249,20 @@ export const templates: TemplateProduct[] = [
         ["Maya Anggraini", "Keuangan", 0, 12, 0, 12],
       ],
     },
+    faq: [
+      {
+        question: "Bagaimana cara menghitung cuti prorata?",
+        answer: "Isi tanggal masuk karyawan di sheet Leave Usage. Rumus NETWORKDAYS otomatis menghitung hari kerja antara tanggal mulai dan selesai cuti.",
+      },
+      {
+        question: "Apakah bisa menambah jenis cuti selain tahunan?",
+        answer: "Bisa. Dropdown status mendukung cuti tahunan, sakit, dan tanpa upah. Anda bisa menyesuaikan label di sheet Setup.",
+      },
+      {
+        question: "Bagaimana saldo cuti terupdate?",
+        answer: "Saldo otomatis berkurang saat Anda mencatat cuti dengan status 'Disetujui' di sheet Leave Usage melalui rumus SUMIFS.",
+      },
+    ],
   },
   {
     slug: "pph21-tax-calculator",
@@ -318,6 +352,20 @@ export const templates: TemplateProduct[] = [
         ["Maya Anggraini", "Keuangan", 6200000, "K/0", "A", "0,75%", 46500],
       ],
     },
+    faq: [
+      {
+        question: "Apakah template ini sesuai regulasi terbaru?",
+        answer: "Ya. Menggunakan metode TER sesuai PP 58/2023 yang berlaku sejak Januari 2024. Selalu verifikasi aturan resmi terbaru.",
+      },
+      {
+        question: "Bagaimana cara memilih kategori TER yang tepat?",
+        answer: "Kategori ditentukan otomatis berdasarkan status PTKP. Kategori A untuk TK/0 dan K/0, B untuk K/1 dan K/2, C untuk K/3.",
+      },
+      {
+        question: "Apakah bisa dipakai untuk payroll final?",
+        answer: "Template ini alat bantu operasional. Untuk payroll final, selalu verifikasi perhitungan dengan aturan DJP terbaru atau konsultan pajak.",
+      },
+    ],
   },
   {
     slug: "thr-tracker",
@@ -400,6 +448,20 @@ export const templates: TemplateProduct[] = [
         ["Maya Anggraini", "Keuangan", "01 Sep 2024", 20, 6200000, 6200000, "Dibayar"],
       ],
     },
+    faq: [
+      {
+        question: "Kapan THR harus dibayar?",
+        answer: "Sesuai PP 78/2015, THR harus dibayar paling lambat 7 hari sebelum hari raya keagamaan karyawan.",
+      },
+      {
+        question: "Bagaimana THR untuk karyawan baru?",
+        answer: "Karyawan dengan masa kerja 12 bulan atau lebih mendapat THR penuh. Di bawah 12 bulan, THR dihitung secara prorata.",
+      },
+      {
+        question: "Bisakah status pembayaran dilacak?",
+        answer: "Ya, sheet THR Calculation memiliki dropdown status (Menunggu/Dibayar) untuk melacak pencairan per karyawan.",
+      },
+    ],
   },
   {
     slug: "bpjs-tracker",
@@ -483,6 +545,20 @@ export const templates: TemplateProduct[] = [
         ["Maya Anggraini", "Keuangan", 6200000, 124000, 62000, 62000, 248000, 634880],
       ],
     },
+    faq: [
+      {
+        question: "Apakah tarif BPJS bisa diubah?",
+        answer: "Ya, semua tarif iuran bisa diatur di sheet Setup. Rumus di sheet BPJS Contributions otomatis menyesuaikan.",
+      },
+      {
+        question: "BPJS apa saja yang dicakup?",
+        answer: "Lengkap: JHT, JP, JKK, JKM, dan BPJS Kesehatan. Masing-masing terpisah untuk porsi karyawan dan perusahaan.",
+      },
+      {
+        question: "Apakah tarif sudah sesuai regulasi terbaru?",
+        answer: "Template menggunakan tarif standar Indonesia. Selalu verifikasi tarif iuran terbaru di bpjs-kesehatan.go.id sebelum dipakai untuk payroll resmi.",
+      },
+    ],
   },
   {
     slug: "performance-review",
@@ -565,6 +641,20 @@ export const templates: TemplateProduct[] = [
         ["Maya Anggraini", "Keuangan", 4, 4, 5, 22, "Baik"],
       ],
     },
+    faq: [
+      {
+        question: "Kategori KPI apa saja yang dinilai?",
+        answer: "5 kategori: Kualitas, Produktivitas, Kerja Tim, Inisiatif, dan Komunikasi. Setiap kategori dinilai 1-5.",
+      },
+      {
+        question: "Bagaimana rating akhir dihitung?",
+        answer: "Rumus otomatis menjumlahkan semua skor KPI dan memberikan label (Sangat Baik, Baik, Sesuai Ekspektasi, Perlu Perbaikan) berdasarkan rentang total.",
+      },
+      {
+        question: "Bisakah kategori KPI diubah?",
+        answer: "Ya, kolom KPI bisa disesuaikan dengan kerangka evaluasi perusahaan Anda. Cukup ganti nama kategori di header.",
+      },
+    ],
   },
   {
     slug: "employee-master-data",
@@ -641,6 +731,20 @@ export const templates: TemplateProduct[] = [
         ["EMP-005", "Maya Anggraini", "P", "Keuangan", "Supervisor", "01 Sep 2024", "Tetap", "Aktif"],
       ],
     },
+    faq: [
+      {
+        question: "Data karyawan apa saja yang bisa disimpan?",
+        answer: "17+ field: data pribadi, informasi kerja, rekening bank, NPWP, nomor BPJS, dan lainnya.",
+      },
+      {
+        question: "Apakah ada statistik otomatis?",
+        answer: "Ya, sheet Statistics menggunakan rumus COUNTIF untuk menampilkan jumlah karyawan per divisi, tipe, status, dan jenis kelamin.",
+      },
+      {
+        question: "Bisa dipakai untuk compliance?",
+        answer: "Template mencakup kolom NPWP dan BPJS untuk kepatuhan. Namun, selalu verifikasi data dengan sumber resmi.",
+      },
+    ],
   },
   {
     slug: "overtime-tracker",
@@ -723,6 +827,20 @@ export const templates: TemplateProduct[] = [
         ["Maya Anggraini", "25 May", "Akhir Pekan", 2, 2.0, 35000, 140000],
       ],
     },
+    faq: [
+      {
+        question: "Apakah pengali tarif lembur sesuai UU?",
+        answer: "Ya. Mengikuti UU 13/2003 (Ketenagakerjaan): 1.5x hari kerja, 2x akhir pekan, dan pengali lebih tinggi untuk hari libur nasional.",
+      },
+      {
+        question: "Bagaimana jam lembur dihitung?",
+        answer: "Cukup isi jam mulai dan selesai. Rumus otomatis menghitung durasi lembur dalam jam desimal.",
+      },
+      {
+        question: "Bisakah melihat total lembur bulanan?",
+        answer: "Ya, sheet Monthly Summary merekap total jam dan bayaran lembur per karyawan menggunakan rumus SUMIF.",
+      },
+    ],
   },
   {
     slug: "turnover-tracker",
@@ -804,6 +922,20 @@ export const templates: TemplateProduct[] = [
         ["Hendra Wijaya", "Keuangan", "20 Mar 2024", "15 May 2026", 26, "Manajemen", "Kosong"],
       ],
     },
+    faq: [
+      {
+        question: "Kategori alasan apa saja yang tersedia?",
+        answer: "6 kategori dropdown: Gaji, Karir, Pribadi, Relokasi, Manajemen, dan Lainnya.",
+      },
+      {
+        question: "Bagaimana masa kerja dihitung?",
+        answer: "Rumus otomatis menghitung selisih antara tanggal masuk dan keluar dalam satuan bulan.",
+      },
+      {
+        question: "Bisa melihat tingkat turnover per divisi?",
+        answer: "Ya, sheet Summary menampilkan jumlah turnover per divisi, per alasan, rata-rata masa kerja, dan tingkat turnover.",
+      },
+    ],
   },
 ];
 
@@ -813,4 +945,12 @@ export const categories = Array.from(
 
 export function getTemplate(slug: string): TemplateProduct | undefined {
   return templates.find((template) => template.slug === slug);
+}
+
+export function getTemplateBySlug(slug: string): TemplateProduct | undefined {
+  return templates.find((t) => t.slug === slug);
+}
+
+export function getAllSlugs(): string[] {
+  return templates.map((t) => t.slug);
 }
