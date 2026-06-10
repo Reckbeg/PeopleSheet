@@ -261,6 +261,52 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Social Proof */}
+      <ScrollReveal>
+        <section className="border-t border-line bg-white">
+          <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+            <div className="grid gap-8 sm:grid-cols-3">
+              {/* Stat 1 */}
+              <div className="text-center">
+                <p className="text-3xl font-semibold text-foreground">9</p>
+                <p className="mt-1 text-sm text-muted">Template HR siap pakai</p>
+              </div>
+              {/* Stat 2 */}
+              <div className="text-center">
+                <p className="text-3xl font-semibold text-foreground">100%</p>
+                <p className="mt-1 text-sm text-muted">Gratis, selamanya</p>
+              </div>
+              {/* Stat 3 */}
+              <div className="text-center">
+                <p className="text-3xl font-semibold text-foreground">30 detik</p>
+                <p className="mt-1 text-sm text-muted">Dari buka sampai unduh</p>
+              </div>
+            </div>
+
+            {/* Trust badges */}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              {[
+                "Tanpa login",
+                "Tanpa tracking",
+                "Data tetap di Anda",
+                "Open source MIT",
+                "Kompatibel Excel & Sheets",
+              ].map((badge) => (
+                <span
+                  key={badge}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-medium text-foreground"
+                >
+                  <svg className="h-3 w-3 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  {badge}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+      </ScrollReveal>
+
       {/* Kenapa PeopleSheet - tinted bg with checkmark list */}
       <ScrollReveal>
         <section id="why" className="border-t border-line bg-accent-soft/40">
