@@ -839,7 +839,7 @@ export const templates: TemplateProduct[] = [
     faq: [
       {
         question: "Apakah pengali tarif lembur sesuai UU?",
-        answer: "Ya. Mengikuti Permenaker 10/2022: hari kerja jam pertama 1.5x, jam ke-2 dst 2x. Akhir pekan/libur: 8 jam pertama 2x, sisanya 3x. Catatan untuk 6 hari kerja tersedia di Setup.",
+        answer: "Ya. Mengikuti Permenaker 10/2022: hari kerja jam pertama 1.5x, jam ke-2 dst 2x. Akhir pekan/libur: jam 1-8 = 2x, jam ke-9 = 3x, jam ke-10 dst = 4x. Catatan untuk 6 hari kerja tersedia di Setup.",
       },
       {
         question: "Bagaimana jam lembur dihitung?",
