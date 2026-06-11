@@ -180,12 +180,12 @@ export function buildPph21TaxCalculator(workbook: ExcelJS.Workbook, template: Te
   addHeader(setup, 28, ["PTKP", "Kategori TER"]);
   addRows(setup, 29, [
     ["TK/0", "A"],
-    ["TK/1", "A"],
+    ["TK/1", "B"],
     ["TK/2", "B"],
-    ["TK/3", "B"],
-    ["K/0", "A"],
+    ["TK/3", "C"],
+    ["K/0", "B"],
     ["K/1", "B"],
-    ["K/2", "B"],
+    ["K/2", "C"],
     ["K/3", "C"],
   ]);
 

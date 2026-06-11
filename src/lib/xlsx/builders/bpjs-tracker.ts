@@ -22,6 +22,17 @@ export function buildBpjsTracker(workbook: ExcelJS.Workbook, template: TemplateP
   setup.getCell("A13").value = "Disclaimer";
   setup.getCell("B13").value = "Pastikan tarif dan batas upah terbaru sebelum digunakan untuk payroll resmi.";
   setup.getCell("B13").font = { italic: true, color: { argb: palette.muted } };
+  setup.getCell("A24").value = "Catatan";
+  setup.getCell("A24").font = { bold: true, color: { argb: palette.ink } };
+  setup.getCell("A25").value = "JKK";
+  setup.getCell("B25").value = "0.24% = Tier 1 (risiko rendah). Ubah sesuai klasifikasi risiko perusahaan (0.24%-1.74%).";
+  setup.getCell("B25").font = { italic: true, color: { argb: palette.muted } };
+  setup.getCell("A26").value = "BPJS Kes (Prsh)";
+  setup.getCell("B26").value = "4% = tarif insentif pemerintah. Tarif asli PP 87/2013 adalah 5%. Verifikasi tarif terbaru.";
+  setup.getCell("B26").font = { italic: true, color: { argb: palette.muted } };
+  setup.getCell("A27").value = "Batas Upah JP";
+  setup.getCell("B27").value = "Rp 11.086.300 (Permenaker 2024). Verifikasi apakah ada penyesuaian tahun berjalan.";
+  setup.getCell("B27").font = { italic: true, color: { argb: palette.muted } };
 
   const rates = [
     ["JHT Employee", 0.02],
