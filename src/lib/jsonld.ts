@@ -17,11 +17,6 @@ export function websiteJsonLd() {
     "@type": "WebSite",
     name: SITE_NAME,
     url: SITE_URL,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${SITE_URL}/templates/{slug}`,
-      "query-input": "required name=slug",
-    },
   };
 }
 
