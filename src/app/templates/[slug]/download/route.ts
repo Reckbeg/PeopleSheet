@@ -106,6 +106,7 @@ export async function GET(
     reviewPeriod: sanitize(searchParams.get("reviewPeriod"), 50),
     taxYear: parseNumber(searchParams.get("taxYear"), 1900, 3000),
     thrYear: parseNumber(searchParams.get("thrYear"), 1900, 3000),
+    holidayDate: sanitize(searchParams.get("holidayDate"), 20),
   };
 
   try {

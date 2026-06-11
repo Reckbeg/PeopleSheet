@@ -25,6 +25,7 @@ export type TemplateBuildOptions = {
   reviewPeriod?: string;
   taxYear?: number;
   thrYear?: number;
+  holidayDate?: string;
 };
 
 export type TemplateBuilder = (

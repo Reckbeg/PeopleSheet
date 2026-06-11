@@ -132,12 +132,12 @@ describe("workbook generation", () => {
     const empTax = workbook.getWorksheet("Employee Tax");
 
     expect(setup?.getCell("B29").value).toBe("A");
-    expect(setup?.getCell("B30").value).toBe("A");
+    expect(setup?.getCell("B30").value).toBe("B");
     expect(setup?.getCell("B31").value).toBe("B");
-    expect(setup?.getCell("B32").value).toBe("B");
-    expect(setup?.getCell("B33").value).toBe("A");
+    expect(setup?.getCell("B32").value).toBe("C");
+    expect(setup?.getCell("B33").value).toBe("B");
     expect(setup?.getCell("B34").value).toBe("B");
-    expect(setup?.getCell("B35").value).toBe("B");
+    expect(setup?.getCell("B35").value).toBe("C");
     expect(setup?.getCell("B36").value).toBe("C");
 
     expect(empTax?.getCell("H6").value).toMatchObject({

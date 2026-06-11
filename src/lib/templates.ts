@@ -359,7 +359,7 @@ export const templates: TemplateProduct[] = [
       },
       {
         question: "Bagaimana cara memilih kategori TER yang tepat?",
-        answer: "Kategori ditentukan otomatis berdasarkan status PTKP. Kategori A untuk TK/0 dan K/0, B untuk K/1 dan K/2, C untuk K/3.",
+        answer: "Kategori ditentukan otomatis berdasarkan status PTKP. Kategori A untuk TK/0, B untuk TK/1, TK/2, K/0, dan K/1, C untuk TK/3, K/2, dan K/3.",
       },
       {
         question: "Apakah bisa dipakai untuk payroll final?",
@@ -380,18 +380,18 @@ export const templates: TemplateProduct[] = [
     features: [
       "Kelayakan THR berdasarkan masa kerja (min 12 bulan)",
       "Rumus THR proporsional untuk masa kerja lebih pendek",
+      "Masa kerja dihitung sampai tanggal hari raya (bukan akhir tahun)",
       "Pelacakan status pembayaran (Menunggu/Dibayar)",
-      "Rekap per divisi dan total pencairan",
     ],
     preview: [
-      "Atur tahun THR dan referensi hari raya keagamaan di Setup.",
-      "Sheet THR Calculation otomatis menentukan kelayakan dan jumlah berdasarkan masa kerja.",
+      "Atur tahun THR dan tanggal hari raya keagamaan di Setup.",
+      "Sheet THR Calculation otomatis menentukan kelayakan dan jumlah berdasarkan masa kerja sampai hari raya.",
       "Sheet Summary menunjukkan total pencairan per divisi.",
     ],
     previewSheets: [
       {
         name: "Setup",
-        description: "Tahun THR, aturan kelayakan, referensi hari raya keagamaan",
+        description: "Tahun THR, tanggal hari raya keagamaan, aturan kelayakan",
       },
       {
         name: "THR Calculation",
@@ -405,6 +405,7 @@ export const templates: TemplateProduct[] = [
     operationalNotes: [
       "Kompatibel dengan Excel 2016+ dan Google Sheets",
       "THR proporsional untuk karyawan dengan masa kerja di bawah 12 bulan",
+      "Masa kerja dihitung sampai tanggal hari raya (bisa diatur di Setup)",
       "Dropdown status pembayaran (Menunggu, Dibayar)",
       "Format mata uang Rupiah sudah diterapkan",
       "Sesuai PP 78/2015 tentang pedoman THR",
@@ -426,6 +427,13 @@ export const templates: TemplateProduct[] = [
           label: "Periode THR",
           type: "year",
           default: 2026,
+        },
+        {
+          key: "holidayDate",
+          label: "Tanggal hari raya",
+          type: "text",
+          default: "2026-03-20",
+          placeholder: "Contoh: 2026-03-20 (Idul Fitri)",
         },
       ],
     },
@@ -477,7 +485,7 @@ export const templates: TemplateProduct[] = [
       "Tarif iuran yang dapat diatur di sheet Setup",
       "Perhitungan iuran karyawan dan perusahaan melalui rumus",
       "5 komponen BPJS lengkap (JHT, JP, JKK, JKM, BPJS Kesehatan)",
-      "Total biaya perusahaan per karyawan",
+      "Catatan JKK tier risiko dan tarif insentif BPJS Kesehatan",
     ],
     preview: [
       "Atur tarif iuran sekali di Setup — semua rumus merujuk ke sana.",
@@ -501,9 +509,10 @@ export const templates: TemplateProduct[] = [
     operationalNotes: [
       "Kompatibel dengan Excel 2016+ dan Google Sheets",
       "Semua tarif dapat diatur di Setup — rumus otomatis menyesuaikan",
-      "Mencakup JHT, JP, JKK, JKM, dan BPJS Kesehatan",
+      "Cakupan: JHT, JP, JKK, JKM, dan BPJS Kesehatan",
+      "JKK 0.24% = Tier 1 (risiko rendah), ubah sesuai klasifikasi perusahaan",
+      "BPJS Kes 4% = tarif insentif, bukan tarif asli PP 87/2013 (5%)",
       "Format mata uang Rupiah sudah diterapkan",
-      "Sesuai regulasi BPJS Indonesia terkini",
       "Disclaimer: verifikasi tarif iuran terbaru sebelum dipakai untuk payroll resmi.",
     ],
     useCase: "Perhitungan iuran BPJS bulanan untuk payroll",
@@ -556,7 +565,7 @@ export const templates: TemplateProduct[] = [
       },
       {
         question: "Apakah tarif sudah sesuai regulasi terbaru?",
-        answer: "Template menggunakan tarif standar Indonesia. Selalu verifikasi tarif iuran terbaru di bpjs-kesehatan.go.id sebelum dipakai untuk payroll resmi.",
+        answer: "Template menggunakan tarif standar Indonesia. JKK 0.24% (Tier 1 risiko rendah) dan BPJS Kes 4% (tarif insentif). Selalu verifikasi tarif iuran terbaru di bpjs-kesehatan.go.id dan bpjsketenagakerjaan.go.id.",
       },
     ],
   },
@@ -757,14 +766,14 @@ export const templates: TemplateProduct[] = [
     downloadLabel: "Unduh template lembur",
     sheets: ["Setup", "Overtime Log", "Monthly Summary"],
     features: [
-      "Tarif lembur sesuai UU Ketenagakerjaan",
-      "Pengali tarif hari kerja, akhir pekan, dan hari libur",
+      "Tarif lembur sesuai Permenaker 10/2022",
+      "Perhitungan per jam: jam pertama 1.5x, sisanya 2x (hari kerja)",
       "Rumus otomatis jam dan bayaran lembur",
-      "Rekap bulanan dengan rekap SUMIF",
+      "Catatan 5 hari vs 6 hari kerja dan batas lembur",
     ],
     preview: [
       "Atur tarif lembur di Setup sesuai UU Ketenagakerjaan Indonesia.",
-      "Sheet Overtime Log menghitung jam, menerapkan pengali tarif, dan menghitung bayaran lembur.",
+      "Sheet Overtime Log menghitung bayaran per jam dengan formula terpisah (1.5x jam pertama, 2x sisanya).",
       "Sheet Monthly Summary menggabungkan total jam dan bayaran per karyawan.",
     ],
     previewSheets: [
@@ -783,9 +792,10 @@ export const templates: TemplateProduct[] = [
     ],
     operationalNotes: [
       "Kompatibel dengan Excel 2016+ dan Google Sheets",
-      "Pengali tarif sesuai UU 13/2003 (Ketenagakerjaan)",
+      "Perhitungan per jam: jam pertama 1.5x, jam ke-2 dst 2x (hari kerja)",
       "Dropdown tipe hari (Hari Kerja, Akhir Pekan, Hari Libur)",
-      "Dropdown status persetujuan",
+      "Catatan untuk 6 hari kerja tersedia di sheet Setup",
+      "Batas lembur: max 4 jam/hari, 18 jam/minggu (Permenaker 10/2022)",
       "Format mata uang Rupiah sudah diterapkan",
       "Disclaimer: verifikasi aturan lembur terbaru sebelum dipakai sebagai dasar kepatuhan.",
     ],
@@ -815,22 +825,21 @@ export const templates: TemplateProduct[] = [
         "Tanggal",
         "Tipe Hari",
         "Jam",
-        "Pengali",
-        "Tarif/Jam",
+        "Gaji",
         "Bayaran Lembur",
       ],
       rows: [
-        ["Dina Prasetya", "05 May", "Hari Kerja", 2, 1.5, 42000, 126000],
-        ["Sari Wulandari", "10 May", "Hari Kerja", 3, 1.5, 38000, 171000],
-        ["Budi Santoso", "17 May", "Hari Kerja", 4, 1.5, 31000, 186000],
-        ["Rafi Mahendra", "24 May", "Akhir Pekan", 4, 2.0, 67000, 536000],
-        ["Maya Anggraini", "25 May", "Akhir Pekan", 2, 2.0, 35000, 140000],
+        ["Dina Prasetya", "05 May", "Hari Kerja", 2, 7500000, 128631],
+        ["Sari Wulandari", "10 May", "Hari Kerja", 3, 6800000, 176023],
+        ["Budi Santoso", "17 May", "Hari Kerja", 4, 5500000, 190983],
+        ["Rafi Mahendra", "24 May", "Akhir Pekan", 4, 12000000, 553098],
+        ["Maya Anggraini", "25 May", "Akhir Pekan", 2, 6200000, 142951],
       ],
     },
     faq: [
       {
         question: "Apakah pengali tarif lembur sesuai UU?",
-        answer: "Ya. Mengikuti UU 13/2003 (Ketenagakerjaan): 1.5x hari kerja, 2x akhir pekan, dan pengali lebih tinggi untuk hari libur nasional.",
+        answer: "Ya. Mengikuti Permenaker 10/2022: hari kerja jam pertama 1.5x, jam ke-2 dst 2x. Akhir pekan/libur: 8 jam pertama 2x, sisanya 3x. Catatan untuk 6 hari kerja tersedia di Setup.",
       },
       {
         question: "Bagaimana jam lembur dihitung?",

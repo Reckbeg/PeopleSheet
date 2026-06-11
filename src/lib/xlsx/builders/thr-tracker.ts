@@ -21,9 +21,14 @@ export function buildThrTracker(workbook: ExcelJS.Workbook, template: TemplatePr
   setup.getCell("B12").value = options?.thrYear ?? options?.year ?? 2026;
   setup.getCell("A13").value = "Min tenure for full THR (months)";
   setup.getCell("B13").value = 12;
-  setup.getCell("A14").value = "Disclaimer";
-  setup.getCell("B14").value = "Verifikasi ketentuan THR terbaru sebelum dipakai untuk kepatuhan.";
-  setup.getCell("B14").font = { italic: true, color: { argb: palette.muted } };
+  setup.getCell("A14").value = "Religious holiday date";
+  const defaultHoliday = new Date(2026, 2, 20); // Eid al-Fitr 2026
+  const holidayDate = options?.holidayDate ? new Date(options.holidayDate) : defaultHoliday;
+  setup.getCell("B14").value = holidayDate;
+  setup.getCell("B14").numFmt = "dd mmm yyyy";
+  setup.getCell("A15").value = "Disclaimer";
+  setup.getCell("B15").value = "Verifikasi ketentuan THR terbaru sebelum dipakai untuk kepatuhan.";
+  setup.getCell("B15").font = { italic: true, color: { argb: palette.muted } };
 
   const calc = workbook.addWorksheet("THR Calculation");
   title(calc, "THR Calculation", "THR eligibility and amount per employee.");
@@ -34,11 +39,11 @@ export function buildThrTracker(workbook: ExcelJS.Workbook, template: TemplatePr
   ]);
   calc.columns = widths([14, 22, 16, 14, 16, 16, 12, 16, 12, 14, 28]);
   addRows(calc, 5, [
-    ["EMP-001", "Dina Prasetya", "Operations", new Date(2024, 2, 1), { formula: 'DATEDIF(D5,DATE(Setup!$B$12,12,31),"M")' }, 7500000, { formula: 'IF(E5>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G5="Yes",F5,F5*E5/12)' }, "Paid", new Date(2026, 3, 15), ""],
-    ["EMP-002", "Rafi Mahendra", "People", new Date(2023, 5, 15), { formula: 'DATEDIF(D6,DATE(Setup!$B$12,12,31),"M")' }, 12000000, { formula: 'IF(E6>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G6="Yes",F6,F6*E6/12)' }, "Paid", new Date(2026, 3, 15), ""],
-    ["EMP-003", "Sari Wulandari", "Finance", new Date(2025, 0, 1), { formula: 'DATEDIF(D7,DATE(Setup!$B$12,12,31),"M")' }, 6800000, { formula: 'IF(E7>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G7="Yes",F7,F7*E7/12)' }, "Pending", "", ""],
-    ["EMP-004", "Budi Santoso", "Operations", new Date(2025, 10, 10), { formula: 'DATEDIF(D8,DATE(Setup!$B$12,12,31),"M")' }, 5500000, { formula: 'IF(E8>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G8="Yes",F8,F8*E8/12)' }, "Pending", "", "Pro-rated"],
-    ["EMP-005", "Maya Anggraini", "Finance", new Date(2024, 8, 1), { formula: 'DATEDIF(D9,DATE(Setup!$B$12,12,31),"M")' }, 6200000, { formula: 'IF(E9>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G9="Yes",F9,F9*E9/12)' }, "Paid", new Date(2026, 3, 15), ""],
+    ["EMP-001", "Dina Prasetya", "Operations", new Date(2024, 2, 1), { formula: 'DATEDIF(D5,Setup!$B$14,"M")' }, 7500000, { formula: 'IF(E5>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G5="Yes",F5,F5*E5/12)' }, "Paid", new Date(2026, 3, 15), ""],
+    ["EMP-002", "Rafi Mahendra", "People", new Date(2023, 5, 15), { formula: 'DATEDIF(D6,Setup!$B$14,"M")' }, 12000000, { formula: 'IF(E6>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G6="Yes",F6,F6*E6/12)' }, "Paid", new Date(2026, 3, 15), ""],
+    ["EMP-003", "Sari Wulandari", "Finance", new Date(2025, 0, 1), { formula: 'DATEDIF(D7,Setup!$B$14,"M")' }, 6800000, { formula: 'IF(E7>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G7="Yes",F7,F7*E7/12)' }, "Pending", "", ""],
+    ["EMP-004", "Budi Santoso", "Operations", new Date(2025, 10, 10), { formula: 'DATEDIF(D8,Setup!$B$14,"M")' }, 5500000, { formula: 'IF(E8>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G8="Yes",F8,F8*E8/12)' }, "Pending", "", "Pro-rated"],
+    ["EMP-005", "Maya Anggraini", "Finance", new Date(2024, 8, 1), { formula: 'DATEDIF(D9,Setup!$B$14,"M")' }, 6200000, { formula: 'IF(E9>=Setup!$B$13,"Yes","No")' }, { formula: 'IF(G9="Yes",F9,F9*E9/12)' }, "Paid", new Date(2026, 3, 15), ""],
   ], { alternate: true });
   for (let row = 5; row <= 25; row += 1) {
     calc.getCell(row, 9).dataValidation = { type: "list", allowBlank: true, formulae: ['"Pending,Paid"'] };
