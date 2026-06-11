@@ -31,6 +31,11 @@ export async function generateMetadata({
       locale: "id_ID",
       type: "website",
     },
+    twitter: {
+      card: "summary_large_image",
+      title: `${template.name} — PeopleSheet`,
+      description: template.summary,
+    },
   };
 }
 

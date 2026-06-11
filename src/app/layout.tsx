@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { SITE_URL } from "@/lib/site";
-import { organizationJsonLd } from "@/lib/jsonld";
+import { organizationJsonLd, websiteJsonLd } from "@/lib/jsonld";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -24,6 +24,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+
     title: "PeopleSheet – Template HR Gratis untuk UMKM Indonesia",
     description:
       "Template spreadsheet HR gratis untuk UMKM Indonesia. Rumus PPh21 TER, presensi, payroll. Unduh XLSX langsung tanpa login.",
@@ -47,7 +48,13 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
         />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
