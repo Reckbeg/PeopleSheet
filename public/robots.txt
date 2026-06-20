@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://peoplesheet.rofiibnu.com/sitemap.xml
+Sitemap: https://peoplesheet.biz.id/sitemap.xml

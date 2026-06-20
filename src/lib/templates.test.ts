@@ -87,7 +87,7 @@ describe("template catalog", () => {
   });
 
   it("uses one canonical public site URL", () => {
-    expect(SITE_URL).toBe("https://peoplesheet.rofiibnu.com");
+    expect(SITE_URL).toBe("https://peoplesheet.biz.id");
     expect(sitemap()[0]?.url).toBe(SITE_URL);
   });
 });

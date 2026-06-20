@@ -11,7 +11,7 @@ async function loadWorkbookFromResponse(response: Response) {
 
 describe("template download route", () => {
   it("returns 404 for unknown template slug", async () => {
-    const request = new Request("https://peoplesheet.rofiibnu.com/templates/unknown/download");
+    const request = new Request("https://peoplesheet.biz.id/templates/unknown/download");
     const response = await GET(request, { params: Promise.resolve({ slug: "unknown" }) });
 
     expect(response.status).toBe(404);
@@ -19,7 +19,7 @@ describe("template download route", () => {
 
   it("sanitizes risky spreadsheet cell input", async () => {
     const request = new Request(
-      "https://peoplesheet.rofiibnu.com/templates/attendance-tracker/download?companyName==SUM(1,1)",
+      "https://peoplesheet.biz.id/templates/attendance-tracker/download?companyName==SUM(1,1)",
     );
     const response = await GET(request, {
       params: Promise.resolve({ slug: "attendance-tracker" }),
@@ -34,7 +34,7 @@ describe("template download route", () => {
   });
 
   it("clamps out-of-range year to accepted bounds", async () => {
-    const request = new Request("https://peoplesheet.rofiibnu.com/templates/leave-tracker/download?year=1800");
+    const request = new Request("https://peoplesheet.biz.id/templates/leave-tracker/download?year=1800");
     const response = await GET(request, {
       params: Promise.resolve({ slug: "leave-tracker" }),
     });
@@ -48,7 +48,7 @@ describe("template download route", () => {
   });
 
   it("sets private cache and attachment filename headers", async () => {
-    const request = new Request("https://peoplesheet.rofiibnu.com/templates/attendance-tracker/download");
+    const request = new Request("https://peoplesheet.biz.id/templates/attendance-tracker/download");
     const response = await GET(request, {
       params: Promise.resolve({ slug: "attendance-tracker" }),
     });
