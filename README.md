@@ -50,7 +50,7 @@ Cukup klik "Sesuaikan" pada template, atur parameter, lalu klik "Buat & Unduh".
 ## Operasional
 
 - Health check endpoint: `GET /api/health`
-- Sitemap: `https://peoplesheet.rofiibnu.com/sitemap.xml`
+- Sitemap: `https://peoplesheet.biz.id/sitemap.xml`
 - CI: lint + test + build via GitHub Actions
 
 ## Tech Stack
@@ -105,7 +105,7 @@ src/
 - **Privasi di atas segalanya** — Tidak ada database, tidak ada tracking, tidak ada akun.
 - **Spreadsheet adalah source of truth** — Data karyawan tetap di tangan Anda.
 - **Praktis untuk HR Indonesia** — Format Rupiah, regulasi lokal, konteks UMKM.
-- **Terbuka dan gratis** — Open-source, gratis selamanya.
+- **Terbuka dan gratis** — Open-source, gratis selamanya. PeopleSheet adalah resource publik, bukan produk berbayar.
 
 ## License
 

@@ -100,7 +100,7 @@ git commit -m "feat: add FAQ data to template catalog"
 **Step 1: Add SITE_NAME to site.ts**
 
 ```typescript
-export const SITE_URL = "https://peoplesheet.id";
+export const SITE_URL = "https://peoplesheet.biz.id";
 export const SITE_NAME = "PeopleSheet";
 ```
 
