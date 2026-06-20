@@ -510,7 +510,7 @@ export const metadata: Metadata = {
   title: "PeopleSheet - HR spreadsheet templates",
   description:
     "Practical HR spreadsheet templates for Indonesian teams. No login. No database. Just download and use.",
-  metadataBase: new URL("https://peoplesheet.id"),
+  metadataBase: new URL("https://peoplesheet.biz.id"),
   icons: {
     icon: "/favicon.svg",
   },
@@ -518,7 +518,7 @@ export const metadata: Metadata = {
     title: "PeopleSheet - HR spreadsheet templates",
     description:
       "Practical HR spreadsheet templates for Indonesian teams. No login. No database. Just download and use.",
-    url: "https://peoplesheet.id",
+    url: "https://peoplesheet.biz.id",
     siteName: "PeopleSheet",
     locale: "en_US",
     type: "website",
